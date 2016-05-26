@@ -6,8 +6,8 @@ const _retrieveProfile = function(callback) {
 }
 const retrieveProfile = promisify(_retrieveProfile);
 
-const _retrieveHistory = function(callback) {
-  uber.user.getHistory(0, 50, callback);
+const _retrieveHistory = function(offset, results, callback) {
+  uber.user.getHistory(offset, results, callback);
 }
 const retrieveHistory = promisify(_retrieveHistory);
 

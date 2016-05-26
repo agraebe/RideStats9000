@@ -4,23 +4,25 @@ var uberController = require('./uberController.js');
 uberRouter.route('/profile')
   .get((req, res) => {
     uberController.retrieveProfile()
-      .then(profile => res.json(profile))
-      .catch(err => res.status(500).json(err.body));
+      .then(profile => res.json({success: true, data: profile}))
+      .catch(message => res.status(500).json({success: false, data: null, message}));
   });
 
 uberRouter.route('/history')
   .get((req, res) => {
-    uberController.retrieveHistory()
-      .then(history => res.json(history))
-      .catch(err => res.status(500).json(err.body));
+    offset = req.query.offset || 0;
+    results = req.query.results || 50;
+    uberController.retrieveHistory(offset, results)
+      .then(history => res.json({success: true, data: history}))
+      .catch(message => res.status(500).json({success: false, data: null, message}));
   });
 
 uberRouter.route('/request/:request_id')
   .get((req, res) => {
-    var id = req.params.id;
+    const id = req.params.id;
     uberController.retrieveRequestById(id)
-      .then(request => res.json(request))
-      .catch(err => res.status(500).json(err.body));
+      .then(request => res.json({success: true, data: request}))
+      .catch(message => res.status(500).json({success: false, data: null, message}));
   });
 
 module.exports = uberRouter;
