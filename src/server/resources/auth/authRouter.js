@@ -1,10 +1,10 @@
 var authRouter = require('express').Router();
-var authController = require('./authController.js');
+var { handleLogin, handleUberCredentials } = require('./authController.js');
 
 authRouter.route('/login')
-  .get(authController.retrieveAuthorizedUrl);
+  .get(handleLogin);
 
 authRouter.route('/callback')
-  .get(authController.handleAuthCallback);
+  .get(handleUberCredentials);
 
 module.exports = authRouter;

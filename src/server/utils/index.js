@@ -4,7 +4,7 @@ const promisify = func => {
     return new Promise((resolve, reject) => {
       const callback = (error, result, secondary) => {
         if (error) {
-          return reject(error.toString());
+          return reject(error);
         }
         resolve(result, secondary);
       };
