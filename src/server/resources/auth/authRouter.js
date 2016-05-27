@@ -1,5 +1,5 @@
 var authRouter = require('express').Router();
-var { handleLogin, handleUberCredentials } = require('./authController.js');
+var { handleLogin, handleCredentials } = require('./authController.js');
 
 authRouter.route('/login')
   .get(handleLogin);

@@ -18,7 +18,7 @@ const retrieveHistory = (req, res) => {
     })
     .catch(message => res.status(500).json({success: false, data: null, message}));
 }
-const handleRequestGet = (req, res) => {
+const retrieveRequest = (req, res) => {
   const id = req.params.request_id;
   retrieveRequestById(id)
     .then(request => res.json({success: true, data: request}))
@@ -28,5 +28,5 @@ const handleRequestGet = (req, res) => {
 module.exports = {
   retrieveProfile,
   retrieveHistory,
-  handleRequestGet
+  retrieveRequest
 }
