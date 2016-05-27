@@ -1,16 +1,21 @@
-const { retrieveProfile, retrieveHistory, retrieveRequestById } = require('./uberClient.js');
+const { retrieveUserProfile, retrieveUserHistory, retrieveRequestById } = require('./uberClient.js');
 
-const handleProfileGet = (req, res) => {
-  retrieveProfile()
+const retrieveProfile = (req, res) => {
+  retrieveUserProfile()
     .then(profile => res.json({success: true, data: profile}))
     .catch(message => res.status(500).json({success: false, data: null, message}));
 }
 
-const handleHistoryGet = (req, res) => {
+const generateHistoryQuery = (limit) => {
+
+}
+
+const retrieveHistory = (req, res) => {
   offset = req.query.offset || 0;
-  results = req.query.results || 50;
-  retrieveHistory(offset, results)
-    .then(history => res.json({success: true, data: history}))
+  retrieveUserHistory(offset, 50)
+    .then(history => {
+      res.json({success: true, data: history})
+    })
     .catch(message => res.status(500).json({success: false, data: null, message}));
 }
 const handleRequestGet = (req, res) => {
@@ -21,7 +26,7 @@ const handleRequestGet = (req, res) => {
 }
 
 module.exports = {
-  handleProfileGet,
-  handleHistoryGet,
+  retrieveProfile,
+  retrieveHistory,
   handleRequestGet
 }

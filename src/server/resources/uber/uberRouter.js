@@ -1,14 +1,14 @@
 var uberRouter = require('express').Router();
-var uberController = require('./uberController.js');
+var { retrieveProfile, retrieveHistory, retrieveRequest } = require('./uberController.js');
 var uber = require('./uberClient.js');
 
 uberRouter.route('/profile')
-  .get(uberController.handleProfileGet);
+  .get(retrieveProfile);
 
 uberRouter.route('/history')
-  .get(uberController.handleHistoryGet);
+  .get(retrieveHistory);
 
 uberRouter.route('/requests/:request_id')
-  .get(uberController.handleRequestGet);
+  .get(retrieveRequest);
 
 module.exports = uberRouter;

@@ -1,12 +1,14 @@
-const promisify = func => {
+const promisify = (func, context=this) => {
   return (...args) => {
-    const context = this;
     return new Promise((resolve, reject) => {
-      const callback = (error, result, secondary) => {
+      const callback = (error, ...results) => {
         if (error) {
           return reject(error);
         }
-        resolve(result, secondary);
+        if (results.length > 1) {
+          return resolve(results);
+        }
+        resolve(results[0]);
       };
       args.push(callback);
       func.apply(context, args)

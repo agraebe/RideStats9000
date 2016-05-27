@@ -1,4 +1,5 @@
 const Uber = require('node-uber');
+const request = require('request');
 const config = require('../../../config');
 const { promisify } = require('../../utils');
 
@@ -12,11 +13,11 @@ const uber = new Uber({
   sandbox: config.uber.sandbox
 });
 
-const retrieveProfile = promisify((callback) => {
+const retrieveUserProfile = promisify((callback) => {
   uber.user.getProfile(callback);
 });
 
-const retrieveHistory = promisify((offset, results, callback) => {
+const retrieveUserHistory = promisify((offset, results, callback) => {
   uber.user.getHistory(offset, results, callback);
 });
 
@@ -24,18 +25,18 @@ const retrieveRequestById = promisify((id, callback) => {
   uber.requests.getByID(id, callback);
 });
 
-const retrieveAuthorizeUrl = function() {
-  return uber.getAuthorizeUrl(['history', 'profile', 'all_trips', 'request', 'request_receipt', 'places']);
-}
-
 const storeCredentials = promisify((authorization_code, callback) => {
   uber.authorization({ authorization_code }, callback);
 });
 
+const retrieveAuthorizeUrl = function() {
+  return uber.getAuthorizeUrl(config.uber.scope);
+}
+
 module.exports = {
   uber,
-  retrieveProfile,
-  retrieveHistory,
+  retrieveUserProfile,
+  retrieveUserHistory,
   retrieveRequestById,
   retrieveAuthorizeUrl,
   storeCredentials

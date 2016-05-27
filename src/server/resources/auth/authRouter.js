@@ -5,6 +5,6 @@ authRouter.route('/login')
   .get(handleLogin);
 
 authRouter.route('/callback')
-  .get(handleUberCredentials);
+  .get(handleCredentials);
 
 module.exports = authRouter;
