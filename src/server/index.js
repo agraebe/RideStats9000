@@ -6,10 +6,10 @@ const app = express();
 require('./middleware')(app);
 require('./routes')(app);
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   res.json({message: 'placeholder'});
 });
 
-app.listen(port, function() {
+app.listen(port, () => {
   console.log('RideEye listening on ' + port);
 })
