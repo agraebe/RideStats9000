@@ -1,4 +1,5 @@
-const { retrieveUserProfile, retrieveUserHistory, retrieveRequestById } = require('./uberClient.js');
+const { retrieveUserProfile, retrieveUserHistory, retrieveRequestById, retrieveCurrentRequest } = require('./uberClient.js');
+const { processHistories, generateRemainingQueryOffsets } = require('./uberUtils.js');
 
 const retrieveProfile = (req, res) => {
   retrieveUserProfile()
@@ -6,18 +7,20 @@ const retrieveProfile = (req, res) => {
     .catch(message => res.status(500).json({success: false, data: null, message}));
 }
 
-const generateHistoryQuery = (limit) => {
-
-}
-
 const retrieveHistory = (req, res) => {
-  offset = req.query.offset || 0;
-  retrieveUserHistory(offset, 50)
-    .then(history => {
-      res.json({success: true, data: history})
-    })
+  retrieveUserHistory(0)
+    .then(history => retrieveRemainingHistories(history))
+    .then(histories => res.json({success: true, data: processHistories(histories)}))
     .catch(message => res.status(500).json({success: false, data: null, message}));
 }
+
+const retrieveRemainingHistories = data => {
+  var offsets = generateRemainingQueryOffsets(data);
+  var remainingHistoryQueries = offsets.map(offset => retrieveUserHistory(offset));
+  remainingHistoryQueries.unshift(data);
+  return Promise.all(remainingHistoryQueries);
+}
+
 const retrieveRequest = (req, res) => {
   const id = req.params.request_id;
   retrieveRequestById(id)
@@ -25,8 +28,15 @@ const retrieveRequest = (req, res) => {
     .catch(message => res.status(500).json({success: false, data: null, message}));
 }
 
+const retrieveRequestCurrent = (req, res) => {
+  retrieveCurrentRequest()
+    .then(request => res.json({success: true, data: request}))
+    .catch(message => res.status(500).json({success: false, data: null, message}));
+}
+
 module.exports = {
   retrieveProfile,
   retrieveHistory,
+  retrieveRequestCurrent,
   retrieveRequest
-}
+};
