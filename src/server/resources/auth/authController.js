@@ -9,7 +9,7 @@ const handleLogin = (req, res) => {
 const handleCredentials = (req, res) => {
   const authorization_code = req.query.code;
   storeCredentials(authorization_code)
-    .then((access_token, refresh_token) => res.redirect('/'))
+    .then(tokens => res.redirect('/'))
     .catch(err => res.status(500).json(err))
 }
 
