@@ -1,5 +1,5 @@
 {
-  "name": "RideEye",
+  "name": "UberStats",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,6 +14,7 @@
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "node-uber": "^0.9.6",
+    "path": "^0.12.7",
     "request": "^2.72.0"
   }
 }

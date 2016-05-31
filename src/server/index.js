@@ -3,7 +3,7 @@ const config = require('../config');
 const port = 3000;
 const app = express();
 
-require('./middleware')(app);
+require('./middleware')(app, express);
 require('./routes')(app);
 
 app.get('/', (req, res) => {
