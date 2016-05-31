@@ -11,5 +11,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log('RideEye listening on ' + port);
+  console.log('UberStats listening on ' + port);
 });
