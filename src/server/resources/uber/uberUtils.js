@@ -29,8 +29,8 @@ const generateStatistics = data => {
     timeSpentRiding: 0,
     totalDistanceTraveled: 0,
     longestRide: {
-      distance: 0,
-      data: null
+      distance: 0
+      city: null
     },
   };
   return data.history.reduce((stats, currentTrip) => {
