@@ -11,10 +11,7 @@ const retrieveHistory = (req, res) => {
   getUserHistory(0)
     .then(history => retrieveRemainingHistories(history))
     .then(histories => res.json({success: true, data: generateStatistics(processHistories(histories))}))
-    .catch(message => {
-      console.log(message);
-      res.status(500).json({success: false, data: null, message})
-    });
+    .catch(message => res.status(500).json({success: false, data: null, message}));
 }
 
 const retrieveRemainingHistories = data => {
