@@ -29,7 +29,7 @@ const generateStatistics = data => {
     timeSpentRiding: 0,
     totalDistanceTraveled: 0,
     longestRide: {
-      distance: 0
+      distance: 0,
       city: null
     },
   };
