@@ -1,8 +1,8 @@
 const { uber } = require('../uber/uberClient.js');
-const { retrieveAuthorizeUrl, storeCredentials } = require('../uber/uberClient.js');
+const { getAuthorizeUrl, storeCredentials } = require('../uber/uberClient.js');
 
 const handleLogin = (req, res) => {
-  const url = retrieveAuthorizeUrl();
+  const url = getAuthorizeUrl();
   res.redirect(url);
 }
 
