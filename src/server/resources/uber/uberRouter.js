@@ -1,5 +1,5 @@
 var uberRouter = require('express').Router();
-var { retrieveProfile, retrieveHistory, retrieveRequestByID, retrieveRequestReceipt, retrieveCurrentRequest } = require('./uberController.js');
+var { retrieveProfile, retrieveHistory, retrieveStatistics, retrieveRequestByID, retrieveRequestReceipt, retrieveCurrentRequest } = require('./uberController.js');
 var uber = require('./uberClient.js');
 
 uberRouter.route('/profile')
@@ -7,6 +7,9 @@ uberRouter.route('/profile')
 
 uberRouter.route('/history')
   .get(retrieveHistory);
+
+uberRouter.route('/statistics')
+  .get(retrieveStatistics);  
 
 uberRouter.route('/requests/:request_id')
   .get(retrieveRequestByID);

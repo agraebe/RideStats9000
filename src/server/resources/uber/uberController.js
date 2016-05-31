@@ -10,6 +10,13 @@ const retrieveProfile = (req, res) => {
 const retrieveHistory = (req, res) => {
   getUserHistory(0)
     .then(history => retrieveRemainingHistories(history))
+    .then(histories => res.json({success: true, data: processHistories(histories)}))
+    .catch(message => res.status(500).json({success: false, data: null, message}));
+}
+
+const retrieveStatistics = (req, res) => {
+  getUserHistory(0)
+    .then(history => retrieveRemainingHistories(history))
     .then(histories => res.json({success: true, data: generateStatistics(processHistories(histories))}))
     .catch(message => res.status(500).json({success: false, data: null, message}));
 }
@@ -44,6 +51,7 @@ const retrieveCurrentRequest = (req, res) => {
 module.exports = {
   retrieveProfile,
   retrieveHistory,
+  retrieveStatistics,
   retrieveRequestByID,
   retrieveCurrentRequest,
   retrieveRequestReceipt
