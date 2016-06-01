@@ -21,10 +21,18 @@ const processHistories = histories => {
   });
 }
 
+const getTripDay = startTime => {
+  const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+  const date = new Date(startTime * 1000);
+  const dayInt = date.getDay();
+  return days[dayInt];
+}
+
 const generateStatistics = data => {
   const statistics = {
     numberOfTrips: data.count,
     tripsPerCity: {},
+    tripsPerDay: {},
     timeSpentWaiting: 0,
     timeSpentRiding: 0,
     totalDistanceTraveled: 0,
@@ -34,18 +42,31 @@ const generateStatistics = data => {
     },
   };
   return data.history.reduce((stats, currentTrip) => {
-    var currentTripCity = currentTrip.start_city.display_name;
+    // Record currentTrip's start city
+    const currentTripCity = currentTrip.start_city.display_name;
     if (!stats.tripsPerCity[currentTripCity]) {
       stats.tripsPerCity[currentTripCity] = 0;
     }
     stats.tripsPerCity[currentTripCity]++;
+
+    // Record currentTrip's day of the week
+    const currentTripDay = getTripDay(currentTrip.start_time);
+    if (!stats.tripsPerDay[currentTripDay]) {
+      stats.tripsPerDay[currentTripDay] = 0;
+    }
+    stats.tripsPerDay[currentTripDay]++;
+
+    // Record currentTrip's wait time, ride time, and distance
     stats.timeSpentWaiting += currentTrip.start_time - currentTrip.request_time;
     stats.timeSpentRiding += currentTrip.end_time - currentTrip.start_time;
     stats.totalDistanceTraveled += currentTrip.distance;
+    
+    // Check if currentTrip is the longest
     if (stats.longestRide.distance < currentTrip.distance) {
       stats.longestRide.distance = currentTrip.distance;
       stats.longestRide.city = currentTripCity;
     }
+
     return stats;
   }, statistics)
 }
