@@ -14,6 +14,7 @@ const retrieveHistory = (req, res) => {
     .catch(message => res.status(500).json({success: false, data: null, message}));
 }
 
+// TODO: Abstract retrieveStatistics and retrieveHistory
 const retrieveStatistics = (req, res) => {
   getUserHistory(0)
     .then(history => retrieveRemainingHistories(history))
@@ -24,7 +25,7 @@ const retrieveStatistics = (req, res) => {
 const retrieveRemainingHistories = data => {
   var offsets = generateRemainingQueryOffsets(data);
   var remainingHistoryQueries = offsets.map(offset => getUserHistory(offset));
-  remainingHistoryQueries.unshift(data);
+  remainingHistoryQueries.unshift(data); // Add first (already completed) dataset to front of promise array to use as base
   return Promise.all(remainingHistoryQueries);
 }
 
