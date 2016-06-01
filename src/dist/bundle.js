@@ -102,28 +102,6 @@
 	      });
 	    }
 	  }, {
-	    key: 'generateCityBarData',
-	    value: function generateCityBarData() {
-	      var cityData = this.state.data.tripsPerCity;
-	      var labels = Object.keys(cityData);
-	      var data = labels.map(function (city) {
-	        return cityData[city];
-	      });
-	      var chartData = {
-	        labels: labels,
-	        datasets: {
-	          label: 'Trips Per City',
-	          fillColor: 'rgba(52, 152, 219, .28)',
-	          borderWidth: 10,
-	          hoverBackgroundColor: '#2980b9',
-	          hoverBorderColor: '#2980b9',
-	          data: data
-	        }
-	      };
-	      console.log(chartData);
-	      return chartData;
-	    }
-	  }, {
 	    key: 'handleDataRequest',
 	    value: function handleDataRequest() {
 	      var _this2 = this;
@@ -139,8 +117,67 @@
 	      });
 	    }
 	  }, {
+	    key: 'generateCityBarData',
+	    value: function generateCityBarData() {
+	      var cityData = this.state.data.tripsPerCity;
+	      var labels = Object.keys(cityData);
+	      var data = labels.map(function (city) {
+	        return cityData[city];
+	      });
+	      var chartData = {
+	        labels: labels,
+	        datasets: [{
+	          label: 'Trips Per City',
+	          fillColor: 'rgba(52, 152, 219, .28)',
+	          borderWidth: 10,
+	          hoverBackgroundColor: '#2980b9',
+	          hoverBorderColor: '#2980b9',
+	          data: data
+	        }]
+	      };
+	      console.log(chartData);
+	      return chartData;
+	    }
+	  }, {
+	    key: 'convertTime',
+	    value: function convertTime(seconds) {
+	      return {
+	        days: Math.floor(seconds / 86400),
+	        hours: Math.floor(seconds % 86400 / 3600),
+	        minutes: Math.floor(seconds % 3600 / 60),
+	        seconds: Math.floor(seconds % 3600 % 60)
+	      };
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      if (!this.state.data) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'h1',
+	            null,
+	            'UberStats'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleLoginClick },
+	            'Login'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleDataRequest },
+	            'Retrieve Data'
+	          )
+	        );
+	      }
+	      var distanceTraveled = this.state.data.totalDistanceTraveled.toFixed(2);
+	      var numberOfTrips = this.state.data.numberOfTrips;
+	      var longestRide = this.state.data.longestRide.distance.toFixed(2);
+	      var longestRideCity = this.state.data.longestRide.city;
+	      var timeWaiting = this.convertTime(this.state.data.timeSpentWaiting);
+	      var timeRiding = this.convertTime(this.state.data.timeSpentRiding);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -159,7 +196,50 @@
 	          { onClick: this.handleDataRequest },
 	          'Retrieve Data'
 	        ),
-	        this.state.data ? _react2.default.createElement(_reactChartjs.Bar, { data: this.generateCityBarData() }) : null
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'You\'ve traveled ',
+	          distanceTraveled,
+	          ' miles during ',
+	          numberOfTrips,
+	          ' Uber rides.'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Your longest ride was ',
+	          longestRide,
+	          ' miles in ',
+	          longestRideCity
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'You\'ve spent ',
+	          timeWaiting.days,
+	          ' days, ',
+	          timeWaiting.hours,
+	          ' hours, ',
+	          timeWaiting.minutes,
+	          ' minutes, and ',
+	          timeWaiting.seconds,
+	          ' seconds waiting for Ubers.'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'You\'ve spent ',
+	          timeRiding.days,
+	          ' days, ',
+	          timeRiding.hours,
+	          ' hours, ',
+	          timeRiding.minutes,
+	          ' minutes, and ',
+	          timeRiding.seconds,
+	          ' seconds riding in Ubers.'
+	        ),
+	        _react2.default.createElement(_reactChartjs.Bar, { data: this.generateCityBarData(), height: 400, width: 400 })
 	      );
 	    }
 	  }]);

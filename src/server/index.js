@@ -1,6 +1,5 @@
 const express = require('express');
-const config = require('../config');
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 
 require('./middleware')(app, express);

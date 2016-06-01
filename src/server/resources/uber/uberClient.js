@@ -1,16 +1,15 @@
 const Uber = require('node-uber');
-const request = require('request');
 const config = require('../../../config');
 const { promisify } = require('../../utils');
 
 const uber = new Uber({
-  client_id: config.uber.client_id,
-  client_secret: config.uber.client_secret,
-  server_token: config.uber.server_token,
-  redirect_uri: config.uber.redirect_uri,
-  name: config.uber.name,
-  language: config.uber.language,
-  sandbox: config.uber.sandbox
+  client_id: process.env.UBER_CLIENT_ID || config.uber.client_id,
+  client_secret: process.env.UBER_CLIENT_SECRET || config.uber.client_secret,
+  server_token: process.env.UBER_SERVER_TOKEN || config.uber.server_token,
+  redirect_uri: process.env.UBER_REDIRECT_URI || config.uber.redirect_uri,
+  name: process.env.UBER_NAME || config.uber.name,
+  language: process.env.UBER_LANGUAGE || config.uber.language,
+  sandbox: process.env.UBER_SANDBOX || config.uber.sandbox
 });
 
 const getUserProfile = promisify(callback => {
