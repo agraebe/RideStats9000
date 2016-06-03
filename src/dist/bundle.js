@@ -70,7 +70,7 @@
 
 	var _stats2 = _interopRequireDefault(_stats);
 
-	var _loginReminder = __webpack_require__(453);
+	var _loginReminder = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./loginReminder.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _loginReminder2 = _interopRequireDefault(_loginReminder);
 
@@ -54312,49 +54312,7 @@
 	exports.default = First;
 
 /***/ },
-/* 453 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var LoginReminder = function LoginReminder() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'h4',
-	      { className: 'text-center' },
-	      'Click ',
-	      _react2.default.createElement(
-	        'strong',
-	        null,
-	        'Log in'
-	      ),
-	      ' to get started'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'text-center' },
-	      _react2.default.createElement('img', { className: 'center-block img-rounded img-responsive', src: 'assets/login.jpg' })
-	    )
-	  );
-	};
-
-	exports.default = LoginReminder;
-
-/***/ },
+/* 453 */,
 /* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
