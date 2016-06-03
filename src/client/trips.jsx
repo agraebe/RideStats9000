@@ -18,12 +18,12 @@ const generateIconDivs = numberOfTrips => {
 }
 
 const Trips = ({ numberOfTrips }) => {
-  const iconDivs = generateIconDivs(300);
+  const iconDivs = generateIconDivs(numberOfTrips);
   const title = (<h3>Total Rides</h3>)
   return (
     <div>
       <Panel className="panel-primary" header={title}>
-        <h3 className="text-center">You've taken <strong>{300}</strong> rides with Uber</h3>
+        <h3 className="text-center">You've taken <strong>{numberOfTrips}</strong> rides with Uber</h3>
         <div className="text-center">{iconDivs}</div>
         <h3 className="text-center"><small>One car represents 10 rides</small></h3>
       </Panel>

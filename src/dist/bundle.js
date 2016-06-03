@@ -70,11 +70,11 @@
 
 	var _stats2 = _interopRequireDefault(_stats);
 
-	var _loginReminder = __webpack_require__(457);
+	var _loginReminder = __webpack_require__(453);
 
 	var _loginReminder2 = _interopRequireDefault(_loginReminder);
 
-	var _loading = __webpack_require__(458);
+	var _loading = __webpack_require__(454);
 
 	var _loading2 = _interopRequireDefault(_loading);
 
@@ -53531,23 +53531,23 @@
 
 	var _distance2 = _interopRequireDefault(_distance);
 
-	var _TotalTime = __webpack_require__(455);
+	var _TotalTime = __webpack_require__(448);
 
 	var _TotalTime2 = _interopRequireDefault(_TotalTime);
 
-	var _AverageTime = __webpack_require__(456);
+	var _AverageTime = __webpack_require__(449);
 
 	var _AverageTime2 = _interopRequireDefault(_AverageTime);
 
-	var _cities = __webpack_require__(451);
+	var _cities = __webpack_require__(450);
 
 	var _cities2 = _interopRequireDefault(_cities);
 
-	var _days = __webpack_require__(452);
+	var _days = __webpack_require__(451);
 
 	var _days2 = _interopRequireDefault(_days);
 
-	var _first = __webpack_require__(461);
+	var _first = __webpack_require__(452);
 
 	var _first2 = _interopRequireDefault(_first);
 
@@ -53699,7 +53699,7 @@
 	var Trips = function Trips(_ref) {
 	  var numberOfTrips = _ref.numberOfTrips;
 
-	  var iconDivs = generateIconDivs(300);
+	  var iconDivs = generateIconDivs(numberOfTrips);
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
@@ -53718,7 +53718,7 @@
 	        _react2.default.createElement(
 	          'strong',
 	          null,
-	          300
+	          numberOfTrips
 	        ),
 	        ' rides with Uber'
 	      ),
@@ -53835,221 +53835,7 @@
 	exports.default = Distance;
 
 /***/ },
-/* 448 */,
-/* 449 */,
-/* 450 */,
-/* 451 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _reactChartjs = __webpack_require__(169);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var generateCityBarData = function generateCityBarData(cityData) {
-	  var labels = Object.keys(cityData);
-	  var data = labels.map(function (city) {
-	    return cityData[city];
-	  });
-	  var cityBarData = {
-	    labels: labels,
-	    datasets: [{
-	      label: 'Trips Per City',
-	      backgroundColor: '#149c82',
-	      fillColor: '#149c82',
-	      borderWidth: 10,
-	      hoverBackgroundColor: '#149c82',
-	      hoverBorderColor: '#149c82',
-	      data: data
-	    }]
-	  };
-	  return cityBarData;
-	};
-
-	var getModeCityData = function getModeCityData(cityData) {
-	  return Object.keys(cityData).reduce(function (results, city) {
-	    if (cityData[city] > results.count) {
-	      results.name = city;
-	      results.count = cityData[city];
-	    }
-	    return results;
-	  }, { name: '', count: 0 });
-	};
-
-	var Cities = function Cities(_ref) {
-	  var cityData = _ref.cityData;
-	  var numberOfTrips = _ref.numberOfTrips;
-
-	  var modeCityData = getModeCityData(cityData);
-	  var modeCityName = modeCityData.name;
-	  var modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(2) * 100;
-	  var cityBarData = generateCityBarData(cityData);
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    'Rides by City'
-	  );
-	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    { className: 'panel-primary', header: title },
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      'You take Uber most often in ',
-	      _react2.default.createElement(
-	        'strong',
-	        null,
-	        modeCityName
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      _react2.default.createElement(
-	        'small',
-	        null,
-	        'Over ',
-	        _react2.default.createElement(
-	          'strong',
-	          null,
-	          modeCityPercentage,
-	          '%'
-	        ),
-	        ' of your rides take place there'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'text-center' },
-	      _react2.default.createElement(_reactChartjs.Bar, {
-	        data: cityBarData,
-	        height: 350,
-	        width: 400
-	      })
-	    )
-	  );
-	};
-
-	exports.default = Cities;
-
-/***/ },
-/* 452 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _reactChartjs = __webpack_require__(169);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-	var generateDayBarData = function generateDayBarData(dayData) {
-	  var labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-	  var data = dayData;
-	  var dayBarData = {
-	    labels: labels,
-	    datasets: [{
-	      label: 'Trips Per Day',
-	      fillColor: ['#970015', '#149C81', '#006551', '#F4A51F', '#C88107', '#E81E3A', '#BF0720'],
-	      borderWidth: 10,
-	      hoverBackgroundColor: '#2980b9',
-	      hoverBorderColor: '#2980b9',
-	      data: data
-	    }]
-	  };
-	  return dayBarData;
-	};
-
-	var days = ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays'];
-
-	var getModeDay = function getModeDay(dayData) {
-	  var modeDayInt = Math.max.apply(Math, _toConsumableArray(dayData));
-	  return days[dayData.indexOf(modeDayInt)];
-	};
-
-	var getMinDay = function getMinDay(dayData) {
-	  var minDayInt = Math.min.apply(Math, _toConsumableArray(dayData));
-	  return days[dayData.indexOf(minDayInt)];
-	};
-
-	var Days = function Days(_ref) {
-	  var dayData = _ref.dayData;
-
-	  var modeDay = getModeDay(dayData);
-	  var minDay = getMinDay(dayData);
-	  var dayBarData = generateDayBarData(dayData);
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    'Rides by Day'
-	  );
-	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    { className: 'panel-primary', header: title },
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      'You take rides most often on ',
-	      _react2.default.createElement(
-	        'strong',
-	        null,
-	        modeDay
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      _react2.default.createElement(
-	        'small',
-	        null,
-	        'You take rides least often on ',
-	        _react2.default.createElement(
-	          'strong',
-	          null,
-	          minDay
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'text-center' },
-	      _react2.default.createElement(_reactChartjs.Bar, {
-	        data: dayBarData,
-	        height: 400,
-	        width: 400
-	      })
-	    )
-	  );
-	};
-
-	exports.default = Days;
-
-/***/ },
-/* 453 */,
-/* 454 */,
-/* 455 */
+/* 448 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54162,7 +53948,7 @@
 	exports.default = TotalTime;
 
 /***/ },
-/* 456 */
+/* 449 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54283,7 +54069,250 @@
 	exports.default = AverageTime;
 
 /***/ },
-/* 457 */
+/* 450 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateCityBarData = function generateCityBarData(cityData) {
+	  var labels = Object.keys(cityData);
+	  var data = labels.map(function (city) {
+	    return cityData[city];
+	  });
+	  var cityBarData = {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Trips Per City',
+	      backgroundColor: '#149c82',
+	      fillColor: '#149c82',
+	      borderWidth: 10,
+	      hoverBackgroundColor: '#149c82',
+	      hoverBorderColor: '#149c82',
+	      data: data
+	    }]
+	  };
+	  return cityBarData;
+	};
+
+	var getModeCityData = function getModeCityData(cityData) {
+	  return Object.keys(cityData).reduce(function (results, city) {
+	    if (cityData[city] > results.count) {
+	      results.name = city;
+	      results.count = cityData[city];
+	    }
+	    return results;
+	  }, { name: '', count: 0 });
+	};
+
+	var Cities = function Cities(_ref) {
+	  var cityData = _ref.cityData;
+	  var numberOfTrips = _ref.numberOfTrips;
+
+	  var modeCityData = getModeCityData(cityData);
+	  var modeCityName = modeCityData.name;
+	  var modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(2) * 100;
+	  var cityBarData = generateCityBarData(cityData);
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    'Rides by City'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'You take Uber most often in ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        modeCityName
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      _react2.default.createElement(
+	        'small',
+	        null,
+	        'Over ',
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          modeCityPercentage,
+	          '%'
+	        ),
+	        ' of your rides take place there'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement(_reactChartjs.Bar, {
+	        data: cityBarData,
+	        height: 350,
+	        width: 400
+	      })
+	    )
+	  );
+	};
+
+	exports.default = Cities;
+
+/***/ },
+/* 451 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	var generateDayBarData = function generateDayBarData(dayData) {
+	  var labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	  var data = dayData;
+	  var dayBarData = {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Trips Per Day',
+	      fillColor: ['#970015', '#149C81', '#006551', '#F4A51F', '#C88107', '#E81E3A', '#BF0720'],
+	      borderWidth: 10,
+	      hoverBackgroundColor: '#2980b9',
+	      hoverBorderColor: '#2980b9',
+	      data: data
+	    }]
+	  };
+	  return dayBarData;
+	};
+
+	var days = ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays'];
+
+	var getModeDay = function getModeDay(dayData) {
+	  var modeDayInt = Math.max.apply(Math, _toConsumableArray(dayData));
+	  return days[dayData.indexOf(modeDayInt)];
+	};
+
+	var getMinDay = function getMinDay(dayData) {
+	  var minDayInt = Math.min.apply(Math, _toConsumableArray(dayData));
+	  return days[dayData.indexOf(minDayInt)];
+	};
+
+	var Days = function Days(_ref) {
+	  var dayData = _ref.dayData;
+
+	  var modeDay = getModeDay(dayData);
+	  var minDay = getMinDay(dayData);
+	  var dayBarData = generateDayBarData(dayData);
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    'Rides by Day'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'You take rides most often on ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        modeDay
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      _react2.default.createElement(
+	        'small',
+	        null,
+	        'You take rides least often on ',
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          minDay
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement(_reactChartjs.Bar, {
+	        data: dayBarData,
+	        height: 400,
+	        width: 400
+	      })
+	    )
+	  );
+	};
+
+	exports.default = Days;
+
+/***/ },
+/* 452 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var First = function First() {
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    null,
+	    _react2.default.createElement(
+	      'div',
+	      { style: { marginTop: '12px', marginBottom: '12px' }, className: 'text-center' },
+	      _react2.default.createElement('img', { className: 'center-block img-rounded img-responsive', src: 'assets/carSpacer.jpg' })
+	    )
+	  );
+	};
+
+	exports.default = First;
+
+/***/ },
+/* 453 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54326,7 +54355,7 @@
 	exports.default = LoginReminder;
 
 /***/ },
-/* 458 */
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54341,7 +54370,7 @@
 
 	var _reactBootstrap = __webpack_require__(180);
 
-	var _reactSpin = __webpack_require__(459);
+	var _reactSpin = __webpack_require__(455);
 
 	var _reactSpin2 = _interopRequireDefault(_reactSpin);
 
@@ -54385,7 +54414,7 @@
 	exports.default = Loading;
 
 /***/ },
-/* 459 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54396,7 +54425,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _spin = __webpack_require__(460);
+	var _spin = __webpack_require__(456);
 
 	var _spin2 = _interopRequireDefault(_spin);
 
@@ -54437,7 +54466,7 @@
 	exports.default = ReactSpinner;
 
 /***/ },
-/* 460 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -54818,40 +54847,6 @@
 
 	}));
 
-
-/***/ },
-/* 461 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _reactChartjs = __webpack_require__(169);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var First = function First() {
-	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    null,
-	    _react2.default.createElement(
-	      'div',
-	      { style: { marginTop: '12px', marginBottom: '12px' }, className: 'text-center' },
-	      _react2.default.createElement('img', { className: 'center-block img-rounded img-responsive', src: 'assets/carSpacer.jpg' })
-	    )
-	  );
-	};
-
-	exports.default = First;
 
 /***/ }
 /******/ ]);
