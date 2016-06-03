@@ -6,6 +6,7 @@ import Nav from './nav.jsx';
 import Stats from './stats.jsx';
 import LoginReminder from './loginReminder.jsx';
 import Loading from './loading.jsx';
+import Footer from './footer.jsx';
 
 class App extends React.Component {
   constructor() {
@@ -59,6 +60,7 @@ class App extends React.Component {
       <div>
         <Nav handleLoginClick={this.handleLoginClick} loggedIn={this.state.loggedIn}/>
         {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <LoginReminder /> }
+        <Footer />
       </div>
     );
   }

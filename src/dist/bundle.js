@@ -78,6 +78,10 @@
 
 	var _loading2 = _interopRequireDefault(_loading);
 
+	var _footer = __webpack_require__(457);
+
+	var _footer2 = _interopRequireDefault(_footer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -153,7 +157,8 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_nav2.default, { handleLoginClick: this.handleLoginClick, loggedIn: this.state.loggedIn }),
-	        this.state.data ? _react2.default.createElement(_stats2.default, { data: this.state.data }) : this.state.loading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(_loginReminder2.default, null)
+	        this.state.data ? _react2.default.createElement(_stats2.default, { data: this.state.data }) : this.state.loading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(_loginReminder2.default, null),
+	        _react2.default.createElement(_footer2.default, null)
 	      );
 	    }
 	  }]);
@@ -54852,6 +54857,41 @@
 
 	}));
 
+
+/***/ },
+/* 457 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Footer = function Footer() {
+	  return _react2.default.createElement(
+	    "footer",
+	    { className: "footer" },
+	    _react2.default.createElement(
+	      "div",
+	      { className: "container footer-content" },
+	      _react2.default.createElement(
+	        "p",
+	        { className: "footer-text" },
+	        "Made with React, Node, and ",
+	        _react2.default.createElement("i", { style: { color: '#FF0000', paddingLeft: '2px' }, className: "fa fa-heart faa-pulse animated footer-pulse-heart" })
+	      )
+	    )
+	  );
+	};
+
+	exports.default = Footer;
 
 /***/ }
 /******/ ]);
