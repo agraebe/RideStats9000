@@ -54885,7 +54885,13 @@
 	        "p",
 	        { className: "footer-text" },
 	        "Made with React, Node, and ",
-	        _react2.default.createElement("i", { style: { color: '#FF0000', paddingLeft: '2px' }, className: "fa fa-heart faa-pulse animated footer-pulse-heart" })
+	        _react2.default.createElement("i", { style: { color: '#FF0000', paddingLeft: '2px' }, className: "fa fa-heart faa-pulse animated footer-pulse-heart" }),
+	        " by ",
+	        _react2.default.createElement(
+	          "a",
+	          { href: "https://github.com/ZLester" },
+	          "ZLester"
+	        )
 	      )
 	    )
 	  );
