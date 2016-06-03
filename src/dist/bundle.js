@@ -53614,9 +53614,9 @@
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { md: 6 },
-	          _react2.default.createElement(_TotalTime2.default, {
-	            timeWaiting: timeWaiting,
-	            timeRiding: timeRiding
+	          _react2.default.createElement(_cities2.default, {
+	            cityData: cityData,
+	            numberOfTrips: numberOfTrips
 	          })
 	        )
 	      ),
@@ -53625,15 +53625,10 @@
 	        { className: 'show-grid' },
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
-	          { md: 6 },
-	          _react2.default.createElement(_first2.default, null)
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 6 },
-	          _react2.default.createElement(_cities2.default, {
-	            cityData: cityData,
-	            numberOfTrips: numberOfTrips
+	          { md: 12 },
+	          _react2.default.createElement(_TotalTime2.default, {
+	            timeWaiting: timeWaiting,
+	            timeRiding: timeRiding
 	          })
 	        )
 	      ),

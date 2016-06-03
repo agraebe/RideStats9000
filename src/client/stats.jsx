@@ -50,20 +50,17 @@ const Stats = ({ data }) => {
               />
             </Col>
             <Col md={6}>
-              <TotalTime 
-                timeWaiting={timeWaiting}
-                timeRiding={timeRiding}
+              <Cities 
+                cityData={cityData}
+                numberOfTrips={numberOfTrips}
               />
             </Col>
           </Row>
           <Row className="show-grid">
-            <Col md={6}>
-              <First />
-            </Col>
-            <Col md={6}>
-              <Cities 
-                cityData={cityData}
-                numberOfTrips={numberOfTrips}
+            <Col md={12}>
+              <TotalTime 
+                timeWaiting={timeWaiting}
+                timeRiding={timeRiding}
               />
             </Col>
           </Row>
