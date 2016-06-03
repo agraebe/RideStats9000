@@ -31,7 +31,7 @@ class App extends React.Component {
     if (this.state.loggedIn) {
       return this.handleLogout();
     }
-    $.ajax({ type: 'GET', url: 'http://localhost:3000/api/auth/login' })
+    $.ajax({ type: 'GET', url: '/api/auth/login' })
       .done(data => window.location.href = data.url)
       .fail(err => console.log(err));
   }
@@ -43,7 +43,7 @@ class App extends React.Component {
 
   requestUserStatistics () {
     this.setState({loggedIn: true, loading: true});
-    $.ajax({ type: 'GET', url: 'http://localhost:3000/api/uber/statistics' })
+    $.ajax({ type: 'GET', url: '/api/uber/statistics' })
       .done(response => {
         console.log(response.data);
         this.setState({ data: response.data, loading: false })

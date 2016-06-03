@@ -120,7 +120,7 @@
 	      if (this.state.loggedIn) {
 	        return this.handleLogout();
 	      }
-	      _jquery2.default.ajax({ type: 'GET', url: 'http://localhost:3000/api/auth/login' }).done(function (data) {
+	      _jquery2.default.ajax({ type: 'GET', url: '/api/auth/login' }).done(function (data) {
 	        return window.location.href = data.url;
 	      }).fail(function (err) {
 	        return console.log(err);
@@ -138,7 +138,7 @@
 	      var _this2 = this;
 
 	      this.setState({ loggedIn: true, loading: true });
-	      _jquery2.default.ajax({ type: 'GET', url: 'http://localhost:3000/api/uber/statistics' }).done(function (response) {
+	      _jquery2.default.ajax({ type: 'GET', url: '/api/uber/statistics' }).done(function (response) {
 	        console.log(response.data);
 	        _this2.setState({ data: response.data, loading: false });
 	      }).fail(function (err) {
