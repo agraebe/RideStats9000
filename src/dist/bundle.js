@@ -54400,7 +54400,7 @@
 	        fps: 20,
 	        zIndex: 2e9,
 	        className: 'spinner',
-	        top: '30%',
+	        top: '40%',
 	        left: '50%',
 	        shadow: false,
 	        hwaccel: false,
