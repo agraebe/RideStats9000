@@ -54243,7 +54243,7 @@
 	    _react2.default.createElement(
 	      'h3',
 	      { className: 'text-center' },
-	      'You take rides most often on ',
+	      'You ride most often on ',
 	      _react2.default.createElement(
 	        'strong',
 	        null,
@@ -54256,7 +54256,7 @@
 	      _react2.default.createElement(
 	        'small',
 	        null,
-	        'You take rides least often on ',
+	        'You ride least often on ',
 	        _react2.default.createElement(
 	          'strong',
 	          null,
@@ -54338,7 +54338,7 @@
 	    _react2.default.createElement(
 	      'h3',
 	      { className: 'text-center' },
-	      'RideStats9000 calculates pertinent statistics about your Uber usage'
+	      'RideStats9000 calculates statistics about your Uber usage'
 	    ),
 	    _react2.default.createElement(
 	      'div',
