@@ -19,15 +19,17 @@ class App extends React.Component {
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleDemoClick = this.handleDemoClick.bind(this);
     this.requestUserStatistics = this.requestUserStatistics.bind(this);
+    this.requestDummyStatistics = this.requestDummyStatistics.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
-    // Temp fix for testing
+    // Temp for testing
     if (window.location.hash === '#/loading') {
       this.requestUserStatistics();
     }
   }
+
   handleLoginClick () {
     if (this.state.loggedIn) {
       return this.handleLogout();
@@ -38,9 +40,7 @@ class App extends React.Component {
   }
 
   handleDemoClick () {
-    this.setState({
-      data: null
-    });
+    this.requestDummyStatistics();
   }
 
   handleLogout () {
@@ -60,6 +60,33 @@ class App extends React.Component {
         this.handleLogout();
         console.log(err);
       });
+  }
+
+  requestDummyStatistics() {
+    this.setState({loggedIn: true, loading: true});
+    window.location.hash === '#/demo'
+    setTimeout(() => {
+      this.setState({
+        loading: false,
+        data: {
+          numberOfTrips: 185,
+          tripsPerCity: {
+            "Los Angeles": 39,
+            "New Orleans": 2,
+            "Portland": 4,
+            "San Francisco": 140
+          },
+          timeSpentRiding: 102370,
+          timeSpentWaiting: 47377,
+          longestRide: {
+            city: "Los Angeles",
+            distance: 24.662265066
+          },
+          totalDistanceTraveled: 399.1359926652999,
+          tripsPerDay: [38, 21, 13, 23, 20, 15, 55]
+        }
+      });
+    }, 2000);
   }
 
   render() {

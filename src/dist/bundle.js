@@ -106,6 +106,7 @@
 	    _this.handleLoginClick = _this.handleLoginClick.bind(_this);
 	    _this.handleDemoClick = _this.handleDemoClick.bind(_this);
 	    _this.requestUserStatistics = _this.requestUserStatistics.bind(_this);
+	    _this.requestDummyStatistics = _this.requestDummyStatistics.bind(_this);
 	    _this.handleLogout = _this.handleLogout.bind(_this);
 	    return _this;
 	  }
@@ -113,7 +114,7 @@
 	  _createClass(App, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      // Temp fix for testing
+	      // Temp for testing
 	      if (window.location.hash === '#/loading') {
 	        this.requestUserStatistics();
 	      }
@@ -133,9 +134,7 @@
 	  }, {
 	    key: 'handleDemoClick',
 	    value: function handleDemoClick() {
-	      this.setState({
-	        data: null
-	      });
+	      this.requestDummyStatistics();
 	    }
 	  }, {
 	    key: 'handleLogout',
@@ -157,6 +156,36 @@
 	        _this2.handleLogout();
 	        console.log(err);
 	      });
+	    }
+	  }, {
+	    key: 'requestDummyStatistics',
+	    value: function requestDummyStatistics() {
+	      var _this3 = this;
+
+	      this.setState({ loggedIn: true, loading: true });
+	      window.location.hash === '#/demo';
+	      setTimeout(function () {
+	        _this3.setState({
+	          loading: false,
+	          data: {
+	            numberOfTrips: 185,
+	            tripsPerCity: {
+	              "Los Angeles": 39,
+	              "New Orleans": 2,
+	              "Portland": 4,
+	              "San Francisco": 140
+	            },
+	            timeSpentRiding: 102370,
+	            timeSpentWaiting: 47377,
+	            longestRide: {
+	              city: "Los Angeles",
+	              distance: 24.662265066
+	            },
+	            totalDistanceTraveled: 399.1359926652999,
+	            tripsPerDay: [38, 21, 13, 23, 20, 15, 55]
+	          }
+	        });
+	      }, 2000);
 	    }
 	  }, {
 	    key: 'render',
@@ -34239,6 +34268,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var NavTop = function NavTop(_ref) {
+	  var handleDemoClick = _ref.handleDemoClick;
 	  var handleLoginClick = _ref.handleLoginClick;
 	  var loggedIn = _ref.loggedIn;
 
@@ -34267,7 +34297,12 @@
 	        { pullRight: true },
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
-	          { eventKey: 1, onClick: handleLoginClick },
+	          { eventKey: 1, onClick: handleDemoClick },
+	          'Demo'
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          { eventKey: 2, onClick: handleLoginClick },
 	          loggedIn ? 'Log out' : 'Log in'
 	        )
 	      )
