@@ -53639,7 +53639,7 @@
 	      ),
 	      _react2.default.createElement(
 	        _reactBootstrap.Row,
-	        { className: 'show-grid' },
+	        { style: { marginBottom: '30px' }, className: 'show-grid' },
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { md: 6 },
