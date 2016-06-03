@@ -34241,7 +34241,7 @@
 	        _react2.default.createElement(
 	          'a',
 	          null,
-	          'UberStats'
+	          'RideStats9000'
 	        )
 	      ),
 	      _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)

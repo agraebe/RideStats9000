@@ -6,7 +6,7 @@ const NavTop = ({ handleLoginClick, loggedIn }) => {
     <Navbar>
       <Navbar.Header>
         <Navbar.Brand>
-          <a>UberStats</a>
+          <a>RideStats9000</a>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
