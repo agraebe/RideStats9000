@@ -53862,7 +53862,9 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Total Ride and Wait Times'
+	    'Σ',
+	    _react2.default.createElement('i', { className: 'fa fa-clock-o', 'aria-hidden': 'true' }),
+	    ' Total Ride and Wait Times'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
@@ -53989,7 +53991,7 @@
 	    'h3',
 	    null,
 	    'x',
-	    _react2.default.createElement('i', { 'class': 'fa fa-clock-o', 'aria-hidden': 'true' }),
+	    _react2.default.createElement('i', { className: 'fa fa-clock-o', 'aria-hidden': 'true' }),
 	    ' Average Ride and Wait Times'
 	  );
 	  return _react2.default.createElement(

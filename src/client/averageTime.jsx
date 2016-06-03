@@ -24,7 +24,7 @@ const generateAverageTimeGraphData = (averageRideWaiting, averageRideRiding) => 
 
 const AverageTime = ({ averageRideWaiting, averageRideRiding }) => {
   const averageTimeGraphData = generateAverageTimeGraphData(averageRideWaiting, averageRideRiding);
-  const title = (<h3>x<i class="fa fa-clock-o" aria-hidden="true"></i> Average Ride and Wait Times</h3>);
+  const title = (<h3>x<i className="fa fa-clock-o" aria-hidden="true"></i> Average Ride and Wait Times</h3>);
   return(
     <Panel className="panel-primary" header={title}>
       <Row>
