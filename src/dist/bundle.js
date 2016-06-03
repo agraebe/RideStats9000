@@ -53536,7 +53536,7 @@
 
 	var _distance2 = _interopRequireDefault(_distance);
 
-	var _TotalTime = __webpack_require__(448);
+	var _TotalTime = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./TotalTime.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _TotalTime2 = _interopRequireDefault(_TotalTime);
 
@@ -53836,111 +53836,7 @@
 	exports.default = Distance;
 
 /***/ },
-/* 448 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _reactChartjs = __webpack_require__(169);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var TotalTime = function TotalTime(_ref) {
-	  var timeWaiting = _ref.timeWaiting;
-	  var timeRiding = _ref.timeRiding;
-
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    'Total Ride and Wait Times'
-	  );
-	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    { className: 'panel-primary', header: title },
-	    _react2.default.createElement(
-	      _reactBootstrap.Row,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 4, md: 4 },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'pull-right' },
-	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/traffic.png' })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 8, md: 8 },
-	        _react2.default.createElement(
-	          'h2',
-	          { className: 'text-left text-muted' },
-	          'You\'ve waited for Ubers a total of'
-	        ),
-	        _react2.default.createElement(
-	          'h2',
-	          { className: 'text-left text-primary' },
-	          timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null,
-	          ' ',
-	          timeWaiting.hours,
-	          ' hours, ',
-	          timeWaiting.minutes,
-	          ' minutes, and ',
-	          timeWaiting.seconds,
-	          ' seconds'
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Row,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 4, md: 4 },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'pull-right' },
-	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/carwheel.png' })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 8, md: 8 },
-	        _react2.default.createElement(
-	          'h2',
-	          { className: 'text-left text-muted' },
-	          'You\'ve ridden in Ubers a total of'
-	        ),
-	        _react2.default.createElement(
-	          'h2',
-	          { className: 'text-left text-primary' },
-	          timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null,
-	          ' ',
-	          timeRiding.hours,
-	          ' hours, ',
-	          timeRiding.minutes,
-	          ' minutes, and ',
-	          timeRiding.seconds,
-	          ' seconds'
-	        )
-	      )
-	    )
-	  );
-	};
-
-	exports.default = TotalTime;
-
-/***/ },
+/* 448 */,
 /* 449 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -53988,7 +53884,9 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Average Ride and Wait Times'
+	    'x',
+	    _react2.default.createElement('i', { 'class': 'fa fa-clock-o', 'aria-hidden': 'true' }),
+	    ' Average Ride and Wait Times'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
@@ -54876,7 +54774,7 @@
 	        "p",
 	        { className: "footer-text" },
 	        "Made with React, Node, and ",
-	        _react2.default.createElement("i", { style: { color: '#FF0000', paddingLeft: '2px' }, className: "fa fa-heart faa-pulse animated footer-pulse-heart" }),
+	        _react2.default.createElement("i", { className: "fa fa-heart faa-pulse animated footer-pulse-heart" }),
 	        " by ",
 	        _react2.default.createElement(
 	          "a",
