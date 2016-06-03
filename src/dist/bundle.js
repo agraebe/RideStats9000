@@ -104,6 +104,7 @@
 	      loggedIn: false
 	    };
 	    _this.handleLoginClick = _this.handleLoginClick.bind(_this);
+	    _this.handleDemoClick = _this.handleDemoClick.bind(_this);
 	    _this.requestUserStatistics = _this.requestUserStatistics.bind(_this);
 	    _this.handleLogout = _this.handleLogout.bind(_this);
 	    return _this;
@@ -114,7 +115,6 @@
 	    value: function componentDidMount() {
 	      // Temp fix for testing
 	      if (window.location.hash === '#/loading') {
-	        console.log('requesting user stats');
 	        this.requestUserStatistics();
 	      }
 	    }
@@ -131,6 +131,13 @@
 	      });
 	    }
 	  }, {
+	    key: 'handleDemoClick',
+	    value: function handleDemoClick() {
+	      this.setState({
+	        data: null
+	      });
+	    }
+	  }, {
 	    key: 'handleLogout',
 	    value: function handleLogout() {
 	      window.location.hash = "#/logout";
@@ -144,6 +151,7 @@
 	      this.setState({ loggedIn: true, loading: true });
 	      _jquery2.default.ajax({ type: 'GET', url: '/api/uber/statistics' }).done(function (response) {
 	        window.location.hash = "#/stats";
+	        console.log(response.data);
 	        _this2.setState({ data: response.data, loading: false });
 	      }).fail(function (err) {
 	        _this2.handleLogout();
@@ -156,7 +164,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_nav2.default, { handleLoginClick: this.handleLoginClick, loggedIn: this.state.loggedIn }),
+	        _react2.default.createElement(_nav2.default, { handleLoginClick: this.handleLoginClick, handleDemoClick: this.handleDemoClick, loggedIn: this.state.loggedIn }),
 	        this.state.data ? _react2.default.createElement(_stats2.default, { data: this.state.data }) : this.state.loading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(_loginReminder2.default, null),
 	        _react2.default.createElement(_footer2.default, null)
 	      );

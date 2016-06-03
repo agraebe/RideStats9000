@@ -17,6 +17,7 @@ class App extends React.Component {
       loggedIn: false
     };
     this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleDemoClick = this.handleDemoClick.bind(this);
     this.requestUserStatistics = this.requestUserStatistics.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
@@ -24,7 +25,6 @@ class App extends React.Component {
   componentDidMount() {
     // Temp fix for testing
     if (window.location.hash === '#/loading') {
-      console.log('requesting user stats');
       this.requestUserStatistics();
     }
   }
@@ -37,6 +37,12 @@ class App extends React.Component {
       .fail(err => console.log(err));
   }
 
+  handleDemoClick () {
+    this.setState({
+      data: null
+    });
+  }
+
   handleLogout () {
     window.location.hash = "#/logout";
     this.setState({ loggedIn: false, loading: false, data: null});
@@ -47,6 +53,7 @@ class App extends React.Component {
     $.ajax({ type: 'GET', url: '/api/uber/statistics' })
       .done(response => {
         window.location.hash = "#/stats";
+        console.log(response.data);
         this.setState({ data: response.data, loading: false })
       })
       .fail(err => {
@@ -58,7 +65,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav handleLoginClick={this.handleLoginClick} loggedIn={this.state.loggedIn}/>
+        <Nav handleLoginClick={this.handleLoginClick} handleDemoClick={this.handleDemoClick} loggedIn={this.state.loggedIn}/>
         {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <LoginReminder /> }
         <Footer />
       </div>
