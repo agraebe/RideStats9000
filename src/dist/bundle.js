@@ -53678,8 +53678,8 @@
 
 	var generateIconDivs = function generateIconDivs(numberOfTrips) {
 	  var iconTotal = Math.ceil(numberOfTrips / 10);
-	  var remainder = numberOfTrips / 10;
-	  var cutWidth = (remainder ? 100 * remainder : 100) + 'px';
+	  var remainder = 1 - (Math.ceil(numberOfTrips / 10) - numberOfTrips / 10);
+	  var cutWidth = 100 * remainder + 'px';
 	  var icons = [];
 	  for (var i = 0; i < iconTotal; i++) {
 	    icons.push(i);

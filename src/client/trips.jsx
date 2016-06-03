@@ -3,8 +3,8 @@ import { Panel } from 'react-bootstrap';
 
 const generateIconDivs = numberOfTrips => {
   const iconTotal = Math.ceil(numberOfTrips/10);
-  const remainder = numberOfTrips / 10;
-  const cutWidth = (remainder ? 100 * remainder : 100) +  'px';
+  const remainder = 1 - (Math.ceil(numberOfTrips/10) - (numberOfTrips/10));
+  const cutWidth = 100 * remainder + 'px';
   const icons = [];
   for (let i = 0; i < iconTotal; i++) {  
     icons.push(i);
