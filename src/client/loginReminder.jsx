@@ -4,7 +4,7 @@ import { Panel } from 'react-bootstrap';
 const LoginReminder = () => {
   return (
     <div>
-        <h3>RideStats9000 calculates pertinent statistics about your Uber usage<h3>
+        <h3>RideStats9000 calculates pertinent statistics about your Uber usage</h3>
         <div className="text-center"><img className="center-block img-rounded img-responsive" src="assets/login.jpg" /></div>
         <h4 className="text-center">Click <strong>Log in</strong> to get started</h4>
     </div>
