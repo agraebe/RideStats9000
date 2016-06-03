@@ -42,7 +42,8 @@ const Days = ({ dayData }) => {
       <h3 className="text-center"><small>You take rides least often on <strong>{minDay}</strong></small></h3>
       <div className="text-center">
         <Bar 
-          data={dayBarData} 
+          data={dayBarData}
+          options={{responsive: true}}
           height={400} 
           width={400} 
         />

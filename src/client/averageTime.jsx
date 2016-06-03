@@ -42,6 +42,7 @@ const AverageTime = ({ averageRideWaiting, averageRideRiding }) => {
           <div className="text-center">
             <Bar
               data={averageTimeGraphData}
+              options={{responsive: true}}
               height={300}
               width={300}
             />

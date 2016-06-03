@@ -54063,6 +54063,7 @@
 	          { className: 'text-center' },
 	          _react2.default.createElement(_reactChartjs.Bar, {
 	            data: averageTimeGraphData,
+	            options: { responsive: true },
 	            height: 300,
 	            width: 300
 	          })
@@ -54171,6 +54172,7 @@
 	      { className: 'text-center' },
 	      _react2.default.createElement(_reactChartjs.Bar, {
 	        data: cityBarData,
+	        options: { responsive: true },
 	        height: 350,
 	        width: 400
 	      })
@@ -54274,6 +54276,7 @@
 	      { className: 'text-center' },
 	      _react2.default.createElement(_reactChartjs.Bar, {
 	        data: dayBarData,
+	        options: { responsive: true },
 	        height: 400,
 	        width: 400
 	      })
@@ -54395,7 +54398,7 @@
 	        radius: 42,
 	        scale: 1,
 	        corners: 1,
-	        color: '#000',
+	        color: '#149c82',
 	        opacity: 0.25,
 	        rotate: 0,
 	        direction: 1,

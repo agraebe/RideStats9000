@@ -43,6 +43,7 @@ const Cities = ({ cityData, numberOfTrips }) => {
       <div className="text-center">
         <Bar 
           data={cityBarData}
+          options={{responsive: true}}
           height={350}
           width={400}
         />
