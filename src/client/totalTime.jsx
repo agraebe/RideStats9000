@@ -6,7 +6,7 @@ const TotalTime = ({ timeWaiting, timeRiding }) => {
   const title = (<h3>Total Ride and Wait Times</h3>);
   return(
     <Panel className="panel-primary" header={title}>
-      <Row style={marginBottom: '20px'}>
+      <Row style={{marginBottom: '20px'}}>
         <Col xs={4} md={4}>
           <div className="pull-right"><img className="img-responsive" src="/assets/traffic.png" /></div>
         </Col>
