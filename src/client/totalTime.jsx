@@ -3,7 +3,7 @@ import { Row, Col, Panel } from 'react-bootstrap';
 import { Bar } from 'react-chartjs';
 
 const TotalTime = ({ timeWaiting, timeRiding }) => {
-  const title = (<h3>Σ<i className="fa fa-clock-o" aria-hidden="true"></i> Total Ride and Wait Times</h3>);
+  const title = (<h3><i className="fa fa-clock-o" aria-hidden="true"></i> Total Wait and Ride Times</h3>);
   return(
     <Panel className="panel-primary" header={title}>
       <Row style={{marginBottom: '20px'}}>

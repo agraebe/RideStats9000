@@ -53703,7 +53703,8 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Total Rides'
+	    _react2.default.createElement('i', { className: 'fa fa-car', 'aria-hidden': 'true' }),
+	    ' Total Rides'
 	  );
 	  return _react2.default.createElement(
 	    'div',
@@ -53789,7 +53790,8 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Distance Traveled'
+	    _react2.default.createElement('i', { className: 'fa fa-road', 'aria-hidden': 'true' }),
+	    ' Distance Traveled'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
@@ -53862,9 +53864,8 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Σ',
 	    _react2.default.createElement('i', { className: 'fa fa-clock-o', 'aria-hidden': 'true' }),
-	    ' Total Ride and Wait Times'
+	    ' Total Wait and Ride Times'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
@@ -53990,9 +53991,8 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'x',
 	    _react2.default.createElement('i', { className: 'fa fa-clock-o', 'aria-hidden': 'true' }),
-	    ' Average Ride and Wait Times'
+	    ' Average Wait and Ride Times'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
@@ -54127,7 +54127,8 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Rides by City'
+	    _react2.default.createElement('i', { className: 'fa fa-map', 'aria-hidden': 'true' }),
+	    ' Rides by City'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
@@ -54233,7 +54234,8 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Rides by Day'
+	    _react2.default.createElement('i', { className: 'fa fa-calendar', 'aria-hidden': 'true' }),
+	    ' Rides by Day'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,

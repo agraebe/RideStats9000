@@ -19,7 +19,7 @@ const generateIconDivs = numberOfTrips => {
 
 const Trips = ({ numberOfTrips }) => {
   const iconDivs = generateIconDivs(numberOfTrips);
-  const title = (<h3>Total Rides</h3>)
+  const title = (<h3><i className="fa fa-car" aria-hidden="true"></i> Total Rides</h3>)
   return (
     <div>
       <Panel className="panel-primary" header={title}>
