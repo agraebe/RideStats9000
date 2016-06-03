@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
-const NavTop = ({ handleDemoClick, handleLoginClick, loggedIn }) => {
+const NavTop = ({ handleDemoClick, handleLoginClick, loggedIn, demo }) => {
   return (
     <Navbar>
       <Navbar.Header>
@@ -12,8 +12,8 @@ const NavTop = ({ handleDemoClick, handleLoginClick, loggedIn }) => {
       </Navbar.Header>
       <Navbar.Collapse>
         <Nav pullRight>
-          <NavItem eventKey={1} onClick={handleDemoClick}>Demo</NavItem>
-          <NavItem eventKey={2} onClick={handleLoginClick}>{loggedIn ? 'Log out' : 'Log in' }</NavItem>
+          {demo ? null : <NavItem eventKey={1} onClick={handleDemoClick}>Demo</NavItem>}
+          <NavItem eventKey={2} onClick={handleLoginClick}>{loggedIn ? demo ? 'End Demo' : 'Log out' : 'Log in' }</NavItem>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

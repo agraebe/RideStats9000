@@ -14,7 +14,8 @@ class App extends React.Component {
     this.state = {
       data: null,
       loading: false,
-      loggedIn: false
+      loggedIn: false,
+      demo: false
     };
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleDemoClick = this.handleDemoClick.bind(this);
@@ -45,7 +46,7 @@ class App extends React.Component {
 
   handleLogout () {
     window.location.hash = "#/logout";
-    this.setState({ loggedIn: false, loading: false, data: null});
+    this.setState({ loggedIn: false, loading: false, data: null, demo: false});
   }
 
   requestUserStatistics () {
@@ -63,7 +64,7 @@ class App extends React.Component {
   }
 
   requestDummyStatistics() {
-    this.setState({loggedIn: true, loading: true});
+    this.setState({loggedIn: true, loading: true, demo: true});
     window.location.hash === '#/demo'
     setTimeout(() => {
       this.setState({
@@ -71,10 +72,10 @@ class App extends React.Component {
         data: {
           numberOfTrips: 185,
           tripsPerCity: {
+            "San Francisco": 140,
             "Los Angeles": 39,
-            "New Orleans": 2,
             "Portland": 4,
-            "San Francisco": 140
+            "New Orleans": 2
           },
           timeSpentRiding: 102370,
           timeSpentWaiting: 47377,
@@ -92,7 +93,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav handleLoginClick={this.handleLoginClick} handleDemoClick={this.handleDemoClick} loggedIn={this.state.loggedIn}/>
+        <Nav 
+          handleLoginClick={this.handleLoginClick}
+          handleDemoClick={this.handleDemoClick}
+          loggedIn={this.state.loggedIn}
+          demo={this.state.demo}
+        />
         {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <LoginReminder /> }
         <Footer />
       </div>

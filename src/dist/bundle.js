@@ -101,7 +101,8 @@
 	    _this.state = {
 	      data: null,
 	      loading: false,
-	      loggedIn: false
+	      loggedIn: false,
+	      demo: false
 	    };
 	    _this.handleLoginClick = _this.handleLoginClick.bind(_this);
 	    _this.handleDemoClick = _this.handleDemoClick.bind(_this);
@@ -140,7 +141,7 @@
 	    key: 'handleLogout',
 	    value: function handleLogout() {
 	      window.location.hash = "#/logout";
-	      this.setState({ loggedIn: false, loading: false, data: null });
+	      this.setState({ loggedIn: false, loading: false, data: null, demo: false });
 	    }
 	  }, {
 	    key: 'requestUserStatistics',
@@ -162,7 +163,7 @@
 	    value: function requestDummyStatistics() {
 	      var _this3 = this;
 
-	      this.setState({ loggedIn: true, loading: true });
+	      this.setState({ loggedIn: true, loading: true, demo: true });
 	      window.location.hash === '#/demo';
 	      setTimeout(function () {
 	        _this3.setState({
@@ -170,10 +171,10 @@
 	          data: {
 	            numberOfTrips: 185,
 	            tripsPerCity: {
+	              "San Francisco": 140,
 	              "Los Angeles": 39,
-	              "New Orleans": 2,
 	              "Portland": 4,
-	              "San Francisco": 140
+	              "New Orleans": 2
 	            },
 	            timeSpentRiding: 102370,
 	            timeSpentWaiting: 47377,
@@ -193,7 +194,12 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_nav2.default, { handleLoginClick: this.handleLoginClick, handleDemoClick: this.handleDemoClick, loggedIn: this.state.loggedIn }),
+	        _react2.default.createElement(_nav2.default, {
+	          handleLoginClick: this.handleLoginClick,
+	          handleDemoClick: this.handleDemoClick,
+	          loggedIn: this.state.loggedIn,
+	          demo: this.state.demo
+	        }),
 	        this.state.data ? _react2.default.createElement(_stats2.default, { data: this.state.data }) : this.state.loading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(_loginReminder2.default, null),
 	        _react2.default.createElement(_footer2.default, null)
 	      );
@@ -34271,6 +34277,7 @@
 	  var handleDemoClick = _ref.handleDemoClick;
 	  var handleLoginClick = _ref.handleLoginClick;
 	  var loggedIn = _ref.loggedIn;
+	  var demo = _ref.demo;
 
 	  return _react2.default.createElement(
 	    _reactBootstrap.Navbar,
@@ -34295,7 +34302,7 @@
 	      _react2.default.createElement(
 	        _reactBootstrap.Nav,
 	        { pullRight: true },
-	        _react2.default.createElement(
+	        demo ? null : _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          { eventKey: 1, onClick: handleDemoClick },
 	          'Demo'
@@ -34303,7 +34310,7 @@
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          { eventKey: 2, onClick: handleLoginClick },
-	          loggedIn ? 'Log out' : 'Log in'
+	          loggedIn ? demo ? 'End Demo' : 'Log out' : 'Log in'
 	        )
 	      )
 	    )
