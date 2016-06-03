@@ -53875,7 +53875,7 @@
 	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'pull-right', style: { paddingTop: '20px' } },
+	          { className: 'pull-right' },
 	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/traffic.png' })
 	        )
 	      ),
@@ -53883,13 +53883,9 @@
 	        _reactBootstrap.Col,
 	        { xs: 8, md: 8 },
 	        _react2.default.createElement(
-	          'h1',
-	          { className: 'text-left' },
-	          _react2.default.createElement(
-	            'small',
-	            null,
-	            'You\'ve waited for Ubers a total of'
-	          )
+	          'h2',
+	          { className: 'text-left text-muted' },
+	          'You\'ve waited for Ubers a total of'
 	        ),
 	        _react2.default.createElement(
 	          'h2',
@@ -53913,7 +53909,7 @@
 	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'pull-right', style: { paddingTop: '20px' } },
+	          { className: 'pull-right' },
 	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/carwheel.png' })
 	        )
 	      ),
@@ -53921,13 +53917,9 @@
 	        _reactBootstrap.Col,
 	        { xs: 8, md: 8 },
 	        _react2.default.createElement(
-	          'h1',
-	          { className: 'text-left' },
-	          _react2.default.createElement(
-	            'small',
-	            null,
-	            'You\'ve ridden in Ubers a total of'
-	          )
+	          'h2',
+	          { className: 'text-left text-muted' },
+	          'You\'ve ridden in Ubers a total of'
 	        ),
 	        _react2.default.createElement(
 	          'h2',
