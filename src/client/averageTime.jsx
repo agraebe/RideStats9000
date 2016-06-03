@@ -29,12 +29,12 @@ const AverageTime = ({ averageRideWaiting, averageRideRiding }) => {
     <Panel className="panel-primary" header={title}>
       <Row>
         <Col xs={6} md={6}>
-          <h3 className="text-center"><small>Your average wait time is</small></h3>
-          <h4 className="text-center text-primary">{averageRideWaiting.minutes} minutes {averageRideWaiting.seconds} seconds</h4>
+          <h3 className="text-center text-primary">{averageRideWaiting.minutes} minutes {averageRideWaiting.seconds} seconds</h3>
+          <h3 className="text-center"><small>Average Wait Length</small></h3>
         </Col>
         <Col xs={6} md={6}>
-          <h3 className="text-center"><small>Your average ride time is</small></h3>
-          <h4 className="text-center text-primary">{averageRideRiding.minutes} minutes {averageRideRiding.seconds} seconds</h4>
+          <h3 className="text-center text-primary">{averageRideRiding.minutes} minutes {averageRideRiding.seconds} seconds</h3>
+          <h3 className="text-center"><small>Average Ride Length</small></h3>
         </Col>
       </Row>
       <Row>

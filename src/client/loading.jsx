@@ -10,7 +10,7 @@ const Loading = () => {
       radius: 42,
       scale: 1,
       corners: 1,
-      color: '#000',
+      color: '#2c3e50',
       opacity: 0.25,
       rotate: 0,
       direction: 1,

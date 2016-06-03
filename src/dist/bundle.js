@@ -53872,14 +53872,18 @@
 	      { style: { marginTop: '20px', marginLeft: '5px' } },
 	      _react2.default.createElement(
 	        _reactBootstrap.Col,
-	        { xs: 12, md: 12 },
+	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'text-right', style: { paddingTop: '20px' } },
 	          _react2.default.createElement('div', { style: { minHeight: '128px', minWidth: '128px', display: 'inline-block', background: 'url(assets/traffic.png) no-repeat' } })
-	        ),
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 8, md: 8 },
 	        _react2.default.createElement(
-	          'h2',
+	          'h1',
 	          { className: 'text-left' },
 	          _react2.default.createElement(
 	            'small',
@@ -53888,7 +53892,7 @@
 	          )
 	        ),
 	        _react2.default.createElement(
-	          'h3',
+	          'h2',
 	          { className: 'text-left text-primary' },
 	          timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null,
 	          ' ',
@@ -53906,14 +53910,18 @@
 	      { style: { marginTop: '40px', marginLeft: '5px', marginBottom: '30px' } },
 	      _react2.default.createElement(
 	        _reactBootstrap.Col,
-	        { xs: 12, md: 12 },
+	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'text-right', style: { paddingTop: '20px' } },
 	          _react2.default.createElement('div', { style: { minHeight: '128px', minWidth: '128px', display: 'inline-block', background: 'url(assets/carwheel.png) no-repeat' } })
-	        ),
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 8, md: 8 },
 	        _react2.default.createElement(
-	          'h2',
+	          'h1',
 	          { className: 'text-left' },
 	          _react2.default.createElement(
 	            'small',
@@ -53922,7 +53930,7 @@
 	          )
 	        ),
 	        _react2.default.createElement(
-	          'h3',
+	          'h2',
 	          { className: 'text-left text-primary' },
 	          timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null,
 	          ' ',
@@ -54001,20 +54009,20 @@
 	        { xs: 6, md: 6 },
 	        _react2.default.createElement(
 	          'h3',
-	          { className: 'text-center' },
-	          _react2.default.createElement(
-	            'small',
-	            null,
-	            'Your average wait time is'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'h4',
 	          { className: 'text-center text-primary' },
 	          averageRideWaiting.minutes,
 	          ' minutes ',
 	          averageRideWaiting.seconds,
 	          ' seconds'
+	        ),
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-center' },
+	          _react2.default.createElement(
+	            'small',
+	            null,
+	            'Average Wait Length'
+	          )
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -54022,20 +54030,20 @@
 	        { xs: 6, md: 6 },
 	        _react2.default.createElement(
 	          'h3',
-	          { className: 'text-center' },
-	          _react2.default.createElement(
-	            'small',
-	            null,
-	            'Your average ride time is'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'h4',
 	          { className: 'text-center text-primary' },
 	          averageRideRiding.minutes,
 	          ' minutes ',
 	          averageRideRiding.seconds,
 	          ' seconds'
+	        ),
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-center' },
+	          _react2.default.createElement(
+	            'small',
+	            null,
+	            'Average Ride Length'
+	          )
 	        )
 	      )
 	    ),
@@ -54385,7 +54393,7 @@
 	        radius: 42,
 	        scale: 1,
 	        corners: 1,
-	        color: '#000',
+	        color: '#2c3e50',
 	        opacity: 0.25,
 	        rotate: 0,
 	        direction: 1,
