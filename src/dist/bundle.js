@@ -53678,7 +53678,7 @@
 
 	var generateIconDivs = function generateIconDivs(numberOfTrips) {
 	  var iconTotal = Math.ceil(numberOfTrips / 10);
-	  var remainder = Math.ceil(numberOfTrips / 10) - numberOfTrips / 10;
+	  var remainder = numberOfTrips / 10;
 	  var cutWidth = (remainder ? 100 * remainder : 100) + 'px';
 	  var icons = [];
 	  for (var i = 0; i < iconTotal; i++) {
@@ -54122,7 +54122,7 @@
 
 	  var modeCityData = getModeCityData(cityData);
 	  var modeCityName = modeCityData.name;
-	  var modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(2) * 100;
+	  var modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(4) * 100;
 	  var cityBarData = generateCityBarData(cityData);
 	  var title = _react2.default.createElement(
 	    'h3',
@@ -54149,7 +54149,6 @@
 	      _react2.default.createElement(
 	        'small',
 	        null,
-	        'Over ',
 	        _react2.default.createElement(
 	          'strong',
 	          null,

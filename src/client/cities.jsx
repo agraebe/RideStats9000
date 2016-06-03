@@ -33,13 +33,13 @@ const getModeCityData = cityData => {
 const Cities = ({ cityData, numberOfTrips }) => {
   const modeCityData = getModeCityData(cityData);
   const modeCityName = modeCityData.name;
-  const modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(2) * 100;
+  const modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(4) * 100;
   const cityBarData = generateCityBarData(cityData);
   const title = (<h3><i className="fa fa-map" aria-hidden="true"></i> Rides by City</h3>);
   return(
     <Panel className="panel-primary" header={title}>
       <h3 className="text-center">You take Uber most often in <strong>{modeCityName}</strong></h3> 
-      <h3 className="text-center"><small>Over <strong>{modeCityPercentage}%</strong> of your rides take place there</small></h3>
+      <h3 className="text-center"><small><strong>{modeCityPercentage}%</strong> of your rides take place there</small></h3>
       <div className="text-center">
         <Bar 
           data={cityBarData}
