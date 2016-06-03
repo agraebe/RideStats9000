@@ -6,18 +6,18 @@ const TotalTime = ({ timeWaiting, timeRiding }) => {
   const title = (<h3>Total Ride and Wait Times</h3>);
   return(
     <Panel className="panel-primary" header={title}>
-      <Row style={{marginTop: '20px', marginLeft: '5px'}}>
+      <Row>
         <Col xs={4} md={4}>
-          <div className="text-right" style={{paddingTop: '20px'}}><div><img className="img-responsive" src="/assets/traffic.png" /></div></div>
+          <div className="pull-right" style={{paddingTop: '20px'}}><img className="img-responsive" src="/assets/traffic.png" /></div>
         </Col>
         <Col xs={8} md={8}>
           <h1 className="text-left"><small>You've waited for Ubers a total of</small></h1>
           <h2 className="text-left text-primary">{timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null} {timeWaiting.hours} hours, {timeWaiting.minutes} minutes, and {timeWaiting.seconds} seconds</h2>
         </Col>
       </Row>
-      <Row style={{marginTop: '40px', marginLeft: '5px', marginBottom: '30px'}}>
+      <Row>
         <Col xs={4} md={4}>
-          <div className="text-right" style={{paddingTop: '20px'}}><div><img className="img-responsive" src="/assets/carwheel.png" /></div></div>
+          <div className="pull-right" style={{paddingTop: '20px'}}><img className="img-responsive" src="/assets/carwheel.png" /></div>
         </Col>
         <Col xs={8} md={8}>
           <h1 className="text-left"><small>You've ridden in Ubers a total of</small></h1>

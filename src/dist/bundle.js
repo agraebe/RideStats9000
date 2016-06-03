@@ -133,7 +133,7 @@
 	  }, {
 	    key: 'handleLogout',
 	    value: function handleLogout() {
-	      window.location.hash = "#logout";
+	      window.location.hash = "#/logout";
 	      this.setState({ loggedIn: false, loading: false, data: null });
 	    }
 	  }, {
@@ -143,7 +143,7 @@
 
 	      this.setState({ loggedIn: true, loading: true });
 	      _jquery2.default.ajax({ type: 'GET', url: '/api/uber/statistics' }).done(function (response) {
-	        console.log(response.data);
+	        window.location.hash = "#/stats";
 	        _this2.setState({ data: response.data, loading: false });
 	      }).fail(function (err) {
 	        _this2.handleLogout();
@@ -53869,18 +53869,14 @@
 	    { className: 'panel-primary', header: title },
 	    _react2.default.createElement(
 	      _reactBootstrap.Row,
-	      { style: { marginTop: '20px', marginLeft: '5px' } },
+	      null,
 	      _react2.default.createElement(
 	        _reactBootstrap.Col,
 	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'text-right', style: { paddingTop: '20px' } },
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/traffic.png' })
-	          )
+	          { className: 'pull-right', style: { paddingTop: '20px' } },
+	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/traffic.png' })
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -53911,18 +53907,14 @@
 	    ),
 	    _react2.default.createElement(
 	      _reactBootstrap.Row,
-	      { style: { marginTop: '40px', marginLeft: '5px', marginBottom: '30px' } },
+	      null,
 	      _react2.default.createElement(
 	        _reactBootstrap.Col,
 	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'text-right', style: { paddingTop: '20px' } },
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/carwheel.png' })
-	          )
+	          { className: 'pull-right', style: { paddingTop: '20px' } },
+	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/carwheel.png' })
 	        )
 	      ),
 	      _react2.default.createElement(

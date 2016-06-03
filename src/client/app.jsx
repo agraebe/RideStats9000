@@ -38,7 +38,7 @@ class App extends React.Component {
   }
 
   handleLogout () {
-    window.location.hash = "#logout";
+    window.location.hash = "#/logout";
     this.setState({ loggedIn: false, loading: false, data: null});
   }
 
@@ -46,7 +46,7 @@ class App extends React.Component {
     this.setState({loggedIn: true, loading: true});
     $.ajax({ type: 'GET', url: '/api/uber/statistics' })
       .done(response => {
-        console.log(response.data);
+        window.location.hash = "#/stats";
         this.setState({ data: response.data, loading: false })
       })
       .fail(err => {
