@@ -54335,7 +54335,7 @@
 	    null,
 	    _react2.default.createElement(
 	      'h3',
-	      null,
+	      { className: 'text-center' },
 	      'RideStats9000 calculates pertinent statistics about your Uber usage'
 	    ),
 	    _react2.default.createElement(
