@@ -53875,8 +53875,12 @@
 	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'text-right', style: { paddingTop: '20px', minHeight: '128px', minWidth: '128px', display: 'inline-block' } },
-	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/traffic.png' })
+	          { className: 'text-right', style: { paddingTop: '20px' } },
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/traffic.png' })
+	          )
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -53913,8 +53917,12 @@
 	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'text-right', style: { paddingTop: '20px', minHeight: '128px', minWidth: '128px', display: 'inline-block' } },
-	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/carwheel.png' })
+	          { className: 'text-right', style: { paddingTop: '20px' } },
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/carwheel.png' })
+	          )
 	        )
 	      ),
 	      _react2.default.createElement(

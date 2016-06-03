@@ -8,7 +8,7 @@ const TotalTime = ({ timeWaiting, timeRiding }) => {
     <Panel className="panel-primary" header={title}>
       <Row style={{marginTop: '20px', marginLeft: '5px'}}>
         <Col xs={4} md={4}>
-          <div className="text-right" style={{paddingTop: '20px', minHeight: '128px', minWidth: '128px', display: 'inline-block'}}><img className="img-responsive" src="/assets/traffic.png" /></div>
+          <div className="text-right" style={{paddingTop: '20px'}}><div><img className="img-responsive" src="/assets/traffic.png" /></div></div>
         </Col>
         <Col xs={8} md={8}>
           <h1 className="text-left"><small>You've waited for Ubers a total of</small></h1>
@@ -17,7 +17,7 @@ const TotalTime = ({ timeWaiting, timeRiding }) => {
       </Row>
       <Row style={{marginTop: '40px', marginLeft: '5px', marginBottom: '30px'}}>
         <Col xs={4} md={4}>
-          <div className="text-right" style={{paddingTop: '20px', minHeight: '128px', minWidth: '128px', display: 'inline-block'}}><img className="img-responsive" src="/assets/carwheel.png" /></div>
+          <div className="text-right" style={{paddingTop: '20px'}}><div><img className="img-responsive" src="/assets/carwheel.png" /></div></div>
         </Col>
         <Col xs={8} md={8}>
           <h1 className="text-left"><small>You've ridden in Ubers a total of</small></h1>
