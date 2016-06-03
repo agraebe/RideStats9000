@@ -43,8 +43,8 @@ const AverageTime = ({ averageRideWaiting, averageRideRiding }) => {
             <Bar
               data={averageTimeGraphData}
               options={{responsive: true}}
-              height={300}
-              width={300}
+              height={400}
+              width={400}
             />
           </div>
         </Col>

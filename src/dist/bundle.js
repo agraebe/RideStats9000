@@ -53872,16 +53872,12 @@
 	      { style: { marginTop: '20px', marginLeft: '5px' } },
 	      _react2.default.createElement(
 	        _reactBootstrap.Col,
-	        { xs: 4, md: 4 },
+	        { xs: 12, md: 12 },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'text-right', style: { paddingTop: '20px' } },
 	          _react2.default.createElement('div', { style: { minHeight: '128px', minWidth: '128px', display: 'inline-block', background: 'url(assets/traffic.png) no-repeat' } })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 8, md: 8 },
+	        ),
 	        _react2.default.createElement(
 	          'h2',
 	          { className: 'text-left' },
@@ -53910,16 +53906,12 @@
 	      { style: { marginTop: '40px', marginLeft: '5px', marginBottom: '30px' } },
 	      _react2.default.createElement(
 	        _reactBootstrap.Col,
-	        { xs: 4, md: 4 },
+	        { xs: 12, md: 12 },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'text-right', style: { paddingTop: '20px' } },
 	          _react2.default.createElement('div', { style: { minHeight: '128px', minWidth: '128px', display: 'inline-block', background: 'url(assets/carwheel.png) no-repeat' } })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 8, md: 8 },
+	        ),
 	        _react2.default.createElement(
 	          'h2',
 	          { className: 'text-left' },
@@ -54059,8 +54051,8 @@
 	          _react2.default.createElement(_reactChartjs.Bar, {
 	            data: averageTimeGraphData,
 	            options: { responsive: true },
-	            height: 300,
-	            width: 300
+	            height: 400,
+	            width: 400
 	          })
 	        )
 	      )
@@ -54168,7 +54160,7 @@
 	      _react2.default.createElement(_reactChartjs.Bar, {
 	        data: cityBarData,
 	        options: { responsive: true },
-	        height: 350,
+	        height: 400,
 	        width: 400
 	      })
 	    )
@@ -54393,7 +54385,7 @@
 	        radius: 42,
 	        scale: 1,
 	        corners: 1,
-	        color: '#149c82',
+	        color: '#000',
 	        opacity: 0.25,
 	        rotate: 0,
 	        direction: 1,

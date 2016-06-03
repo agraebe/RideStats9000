@@ -44,7 +44,7 @@ const Cities = ({ cityData, numberOfTrips }) => {
         <Bar 
           data={cityBarData}
           options={{responsive: true}}
-          height={350}
+          height={400}
           width={400}
         />
       </div>
