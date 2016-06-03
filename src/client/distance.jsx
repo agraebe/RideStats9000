@@ -30,6 +30,7 @@ const Distance = ({ distanceTraveled, longestRideDistance, averageRideDistance }
       <div className="text-center">
         <Bar
           data={distanceGraphData}
+          options={{responsive: true}}
           height={400}
           width={400}
         />

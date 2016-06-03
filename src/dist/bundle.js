@@ -53830,6 +53830,7 @@
 	      { className: 'text-center' },
 	      _react2.default.createElement(_reactChartjs.Bar, {
 	        data: distanceGraphData,
+	        options: { responsive: true },
 	        height: 400,
 	        width: 400
 	      })
