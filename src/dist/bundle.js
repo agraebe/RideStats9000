@@ -54403,6 +54403,12 @@
 	        null,
 	        'Log in'
 	      ),
+	      ' or ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        'Demo'
+	      ),
 	      ' to get started'
 	    )
 	  );
