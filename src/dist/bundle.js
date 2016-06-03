@@ -70,6 +70,14 @@
 
 	var _stats2 = _interopRequireDefault(_stats);
 
+	var _loginReminder = __webpack_require__(457);
+
+	var _loginReminder2 = _interopRequireDefault(_loginReminder);
+
+	var _loading = __webpack_require__(458);
+
+	var _loading2 = _interopRequireDefault(_loading);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -88,43 +96,53 @@
 
 	    _this.state = {
 	      data: null,
+	      loading: false,
 	      loggedIn: false
 	    };
 	    _this.handleLoginClick = _this.handleLoginClick.bind(_this);
 	    _this.requestUserStatistics = _this.requestUserStatistics.bind(_this);
+	    _this.handleLogout = _this.handleLogout.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(App, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      // Temp fix for testing
 	      if (window.location.hash === '#_') {
+	        console.log('requesting user stats');
 	        this.requestUserStatistics();
 	      }
 	    }
 	  }, {
 	    key: 'handleLoginClick',
 	    value: function handleLoginClick() {
-	      _jquery2.default.ajax({
-	        type: 'GET',
-	        url: 'http://localhost:3000/api/auth/login'
-	      }).done(function (data) {
-	        window.location.href = data.url;
+	      if (this.state.loggedIn) {
+	        return this.handleLogout();
+	      }
+	      _jquery2.default.ajax({ type: 'GET', url: 'http://localhost:3000/api/auth/login' }).done(function (data) {
+	        return window.location.href = data.url;
 	      }).fail(function (err) {
-	        console.log(err);
+	        return console.log(err);
 	      });
+	    }
+	  }, {
+	    key: 'handleLogout',
+	    value: function handleLogout() {
+	      window.location.hash = "#logout";
+	      this.setState({ loggedIn: false, loading: false, data: null });
 	    }
 	  }, {
 	    key: 'requestUserStatistics',
 	    value: function requestUserStatistics() {
 	      var _this2 = this;
 
-	      _jquery2.default.ajax({
-	        type: 'GET',
-	        url: 'http://localhost:3000/api/uber/statistics'
-	      }).done(function (response) {
-	        _this2.setState({ data: response.data, loggedIn: true });
+	      this.setState({ loggedIn: true, loading: true });
+	      _jquery2.default.ajax({ type: 'GET', url: 'http://localhost:3000/api/uber/statistics' }).done(function (response) {
+	        console.log(response.data);
+	        _this2.setState({ data: response.data, loading: false });
 	      }).fail(function (err) {
+	        _this2.handleLogout();
 	        console.log(err);
 	      });
 	    }
@@ -135,7 +153,7 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_nav2.default, { handleLoginClick: this.handleLoginClick, loggedIn: this.state.loggedIn }),
-	        this.state.data ? _react2.default.createElement(_stats2.default, { data: this.state.data }) : null
+	        this.state.data ? _react2.default.createElement(_stats2.default, { data: this.state.data }) : this.state.loading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(_loginReminder2.default, null)
 	      );
 	    }
 	  }]);
@@ -53513,74 +53531,30 @@
 
 	var _distance2 = _interopRequireDefault(_distance);
 
-	var _time = __webpack_require__(448);
+	var _TotalTime = __webpack_require__(455);
 
-	var _time2 = _interopRequireDefault(_time);
+	var _TotalTime2 = _interopRequireDefault(_TotalTime);
+
+	var _AverageTime = __webpack_require__(456);
+
+	var _AverageTime2 = _interopRequireDefault(_AverageTime);
+
+	var _cities = __webpack_require__(451);
+
+	var _cities2 = _interopRequireDefault(_cities);
+
+	var _days = __webpack_require__(452);
+
+	var _days2 = _interopRequireDefault(_days);
+
+	var _first = __webpack_require__(461);
+
+	var _first2 = _interopRequireDefault(_first);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 	var Stats = function Stats(_ref) {
 	  var data = _ref.data;
-
-	  var generateCityBarData = function generateCityBarData(cityData) {
-	    var labels = Object.keys(cityData);
-	    var data = labels.map(function (city) {
-	      return cityData[city];
-	    });
-	    var cityBarData = {
-	      labels: labels,
-	      datasets: [{
-	        label: 'Trips Per City',
-	        fillColor: 'rgba(52, 152, 219, .28)',
-	        borderWidth: 10,
-	        hoverBackgroundColor: '#2980b9',
-	        hoverBorderColor: '#2980b9',
-	        data: data
-	      }]
-	    };
-	    return cityBarData;
-	  };
-
-	  var generateDayBarData = function generateDayBarData(dayData) {
-	    var labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-	    var data = dayData;
-	    var dayBarData = {
-	      labels: labels,
-	      datasets: [{
-	        label: 'Trips Per Day',
-	        fillColor: 'rgba(52, 152, 219, .28)',
-	        borderWidth: 10,
-	        hoverBackgroundColor: '#2980b9',
-	        hoverBorderColor: '#2980b9',
-	        data: data
-	      }]
-	    };
-	    return dayBarData;
-	  };
-
-	  var getModeDay = function getModeDay(dayData) {
-	    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-	    var modeDayInt = Math.max.apply(Math, _toConsumableArray(dayData));
-	    return days[dayData.indexOf(modeDayInt)];
-	  };
-
-	  var getMinDay = function getMinDay(dayData) {
-	    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-	    var minDayInt = Math.min.apply(Math, _toConsumableArray(dayData));
-	    return days[dayData.indexOf(minDayInt)];
-	  };
-
-	  var getCityData = function getCityData(cityData) {
-	    return Object.keys(cityData).reduce(function (results, city) {
-	      if (cityData[city] > results.count) {
-	        results.name = city;
-	        results.count = cityData[city];
-	      }
-	      return results;
-	    }, { name: '', count: 0 });
-	  };
 
 	  var convertTime = function convertTime(seconds) {
 	    return {
@@ -53592,6 +53566,8 @@
 	  };
 
 	  var numberOfTrips = data.numberOfTrips;
+	  var dayData = data.tripsPerDay;
+	  var cityData = data.tripsPerCity;
 
 	  var distanceTraveled = data.totalDistanceTraveled.toFixed(2);
 	  var longestRideDistance = data.longestRide.distance.toFixed(2);
@@ -53604,16 +53580,6 @@
 	  var averageRideWaiting = convertTime(data.timeSpentWaiting / numberOfTrips);
 	  var averageRideRiding = convertTime(data.timeSpentRiding / numberOfTrips);
 
-	  var modeDay = getModeDay(data.tripsPerDay);
-	  var minDay = getMinDay(data.tripsPerDay);
-
-	  var modeCityData = getCityData(data.tripsPerCity);
-	  var modeCityName = modeCityData.name;
-	  var modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(4) * 100;
-
-	  var cityBarData = generateCityBarData(data.tripsPerCity);
-	  var dayBarData = generateDayBarData(data.tripsPerDay);
-
 	  return _react2.default.createElement(
 	    'div',
 	    null,
@@ -53622,12 +53588,53 @@
 	      null,
 	      _react2.default.createElement(
 	        _reactBootstrap.Row,
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 12 },
+	          _react2.default.createElement(_trips2.default, { numberOfTrips: numberOfTrips })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Row,
 	        { className: 'show-grid' },
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { md: 6 },
-	          _react2.default.createElement(_trips2.default, { numberOfTrips: numberOfTrips })
+	          _react2.default.createElement(_AverageTime2.default, {
+	            averageRideWaiting: averageRideWaiting,
+	            averageRideRiding: averageRideRiding
+	          })
 	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 6 },
+	          _react2.default.createElement(_TotalTime2.default, {
+	            timeWaiting: timeWaiting,
+	            timeRiding: timeRiding
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Row,
+	        { className: 'show-grid' },
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 6 },
+	          _react2.default.createElement(_first2.default, null)
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 6 },
+	          _react2.default.createElement(_cities2.default, {
+	            cityData: cityData,
+	            numberOfTrips: numberOfTrips
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Row,
+	        { className: 'show-grid' },
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { md: 6 },
@@ -53636,90 +53643,13 @@
 	            averageRideDistance: averageRideDistance,
 	            longestRideDistance: longestRideDistance
 	          })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Row,
-	        { className: 'show-grid' },
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 12 },
-	          _react2.default.createElement(_time2.default, {
-	            timeWaiting: timeWaiting,
-	            timeRiding: timeRiding,
-	            averageRideWaiting: averageRideWaiting,
-	            averageRideRiding: averageRideRiding
-	          })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Row,
-	        { className: 'show-grid' },
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 6 },
-	          _react2.default.createElement(
-	            'h3',
-	            null,
-	            'Rides by Day'
-	          ),
-	          _react2.default.createElement(
-	            'h3',
-	            null,
-	            'You most often take rides on ',
-	            modeDay,
-	            '.'
-	          ),
-	          _react2.default.createElement(
-	            'h3',
-	            null,
-	            'You least often take rides on ',
-	            minDay,
-	            '.'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(_reactChartjs.Bar, {
-	              data: dayBarData,
-	              height: 400,
-	              width: 400
-	            })
-	          )
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { md: 6 },
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	              'h3',
-	              null,
-	              'Rides by City'
-	            ),
-	            _react2.default.createElement(
-	              'h3',
-	              null,
-	              'You most often take rides in ',
-	              modeCityName
-	            ),
-	            _react2.default.createElement(
-	              'h3',
-	              null,
-	              modeCityPercentage,
-	              '% of your rides take place there'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement(_reactChartjs.Bar, {
-	                data: cityBarData,
-	                height: 400,
-	                width: 400
-	              })
-	            )
-	          )
+	          _react2.default.createElement(_days2.default, {
+	            dayData: dayData
+	          })
 	        )
 	      )
 	    )
@@ -53746,9 +53676,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Trips = function Trips(_ref) {
-	  var numberOfTrips = _ref.numberOfTrips;
-
+	var generateIconDivs = function generateIconDivs(numberOfTrips) {
 	  var iconTotal = Math.ceil(numberOfTrips / 10);
 	  var remainder = Math.ceil(numberOfTrips / 10) - numberOfTrips / 10;
 	  var cutWidth = (remainder ? 100 * remainder : 100) + 'px';
@@ -53756,12 +53684,22 @@
 	  for (var i = 0; i < iconTotal; i++) {
 	    icons.push(i);
 	  }
-	  var iconDivs = icons.map(function (icon, iconIndex) {
+	  return icons.map(function (icon, iconIndex) {
 	    if (iconIndex === icons.length - 1) {
-	      return _react2.default.createElement('div', { key: iconIndex, style: { minHeight: '100px', minWidth: cutWidth, overflow: 'hidden', display: 'inline-block', background: 'url(carIconRed.png) no-repeat' } });
+	      return _react2.default.createElement(
+	        'div',
+	        { key: iconIndex, className: 'text-left', style: { minHeight: '100px', minWidth: '100px', maxHeight: '100px', maxWidth: '100px', display: 'inline-block' } },
+	        _react2.default.createElement('div', { style: { minHeight: '100px', minWidth: cutWidth, overflow: 'hidden', display: 'inline-block', background: 'url(assets/carIconRed.png) no-repeat' } })
+	      );
 	    }
-	    return _react2.default.createElement('div', { key: iconIndex, style: { minHeight: '100px', minWidth: '100px', display: 'inline-block', background: 'url(carIconRed.png) no-repeat' } });
+	    return _react2.default.createElement('div', { key: iconIndex, style: { minHeight: '100px', minWidth: '100px', display: 'inline-block', background: 'url(assets/carIconRed.png) no-repeat' } });
 	  });
+	};
+
+	var Trips = function Trips(_ref) {
+	  var numberOfTrips = _ref.numberOfTrips;
+
+	  var iconDivs = generateIconDivs(300);
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
@@ -53772,27 +53710,31 @@
 	    null,
 	    _react2.default.createElement(
 	      _reactBootstrap.Panel,
-	      { header: title },
+	      { className: 'panel-primary', header: title },
 	      _react2.default.createElement(
 	        'h3',
-	        null,
+	        { className: 'text-center' },
 	        'You\'ve taken ',
 	        _react2.default.createElement(
-	          'span',
+	          'strong',
 	          null,
-	          numberOfTrips
+	          300
 	        ),
 	        ' rides with Uber'
 	      ),
 	      _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'text-center' },
 	        iconDivs
 	      ),
 	      _react2.default.createElement(
-	        'p',
-	        null,
-	        'One car represents 10 rides'
+	        'h3',
+	        { className: 'text-center' },
+	        _react2.default.createElement(
+	          'small',
+	          null,
+	          'One car represents 10 rides'
+	        )
 	      )
 	    )
 	  );
@@ -53816,13 +53758,34 @@
 
 	var _reactBootstrap = __webpack_require__(180);
 
+	var _reactChartjs = __webpack_require__(169);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateDistanceGraphData = function generateDistanceGraphData(distanceTraveled, longestRideDistance, averageRideDistance) {
+	  var labels = ['Longest Ride Distance', 'Average Ride Distance'];
+	  var data = [longestRideDistance, averageRideDistance];
+	  return {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Distance',
+	      fillColor: ['#149c82', '#970015'],
+	      backgroundColor: ['#149c82', '#970015'],
+	      borderColor: ['#149c82', '#970015'],
+	      borderWidth: 10,
+	      hoverBackgroundColor: '#149c82',
+	      hoverBorderColor: '#149c82',
+	      data: data
+	    }]
+	  };
+	};
 
 	var Distance = function Distance(_ref) {
 	  var distanceTraveled = _ref.distanceTraveled;
-	  var averageRideDistance = _ref.averageRideDistance;
 	  var longestRideDistance = _ref.longestRideDistance;
+	  var averageRideDistance = _ref.averageRideDistance;
 
+	  var distanceGraphData = generateDistanceGraphData(distanceTraveled, longestRideDistance, averageRideDistance);
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
@@ -53830,27 +53793,41 @@
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
-	    { header: title },
+	    { className: 'panel-primary', header: title },
 	    _react2.default.createElement(
 	      'h3',
-	      null,
+	      { className: 'text-center' },
 	      'You\'ve traveled a total of ',
-	      distanceTraveled,
-	      ' miles.'
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        distanceTraveled,
+	        ' miles'
+	      )
 	    ),
 	    _react2.default.createElement(
 	      'h3',
-	      null,
-	      'Your average ride length is ',
-	      averageRideDistance,
-	      ' miles.'
+	      { className: 'text-center' },
+	      _react2.default.createElement(
+	        'small',
+	        null,
+	        'Your longest ride ever was ',
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          longestRideDistance,
+	          ' miles'
+	        )
+	      )
 	    ),
 	    _react2.default.createElement(
-	      'h3',
-	      null,
-	      'Your longest ride ever was ',
-	      longestRideDistance,
-	      ' miles.'
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement(_reactChartjs.Bar, {
+	        data: distanceGraphData,
+	        height: 400,
+	        width: 400
+	      })
 	    )
 	  );
 	};
@@ -53858,7 +53835,455 @@
 	exports.default = Distance;
 
 /***/ },
-/* 448 */
+/* 448 */,
+/* 449 */,
+/* 450 */,
+/* 451 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateCityBarData = function generateCityBarData(cityData) {
+	  var labels = Object.keys(cityData);
+	  var data = labels.map(function (city) {
+	    return cityData[city];
+	  });
+	  var cityBarData = {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Trips Per City',
+	      backgroundColor: '#149c82',
+	      fillColor: '#149c82',
+	      borderWidth: 10,
+	      hoverBackgroundColor: '#149c82',
+	      hoverBorderColor: '#149c82',
+	      data: data
+	    }]
+	  };
+	  return cityBarData;
+	};
+
+	var getModeCityData = function getModeCityData(cityData) {
+	  return Object.keys(cityData).reduce(function (results, city) {
+	    if (cityData[city] > results.count) {
+	      results.name = city;
+	      results.count = cityData[city];
+	    }
+	    return results;
+	  }, { name: '', count: 0 });
+	};
+
+	var Cities = function Cities(_ref) {
+	  var cityData = _ref.cityData;
+	  var numberOfTrips = _ref.numberOfTrips;
+
+	  var modeCityData = getModeCityData(cityData);
+	  var modeCityName = modeCityData.name;
+	  var modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(2) * 100;
+	  var cityBarData = generateCityBarData(cityData);
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    'Rides by City'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'You take Uber most often in ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        modeCityName
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      _react2.default.createElement(
+	        'small',
+	        null,
+	        'Over ',
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          modeCityPercentage,
+	          '%'
+	        ),
+	        ' of your rides take place there'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement(_reactChartjs.Bar, {
+	        data: cityBarData,
+	        height: 350,
+	        width: 400
+	      })
+	    )
+	  );
+	};
+
+	exports.default = Cities;
+
+/***/ },
+/* 452 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	var generateDayBarData = function generateDayBarData(dayData) {
+	  var labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	  var data = dayData;
+	  var dayBarData = {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Trips Per Day',
+	      fillColor: ['#970015', '#149C81', '#006551', '#F4A51F', '#C88107', '#E81E3A', '#BF0720'],
+	      borderWidth: 10,
+	      hoverBackgroundColor: '#2980b9',
+	      hoverBorderColor: '#2980b9',
+	      data: data
+	    }]
+	  };
+	  return dayBarData;
+	};
+
+	var days = ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays'];
+
+	var getModeDay = function getModeDay(dayData) {
+	  var modeDayInt = Math.max.apply(Math, _toConsumableArray(dayData));
+	  return days[dayData.indexOf(modeDayInt)];
+	};
+
+	var getMinDay = function getMinDay(dayData) {
+	  var minDayInt = Math.min.apply(Math, _toConsumableArray(dayData));
+	  return days[dayData.indexOf(minDayInt)];
+	};
+
+	var Days = function Days(_ref) {
+	  var dayData = _ref.dayData;
+
+	  var modeDay = getModeDay(dayData);
+	  var minDay = getMinDay(dayData);
+	  var dayBarData = generateDayBarData(dayData);
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    'Rides by Day'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'You take rides most often on ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        modeDay
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      _react2.default.createElement(
+	        'small',
+	        null,
+	        'You take rides least often on ',
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          minDay
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement(_reactChartjs.Bar, {
+	        data: dayBarData,
+	        height: 400,
+	        width: 400
+	      })
+	    )
+	  );
+	};
+
+	exports.default = Days;
+
+/***/ },
+/* 453 */,
+/* 454 */,
+/* 455 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var TotalTime = function TotalTime(_ref) {
+	  var timeWaiting = _ref.timeWaiting;
+	  var timeRiding = _ref.timeRiding;
+
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    'Total Ride and Wait Times'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      _reactBootstrap.Row,
+	      { style: { marginTop: '20px', marginLeft: '5px' } },
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 4, md: 4 },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'text-right', style: { paddingTop: '20px' } },
+	          _react2.default.createElement('div', { style: { minHeight: '128px', minWidth: '128px', display: 'inline-block', background: 'url(assets/traffic.png) no-repeat' } })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 8, md: 8 },
+	        _react2.default.createElement(
+	          'h2',
+	          { className: 'text-left' },
+	          _react2.default.createElement(
+	            'small',
+	            null,
+	            'You\'ve waited for Ubers a total of'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-left text-primary' },
+	          timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null,
+	          ' ',
+	          timeWaiting.hours,
+	          ' hours, ',
+	          timeWaiting.minutes,
+	          ' minutes, and ',
+	          timeWaiting.seconds,
+	          ' seconds'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _reactBootstrap.Row,
+	      { style: { marginTop: '40px', marginLeft: '5px', marginBottom: '30px' } },
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 4, md: 4 },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'text-right', style: { paddingTop: '20px' } },
+	          _react2.default.createElement('div', { style: { minHeight: '128px', minWidth: '128px', display: 'inline-block', background: 'url(assets/carwheel.png) no-repeat' } })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 8, md: 8 },
+	        _react2.default.createElement(
+	          'h2',
+	          { className: 'text-left' },
+	          _react2.default.createElement(
+	            'small',
+	            null,
+	            'You\'ve ridden in Ubers a total of'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-left text-primary' },
+	          timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null,
+	          ' ',
+	          timeRiding.hours,
+	          ' hours, ',
+	          timeRiding.minutes,
+	          ' minutes, and ',
+	          timeRiding.seconds,
+	          ' seconds'
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = TotalTime;
+
+/***/ },
+/* 456 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateAverageTimeGraphData = function generateAverageTimeGraphData(averageRideWaiting, averageRideRiding) {
+	  var averageRideWaitingDec = (averageRideWaiting.minutes + averageRideWaiting.seconds / 60).toFixed(2);
+	  var averageRideRidingDec = (averageRideRiding.minutes + averageRideRiding.seconds / 60).toFixed(2);
+	  var labels = ['Average Wait', 'Average Ride'];
+	  var data = [averageRideWaitingDec, averageRideRidingDec];
+	  return {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Distance',
+	      fillColor: ['#149c82', '#970015'],
+	      backgroundColor: ['#149c82', '#970015'],
+	      borderColor: ['#149c82', '#970015'],
+	      borderWidth: 10,
+	      hoverBackgroundColor: '#149c82',
+	      hoverBorderColor: '#149c82',
+	      data: data
+	    }]
+	  };
+	};
+
+	var AverageTime = function AverageTime(_ref) {
+	  var averageRideWaiting = _ref.averageRideWaiting;
+	  var averageRideRiding = _ref.averageRideRiding;
+
+	  var averageTimeGraphData = generateAverageTimeGraphData(averageRideWaiting, averageRideRiding);
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    'Average Ride and Wait Times'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      _reactBootstrap.Row,
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 6, md: 6 },
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-center' },
+	          _react2.default.createElement(
+	            'small',
+	            null,
+	            'Your average wait time is'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          { className: 'text-center text-primary' },
+	          averageRideWaiting.minutes,
+	          ' minutes ',
+	          averageRideWaiting.seconds,
+	          ' seconds'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 6, md: 6 },
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-center' },
+	          _react2.default.createElement(
+	            'small',
+	            null,
+	            'Your average ride time is'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          { className: 'text-center text-primary' },
+	          averageRideRiding.minutes,
+	          ' minutes ',
+	          averageRideRiding.seconds,
+	          ' seconds'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _reactBootstrap.Row,
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 12, md: 12 },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'text-center' },
+	          _react2.default.createElement(_reactChartjs.Bar, {
+	            data: averageTimeGraphData,
+	            height: 300,
+	            width: 300
+	          })
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = AverageTime;
+
+/***/ },
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53875,68 +54300,558 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Time = function Time(_ref) {
-	  var timeWaiting = _ref.timeWaiting;
-	  var timeRiding = _ref.timeRiding;
-	  var averageRideWaiting = _ref.averageRideWaiting;
-	  var averageRideRiding = _ref.averageRideRiding;
-
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    'Ride Time'
-	  );
+	var LoginReminder = function LoginReminder() {
 	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    { header: title },
+	    'div',
+	    null,
 	    _react2.default.createElement(
-	      'h3',
-	      null,
-	      'You\'ve spent ',
-	      timeWaiting.days,
-	      ' days, ',
-	      timeWaiting.hours,
-	      ' hours, ',
-	      timeWaiting.minutes,
-	      ' minutes, and ',
-	      timeWaiting.seconds,
-	      ' seconds waiting for rides'
+	      'h4',
+	      { className: 'text-center' },
+	      'Click ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        'Log in'
+	      ),
+	      ' to get started'
 	    ),
 	    _react2.default.createElement(
-	      'h3',
-	      null,
-	      'Your average wait time is ',
-	      averageRideWaiting.minutes,
-	      ' minutes ',
-	      averageRideWaiting.seconds,
-	      ' seconds.'
-	    ),
-	    _react2.default.createElement(
-	      'h3',
-	      null,
-	      'You\'ve spent ',
-	      timeRiding.days,
-	      ' days, ',
-	      timeRiding.hours,
-	      ' hours, ',
-	      timeRiding.minutes,
-	      ' minutes, and ',
-	      timeRiding.seconds,
-	      ' seconds on rides'
-	    ),
-	    _react2.default.createElement(
-	      'h3',
-	      null,
-	      'Your average ride time is ',
-	      averageRideRiding.minutes,
-	      ' minutes ',
-	      averageRideRiding.seconds,
-	      ' seconds.'
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement('img', { className: 'center-block img-rounded img-responsive', src: 'assets/login.jpg' })
 	    )
 	  );
 	};
 
-	exports.default = Time;
+	exports.default = LoginReminder;
+
+/***/ },
+/* 458 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactSpin = __webpack_require__(459);
+
+	var _reactSpin2 = _interopRequireDefault(_reactSpin);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Loading = function Loading() {
+	    var spinConfig = {
+	        lines: 13,
+	        length: 28,
+	        width: 14,
+	        radius: 42,
+	        scale: 1,
+	        corners: 1,
+	        color: '#000',
+	        opacity: 0.25,
+	        rotate: 0,
+	        direction: 1,
+	        speed: 1,
+	        trail: 60,
+	        fps: 20,
+	        zIndex: 2e9,
+	        className: 'spinner',
+	        top: '30%',
+	        left: '50%',
+	        shadow: false,
+	        hwaccel: false,
+	        position: 'absolute'
+	    };
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'h3',
+	            { className: 'text-center' },
+	            'Retrieving Uber statistics...'
+	        ),
+	        _react2.default.createElement(_reactSpin2.default, { config: spinConfig })
+	    );
+	};
+
+	exports.default = Loading;
+
+/***/ },
+/* 459 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _spin = __webpack_require__(460);
+
+	var _spin2 = _interopRequireDefault(_spin);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var ReactSpinner = _react2.default.createClass({
+	  displayName: 'ReactSpinner',
+
+	  propTypes: {
+	    config: _react2.default.PropTypes.object,
+	    stopped: _react2.default.PropTypes.bool
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    this.spinner = new _spin2.default(this.props.config);
+	    if (!this.props.stopped) {
+	      this.spinner.spin(this.refs.container);
+	    }
+	  },
+
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    if (newProps.stopped === true && !this.props.stopped) {
+	      this.spinner.stop();
+	    } else if (!newProps.stopped && this.props.stopped === true) {
+	      this.spinner.spin(this.refs.container);
+	    }
+	  },
+
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.spinner.stop();
+	  },
+
+	  render: function render() {
+	    return _react2.default.createElement('span', { ref: 'container' });
+	  }
+	});
+
+	exports.default = ReactSpinner;
+
+/***/ },
+/* 460 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
+	 * Copyright (c) 2011-2014 Felix Gnass
+	 * Licensed under the MIT license
+	 * http://spin.js.org/
+	 *
+	 * Example:
+	    var opts = {
+	      lines: 12             // The number of lines to draw
+	    , length: 7             // The length of each line
+	    , width: 5              // The line thickness
+	    , radius: 10            // The radius of the inner circle
+	    , scale: 1.0            // Scales overall size of the spinner
+	    , corners: 1            // Roundness (0..1)
+	    , color: '#000'         // #rgb or #rrggbb
+	    , opacity: 1/4          // Opacity of the lines
+	    , rotate: 0             // Rotation offset
+	    , direction: 1          // 1: clockwise, -1: counterclockwise
+	    , speed: 1              // Rounds per second
+	    , trail: 100            // Afterglow percentage
+	    , fps: 20               // Frames per second when using setTimeout()
+	    , zIndex: 2e9           // Use a high z-index by default
+	    , className: 'spinner'  // CSS class to assign to the element
+	    , top: '50%'            // center vertically
+	    , left: '50%'           // center horizontally
+	    , shadow: false         // Whether to render a shadow
+	    , hwaccel: false        // Whether to use hardware acceleration (might be buggy)
+	    , position: 'absolute'  // Element positioning
+	    }
+	    var target = document.getElementById('foo')
+	    var spinner = new Spinner(opts).spin(target)
+	 */
+	;(function (root, factory) {
+
+	  /* CommonJS */
+	  if (typeof module == 'object' && module.exports) module.exports = factory()
+
+	  /* AMD module */
+	  else if (true) !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
+
+	  /* Browser global */
+	  else root.Spinner = factory()
+	}(this, function () {
+	  "use strict"
+
+	  var prefixes = ['webkit', 'Moz', 'ms', 'O'] /* Vendor prefixes */
+	    , animations = {} /* Animation rules keyed by their name */
+	    , useCssAnimations /* Whether to use CSS animations or setTimeout */
+	    , sheet /* A stylesheet to hold the @keyframe or VML rules. */
+
+	  /**
+	   * Utility function to create elements. If no tag name is given,
+	   * a DIV is created. Optionally properties can be passed.
+	   */
+	  function createEl (tag, prop) {
+	    var el = document.createElement(tag || 'div')
+	      , n
+
+	    for (n in prop) el[n] = prop[n]
+	    return el
+	  }
+
+	  /**
+	   * Appends children and returns the parent.
+	   */
+	  function ins (parent /* child1, child2, ...*/) {
+	    for (var i = 1, n = arguments.length; i < n; i++) {
+	      parent.appendChild(arguments[i])
+	    }
+
+	    return parent
+	  }
+
+	  /**
+	   * Creates an opacity keyframe animation rule and returns its name.
+	   * Since most mobile Webkits have timing issues with animation-delay,
+	   * we create separate rules for each line/segment.
+	   */
+	  function addAnimation (alpha, trail, i, lines) {
+	    var name = ['opacity', trail, ~~(alpha * 100), i, lines].join('-')
+	      , start = 0.01 + i/lines * 100
+	      , z = Math.max(1 - (1-alpha) / trail * (100-start), alpha)
+	      , prefix = useCssAnimations.substring(0, useCssAnimations.indexOf('Animation')).toLowerCase()
+	      , pre = prefix && '-' + prefix + '-' || ''
+
+	    if (!animations[name]) {
+	      sheet.insertRule(
+	        '@' + pre + 'keyframes ' + name + '{' +
+	        '0%{opacity:' + z + '}' +
+	        start + '%{opacity:' + alpha + '}' +
+	        (start+0.01) + '%{opacity:1}' +
+	        (start+trail) % 100 + '%{opacity:' + alpha + '}' +
+	        '100%{opacity:' + z + '}' +
+	        '}', sheet.cssRules.length)
+
+	      animations[name] = 1
+	    }
+
+	    return name
+	  }
+
+	  /**
+	   * Tries various vendor prefixes and returns the first supported property.
+	   */
+	  function vendor (el, prop) {
+	    var s = el.style
+	      , pp
+	      , i
+
+	    prop = prop.charAt(0).toUpperCase() + prop.slice(1)
+	    if (s[prop] !== undefined) return prop
+	    for (i = 0; i < prefixes.length; i++) {
+	      pp = prefixes[i]+prop
+	      if (s[pp] !== undefined) return pp
+	    }
+	  }
+
+	  /**
+	   * Sets multiple style properties at once.
+	   */
+	  function css (el, prop) {
+	    for (var n in prop) {
+	      el.style[vendor(el, n) || n] = prop[n]
+	    }
+
+	    return el
+	  }
+
+	  /**
+	   * Fills in default values.
+	   */
+	  function merge (obj) {
+	    for (var i = 1; i < arguments.length; i++) {
+	      var def = arguments[i]
+	      for (var n in def) {
+	        if (obj[n] === undefined) obj[n] = def[n]
+	      }
+	    }
+	    return obj
+	  }
+
+	  /**
+	   * Returns the line color from the given string or array.
+	   */
+	  function getColor (color, idx) {
+	    return typeof color == 'string' ? color : color[idx % color.length]
+	  }
+
+	  // Built-in defaults
+
+	  var defaults = {
+	    lines: 12             // The number of lines to draw
+	  , length: 7             // The length of each line
+	  , width: 5              // The line thickness
+	  , radius: 10            // The radius of the inner circle
+	  , scale: 1.0            // Scales overall size of the spinner
+	  , corners: 1            // Roundness (0..1)
+	  , color: '#000'         // #rgb or #rrggbb
+	  , opacity: 1/4          // Opacity of the lines
+	  , rotate: 0             // Rotation offset
+	  , direction: 1          // 1: clockwise, -1: counterclockwise
+	  , speed: 1              // Rounds per second
+	  , trail: 100            // Afterglow percentage
+	  , fps: 20               // Frames per second when using setTimeout()
+	  , zIndex: 2e9           // Use a high z-index by default
+	  , className: 'spinner'  // CSS class to assign to the element
+	  , top: '50%'            // center vertically
+	  , left: '50%'           // center horizontally
+	  , shadow: false         // Whether to render a shadow
+	  , hwaccel: false        // Whether to use hardware acceleration (might be buggy)
+	  , position: 'absolute'  // Element positioning
+	  }
+
+	  /** The constructor */
+	  function Spinner (o) {
+	    this.opts = merge(o || {}, Spinner.defaults, defaults)
+	  }
+
+	  // Global defaults that override the built-ins:
+	  Spinner.defaults = {}
+
+	  merge(Spinner.prototype, {
+	    /**
+	     * Adds the spinner to the given target element. If this instance is already
+	     * spinning, it is automatically removed from its previous target b calling
+	     * stop() internally.
+	     */
+	    spin: function (target) {
+	      this.stop()
+
+	      var self = this
+	        , o = self.opts
+	        , el = self.el = createEl(null, {className: o.className})
+
+	      css(el, {
+	        position: o.position
+	      , width: 0
+	      , zIndex: o.zIndex
+	      , left: o.left
+	      , top: o.top
+	      })
+
+	      if (target) {
+	        target.insertBefore(el, target.firstChild || null)
+	      }
+
+	      el.setAttribute('role', 'progressbar')
+	      self.lines(el, self.opts)
+
+	      if (!useCssAnimations) {
+	        // No CSS animation support, use setTimeout() instead
+	        var i = 0
+	          , start = (o.lines - 1) * (1 - o.direction) / 2
+	          , alpha
+	          , fps = o.fps
+	          , f = fps / o.speed
+	          , ostep = (1 - o.opacity) / (f * o.trail / 100)
+	          , astep = f / o.lines
+
+	        ;(function anim () {
+	          i++
+	          for (var j = 0; j < o.lines; j++) {
+	            alpha = Math.max(1 - (i + (o.lines - j) * astep) % f * ostep, o.opacity)
+
+	            self.opacity(el, j * o.direction + start, alpha, o)
+	          }
+	          self.timeout = self.el && setTimeout(anim, ~~(1000 / fps))
+	        })()
+	      }
+	      return self
+	    }
+
+	    /**
+	     * Stops and removes the Spinner.
+	     */
+	  , stop: function () {
+	      var el = this.el
+	      if (el) {
+	        clearTimeout(this.timeout)
+	        if (el.parentNode) el.parentNode.removeChild(el)
+	        this.el = undefined
+	      }
+	      return this
+	    }
+
+	    /**
+	     * Internal method that draws the individual lines. Will be overwritten
+	     * in VML fallback mode below.
+	     */
+	  , lines: function (el, o) {
+	      var i = 0
+	        , start = (o.lines - 1) * (1 - o.direction) / 2
+	        , seg
+
+	      function fill (color, shadow) {
+	        return css(createEl(), {
+	          position: 'absolute'
+	        , width: o.scale * (o.length + o.width) + 'px'
+	        , height: o.scale * o.width + 'px'
+	        , background: color
+	        , boxShadow: shadow
+	        , transformOrigin: 'left'
+	        , transform: 'rotate(' + ~~(360/o.lines*i + o.rotate) + 'deg) translate(' + o.scale*o.radius + 'px' + ',0)'
+	        , borderRadius: (o.corners * o.scale * o.width >> 1) + 'px'
+	        })
+	      }
+
+	      for (; i < o.lines; i++) {
+	        seg = css(createEl(), {
+	          position: 'absolute'
+	        , top: 1 + ~(o.scale * o.width / 2) + 'px'
+	        , transform: o.hwaccel ? 'translate3d(0,0,0)' : ''
+	        , opacity: o.opacity
+	        , animation: useCssAnimations && addAnimation(o.opacity, o.trail, start + i * o.direction, o.lines) + ' ' + 1 / o.speed + 's linear infinite'
+	        })
+
+	        if (o.shadow) ins(seg, css(fill('#000', '0 0 4px #000'), {top: '2px'}))
+	        ins(el, ins(seg, fill(getColor(o.color, i), '0 0 1px rgba(0,0,0,.1)')))
+	      }
+	      return el
+	    }
+
+	    /**
+	     * Internal method that adjusts the opacity of a single line.
+	     * Will be overwritten in VML fallback mode below.
+	     */
+	  , opacity: function (el, i, val) {
+	      if (i < el.childNodes.length) el.childNodes[i].style.opacity = val
+	    }
+
+	  })
+
+
+	  function initVML () {
+
+	    /* Utility function to create a VML tag */
+	    function vml (tag, attr) {
+	      return createEl('<' + tag + ' xmlns="urn:schemas-microsoft.com:vml" class="spin-vml">', attr)
+	    }
+
+	    // No CSS transforms but VML support, add a CSS rule for VML elements:
+	    sheet.addRule('.spin-vml', 'behavior:url(#default#VML)')
+
+	    Spinner.prototype.lines = function (el, o) {
+	      var r = o.scale * (o.length + o.width)
+	        , s = o.scale * 2 * r
+
+	      function grp () {
+	        return css(
+	          vml('group', {
+	            coordsize: s + ' ' + s
+	          , coordorigin: -r + ' ' + -r
+	          })
+	        , { width: s, height: s }
+	        )
+	      }
+
+	      var margin = -(o.width + o.length) * o.scale * 2 + 'px'
+	        , g = css(grp(), {position: 'absolute', top: margin, left: margin})
+	        , i
+
+	      function seg (i, dx, filter) {
+	        ins(
+	          g
+	        , ins(
+	            css(grp(), {rotation: 360 / o.lines * i + 'deg', left: ~~dx})
+	          , ins(
+	              css(
+	                vml('roundrect', {arcsize: o.corners})
+	              , { width: r
+	                , height: o.scale * o.width
+	                , left: o.scale * o.radius
+	                , top: -o.scale * o.width >> 1
+	                , filter: filter
+	                }
+	              )
+	            , vml('fill', {color: getColor(o.color, i), opacity: o.opacity})
+	            , vml('stroke', {opacity: 0}) // transparent stroke to fix color bleeding upon opacity change
+	            )
+	          )
+	        )
+	      }
+
+	      if (o.shadow)
+	        for (i = 1; i <= o.lines; i++) {
+	          seg(i, -2, 'progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)')
+	        }
+
+	      for (i = 1; i <= o.lines; i++) seg(i)
+	      return ins(el, g)
+	    }
+
+	    Spinner.prototype.opacity = function (el, i, val, o) {
+	      var c = el.firstChild
+	      o = o.shadow && o.lines || 0
+	      if (c && i + o < c.childNodes.length) {
+	        c = c.childNodes[i + o]; c = c && c.firstChild; c = c && c.firstChild
+	        if (c) c.opacity = val
+	      }
+	    }
+	  }
+
+	  if (typeof document !== 'undefined') {
+	    sheet = (function () {
+	      var el = createEl('style', {type : 'text/css'})
+	      ins(document.getElementsByTagName('head')[0], el)
+	      return el.sheet || el.styleSheet
+	    }())
+
+	    var probe = css(createEl('group'), {behavior: 'url(#default#VML)'})
+
+	    if (!vendor(probe, 'transform') && probe.adj) initVML()
+	    else useCssAnimations = vendor(probe, 'animation')
+	  }
+
+	  return Spinner
+
+	}));
+
+
+/***/ },
+/* 461 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var First = function First() {
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    null,
+	    _react2.default.createElement(
+	      'div',
+	      { style: { marginTop: '12px', marginBottom: '12px' }, className: 'text-center' },
+	      _react2.default.createElement('img', { className: 'center-block img-rounded img-responsive', src: 'assets/carSpacer.jpg' })
+	    )
+	  );
+	};
+
+	exports.default = First;
 
 /***/ }
 /******/ ]);

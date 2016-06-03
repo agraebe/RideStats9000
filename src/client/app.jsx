@@ -4,45 +4,52 @@ import $ from 'jquery';
 import { Bar } from 'react-chartjs';
 import Nav from './nav.jsx';
 import Stats from './stats.jsx';
+import LoginReminder from './loginReminder.jsx';
+import Loading from './loading.jsx';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       data: null,
+      loading: false,
       loggedIn: false
     };
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.requestUserStatistics = this.requestUserStatistics.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
+    // Temp fix for testing
     if (window.location.hash === '#_') {
+      console.log('requesting user stats');
       this.requestUserStatistics();
     }
   }
   handleLoginClick () {
-    $.ajax({
-      type: 'GET',
-      url: 'http://localhost:3000/api/auth/login'
-    })
-      .done((data) => {
-        window.location.href = data.url;
-      })
-      .fail((err) => {
-        console.log(err);
-      });
+    if (this.state.loggedIn) {
+      return this.handleLogout();
+    }
+    $.ajax({ type: 'GET', url: 'http://localhost:3000/api/auth/login' })
+      .done(data => window.location.href = data.url)
+      .fail(err => console.log(err));
+  }
+
+  handleLogout () {
+    window.location.hash = "#logout";
+    this.setState({ loggedIn: false, loading: false, data: null});
   }
 
   requestUserStatistics () {
-    $.ajax({
-      type: 'GET',
-      url: 'http://localhost:3000/api/uber/statistics'
-    })
-      .done((response) => {
-        this.setState({ data: response.data, loggedIn: true });
+    this.setState({loggedIn: true, loading: true});
+    $.ajax({ type: 'GET', url: 'http://localhost:3000/api/uber/statistics' })
+      .done(response => {
+        console.log(response.data);
+        this.setState({ data: response.data, loading: false })
       })
-      .fail((err) => {
+      .fail(err => {
+        this.handleLogout();
         console.log(err);
       });
   }
@@ -51,7 +58,7 @@ class App extends React.Component {
     return (
       <div>
         <Nav handleLoginClick={this.handleLoginClick} loggedIn={this.state.loggedIn}/>
-        {this.state.data ? <Stats data={this.state.data}/> : null }
+        {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <LoginReminder /> }
       </div>
     );
   }
