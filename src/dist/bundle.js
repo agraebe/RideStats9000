@@ -113,7 +113,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      // Temp fix for testing
-	      if (window.location.hash === '#_') {
+	      if (window.location.hash === '#/loading') {
 	        console.log('requesting user stats');
 	        this.requestUserStatistics();
 	      }
