@@ -35,14 +35,15 @@ const Days = ({ dayData }) => {
   const modeDay = getModeDay(dayData);
   const minDay = getMinDay(dayData);
   const dayBarData = generateDayBarData(dayData);
-  const title = (<h3>Rides by Day</h3>);
+  const title = (<h3><i className="fa fa-calendar" aria-hidden="true"></i> Rides by Day</h3>);
   return(
     <Panel className="panel-primary" header={title}>
-      <h3 className="text-center">You take rides most often on <strong>{modeDay}</strong></h3>
-      <h3 className="text-center"><small>You take rides least often on <strong>{minDay}</strong></small></h3>
+      <h3 className="text-center">You ride most often on <strong>{modeDay}</strong></h3>
+      <h3 className="text-center"><small>You ride least often on <strong>{minDay}</strong></small></h3>
       <div className="text-center">
         <Bar 
-          data={dayBarData} 
+          data={dayBarData}
+          options={{responsive: true}}
           height={400} 
           width={400} 
         />

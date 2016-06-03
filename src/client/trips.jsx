@@ -3,8 +3,8 @@ import { Panel } from 'react-bootstrap';
 
 const generateIconDivs = numberOfTrips => {
   const iconTotal = Math.ceil(numberOfTrips/10);
-  const remainder = Math.ceil(numberOfTrips/10) - (numberOfTrips/10);
-  const cutWidth = (remainder ? 100 * remainder : 100) +  'px';
+  const remainder = 1 - (Math.ceil(numberOfTrips/10) - (numberOfTrips/10));
+  const cutWidth = 100 * remainder + 'px';
   const icons = [];
   for (let i = 0; i < iconTotal; i++) {  
     icons.push(i);
@@ -19,7 +19,7 @@ const generateIconDivs = numberOfTrips => {
 
 const Trips = ({ numberOfTrips }) => {
   const iconDivs = generateIconDivs(numberOfTrips);
-  const title = (<h3>Total Rides</h3>)
+  const title = (<h3><i className="fa fa-car" aria-hidden="true"></i> Total Rides</h3>)
   return (
     <div>
       <Panel className="panel-primary" header={title}>

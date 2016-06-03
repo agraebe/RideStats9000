@@ -24,17 +24,17 @@ const generateAverageTimeGraphData = (averageRideWaiting, averageRideRiding) => 
 
 const AverageTime = ({ averageRideWaiting, averageRideRiding }) => {
   const averageTimeGraphData = generateAverageTimeGraphData(averageRideWaiting, averageRideRiding);
-  const title = (<h3>Average Ride and Wait Times</h3>);
+  const title = (<h3><i className="fa fa-clock-o" aria-hidden="true"></i> Average Wait and Ride Times</h3>);
   return(
     <Panel className="panel-primary" header={title}>
       <Row>
         <Col xs={6} md={6}>
-          <h3 className="text-center"><small>Your average wait time is</small></h3>
-          <h4 className="text-center text-primary">{averageRideWaiting.minutes} minutes {averageRideWaiting.seconds} seconds</h4>
+          <h3 className="text-center text-primary">{averageRideWaiting.minutes} minutes {averageRideWaiting.seconds} seconds</h3>
+          <h3 className="text-center"><small>Average Wait Length</small></h3>
         </Col>
         <Col xs={6} md={6}>
-          <h3 className="text-center"><small>Your average ride time is</small></h3>
-          <h4 className="text-center text-primary">{averageRideRiding.minutes} minutes {averageRideRiding.seconds} seconds</h4>
+          <h3 className="text-center text-primary">{averageRideRiding.minutes} minutes {averageRideRiding.seconds} seconds</h3>
+          <h3 className="text-center"><small>Average Ride Length</small></h3>
         </Col>
       </Row>
       <Row>
@@ -42,8 +42,9 @@ const AverageTime = ({ averageRideWaiting, averageRideRiding }) => {
           <div className="text-center">
             <Bar
               data={averageTimeGraphData}
-              height={300}
-              width={300}
+              options={{responsive: true}}
+              height={400}
+              width={400}
             />
           </div>
         </Col>

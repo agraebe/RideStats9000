@@ -6,6 +6,7 @@ import Nav from './nav.jsx';
 import Stats from './stats.jsx';
 import LoginReminder from './loginReminder.jsx';
 import Loading from './loading.jsx';
+import Footer from './footer.jsx';
 
 class App extends React.Component {
   constructor() {
@@ -13,20 +14,23 @@ class App extends React.Component {
     this.state = {
       data: null,
       loading: false,
-      loggedIn: false
+      loggedIn: false,
+      demo: false
     };
     this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleDemoClick = this.handleDemoClick.bind(this);
     this.requestUserStatistics = this.requestUserStatistics.bind(this);
+    this.requestDummyStatistics = this.requestDummyStatistics.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
-    // Temp fix for testing
-    if (window.location.hash === '#_') {
-      console.log('requesting user stats');
+    // Temp for testing
+    if (window.location.hash === '#/loading') {
       this.requestUserStatistics();
     }
   }
+
   handleLoginClick () {
     if (this.state.loggedIn) {
       return this.handleLogout();
@@ -36,15 +40,20 @@ class App extends React.Component {
       .fail(err => console.log(err));
   }
 
+  handleDemoClick () {
+    this.requestDummyStatistics();
+  }
+
   handleLogout () {
-    window.location.hash = "#logout";
-    this.setState({ loggedIn: false, loading: false, data: null});
+    window.location.hash = "#/logout";
+    this.setState({ loggedIn: false, loading: false, data: null, demo: false});
   }
 
   requestUserStatistics () {
     this.setState({loggedIn: true, loading: true});
     $.ajax({ type: 'GET', url: '/api/uber/statistics' })
       .done(response => {
+        window.location.hash = "#/stats";
         console.log(response.data);
         this.setState({ data: response.data, loading: false })
       })
@@ -54,11 +63,44 @@ class App extends React.Component {
       });
   }
 
+  requestDummyStatistics() {
+    this.setState({loggedIn: true, loading: true, demo: true});
+    window.location.hash === '#/demo'
+    setTimeout(() => {
+      this.setState({
+        loading: false,
+        data: {
+          numberOfTrips: 185,
+          tripsPerCity: {
+            "San Francisco": 140,
+            "Los Angeles": 39,
+            "Portland": 4,
+            "New Orleans": 2
+          },
+          timeSpentRiding: 102370,
+          timeSpentWaiting: 47377,
+          longestRide: {
+            city: "Los Angeles",
+            distance: 24.662265066
+          },
+          totalDistanceTraveled: 399.1359926652999,
+          tripsPerDay: [38, 21, 13, 23, 20, 15, 55]
+        }
+      });
+    }, 2000);
+  }
+
   render() {
     return (
       <div>
-        <Nav handleLoginClick={this.handleLoginClick} loggedIn={this.state.loggedIn}/>
+        <Nav 
+          handleLoginClick={this.handleLoginClick}
+          handleDemoClick={this.handleDemoClick}
+          loggedIn={this.state.loggedIn}
+          demo={this.state.demo}
+        />
         {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <LoginReminder /> }
+        <Footer />
       </div>
     );
   }

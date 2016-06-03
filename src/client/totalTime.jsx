@@ -3,25 +3,25 @@ import { Row, Col, Panel } from 'react-bootstrap';
 import { Bar } from 'react-chartjs';
 
 const TotalTime = ({ timeWaiting, timeRiding }) => {
-  const title = (<h3>Total Ride and Wait Times</h3>);
+  const title = (<h3><i className="fa fa-clock-o" aria-hidden="true"></i> Total Wait and Ride Times</h3>);
   return(
     <Panel className="panel-primary" header={title}>
-      <Row style={{marginTop: '20px', marginLeft: '5px'}}>
+      <Row style={{marginBottom: '20px'}}>
         <Col xs={4} md={4}>
-          <div className="text-right" style={{paddingTop: '20px'}}><div style={{minHeight: '128px', minWidth: '128px', display: 'inline-block', background: 'url(assets/traffic.png) no-repeat'}}></div></div>
+          <div className="pull-right"><img className="img-responsive" src="/assets/traffic.png" /></div>
         </Col>
         <Col xs={8} md={8}>
-          <h2 className="text-left"><small>You've waited for Ubers a total of</small></h2>
-          <h3 className="text-left text-primary">{timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null} {timeWaiting.hours} hours, {timeWaiting.minutes} minutes, and {timeWaiting.seconds} seconds</h3>
+          <h2 className="text-left text-muted">You've waited for Ubers a total of</h2>
+          <h2 className="text-left text-primary">{timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null} {timeWaiting.hours} hours, {timeWaiting.minutes} minutes, and {timeWaiting.seconds} seconds</h2>
         </Col>
       </Row>
-      <Row style={{marginTop: '40px', marginLeft: '5px', marginBottom: '30px'}}>
+      <Row>
         <Col xs={4} md={4}>
-          <div className="text-right" style={{paddingTop: '20px'}}><div style={{minHeight: '128px', minWidth: '128px', display: 'inline-block', background: 'url(assets/carwheel.png) no-repeat'}}></div></div>
+          <div className="pull-right"><img className="img-responsive" src="/assets/carwheel.png" /></div>
         </Col>
         <Col xs={8} md={8}>
-          <h2 className="text-left"><small>You've ridden in Ubers a total of</small></h2>
-          <h3 className="text-left text-primary">{timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null} {timeRiding.hours} hours, {timeRiding.minutes} minutes, and {timeRiding.seconds} seconds</h3>
+          <h2 className="text-left text-muted">You've ridden in Ubers a total of</h2>
+          <h2 className="text-left text-primary">{timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null} {timeRiding.hours} hours, {timeRiding.minutes} minutes, and {timeRiding.seconds} seconds</h2>
         </Col>
       </Row>
     </Panel>

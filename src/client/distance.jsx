@@ -22,7 +22,7 @@ const generateDistanceGraphData = (distanceTraveled, longestRideDistance, averag
 
 const Distance = ({ distanceTraveled, longestRideDistance, averageRideDistance }) => {
   const distanceGraphData = generateDistanceGraphData(distanceTraveled, longestRideDistance, averageRideDistance);
-  const title = (<h3>Distance Traveled</h3>)
+  const title = (<h3><i className="fa fa-road" aria-hidden="true"></i> Distance Traveled</h3>)
   return(
     <Panel className="panel-primary" header={title}>
       <h3 className="text-center">You've traveled a total of <strong>{distanceTraveled} miles</strong></h3>
@@ -30,6 +30,7 @@ const Distance = ({ distanceTraveled, longestRideDistance, averageRideDistance }
       <div className="text-center">
         <Bar
           data={distanceGraphData}
+          options={{responsive: true}}
           height={400}
           width={400}
         />

@@ -50,17 +50,6 @@ const Stats = ({ data }) => {
               />
             </Col>
             <Col md={6}>
-              <TotalTime 
-                timeWaiting={timeWaiting}
-                timeRiding={timeRiding}
-              />
-            </Col>
-          </Row>
-          <Row className="show-grid">
-            <Col md={6}>
-              <First />
-            </Col>
-            <Col md={6}>
               <Cities 
                 cityData={cityData}
                 numberOfTrips={numberOfTrips}
@@ -68,6 +57,14 @@ const Stats = ({ data }) => {
             </Col>
           </Row>
           <Row className="show-grid">
+            <Col md={12}>
+              <TotalTime 
+                timeWaiting={timeWaiting}
+                timeRiding={timeRiding}
+              />
+            </Col>
+          </Row>
+          <Row style={{marginBottom: '30px'}} className="show-grid">
             <Col md={6}>
               <Distance
                 distanceTraveled={distanceTraveled}

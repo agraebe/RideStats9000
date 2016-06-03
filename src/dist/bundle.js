@@ -78,6 +78,10 @@
 
 	var _loading2 = _interopRequireDefault(_loading);
 
+	var _footer = __webpack_require__(457);
+
+	var _footer2 = _interopRequireDefault(_footer);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -97,10 +101,13 @@
 	    _this.state = {
 	      data: null,
 	      loading: false,
-	      loggedIn: false
+	      loggedIn: false,
+	      demo: false
 	    };
 	    _this.handleLoginClick = _this.handleLoginClick.bind(_this);
+	    _this.handleDemoClick = _this.handleDemoClick.bind(_this);
 	    _this.requestUserStatistics = _this.requestUserStatistics.bind(_this);
+	    _this.requestDummyStatistics = _this.requestDummyStatistics.bind(_this);
 	    _this.handleLogout = _this.handleLogout.bind(_this);
 	    return _this;
 	  }
@@ -108,9 +115,8 @@
 	  _createClass(App, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      // Temp fix for testing
-	      if (window.location.hash === '#_') {
-	        console.log('requesting user stats');
+	      // Temp for testing
+	      if (window.location.hash === '#/loading') {
 	        this.requestUserStatistics();
 	      }
 	    }
@@ -127,10 +133,15 @@
 	      });
 	    }
 	  }, {
+	    key: 'handleDemoClick',
+	    value: function handleDemoClick() {
+	      this.requestDummyStatistics();
+	    }
+	  }, {
 	    key: 'handleLogout',
 	    value: function handleLogout() {
-	      window.location.hash = "#logout";
-	      this.setState({ loggedIn: false, loading: false, data: null });
+	      window.location.hash = "#/logout";
+	      this.setState({ loggedIn: false, loading: false, data: null, demo: false });
 	    }
 	  }, {
 	    key: 'requestUserStatistics',
@@ -139,6 +150,7 @@
 
 	      this.setState({ loggedIn: true, loading: true });
 	      _jquery2.default.ajax({ type: 'GET', url: '/api/uber/statistics' }).done(function (response) {
+	        window.location.hash = "#/stats";
 	        console.log(response.data);
 	        _this2.setState({ data: response.data, loading: false });
 	      }).fail(function (err) {
@@ -147,13 +159,49 @@
 	      });
 	    }
 	  }, {
+	    key: 'requestDummyStatistics',
+	    value: function requestDummyStatistics() {
+	      var _this3 = this;
+
+	      this.setState({ loggedIn: true, loading: true, demo: true });
+	      window.location.hash === '#/demo';
+	      setTimeout(function () {
+	        _this3.setState({
+	          loading: false,
+	          data: {
+	            numberOfTrips: 185,
+	            tripsPerCity: {
+	              "San Francisco": 140,
+	              "Los Angeles": 39,
+	              "Portland": 4,
+	              "New Orleans": 2
+	            },
+	            timeSpentRiding: 102370,
+	            timeSpentWaiting: 47377,
+	            longestRide: {
+	              city: "Los Angeles",
+	              distance: 24.662265066
+	            },
+	            totalDistanceTraveled: 399.1359926652999,
+	            tripsPerDay: [38, 21, 13, 23, 20, 15, 55]
+	          }
+	        });
+	      }, 2000);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_nav2.default, { handleLoginClick: this.handleLoginClick, loggedIn: this.state.loggedIn }),
-	        this.state.data ? _react2.default.createElement(_stats2.default, { data: this.state.data }) : this.state.loading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(_loginReminder2.default, null)
+	        _react2.default.createElement(_nav2.default, {
+	          handleLoginClick: this.handleLoginClick,
+	          handleDemoClick: this.handleDemoClick,
+	          loggedIn: this.state.loggedIn,
+	          demo: this.state.demo
+	        }),
+	        this.state.data ? _react2.default.createElement(_stats2.default, { data: this.state.data }) : this.state.loading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(_loginReminder2.default, null),
+	        _react2.default.createElement(_footer2.default, null)
 	      );
 	    }
 	  }]);
@@ -34226,8 +34274,10 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var NavTop = function NavTop(_ref) {
+	  var handleDemoClick = _ref.handleDemoClick;
 	  var handleLoginClick = _ref.handleLoginClick;
 	  var loggedIn = _ref.loggedIn;
+	  var demo = _ref.demo;
 
 	  return _react2.default.createElement(
 	    _reactBootstrap.Navbar,
@@ -34252,10 +34302,15 @@
 	      _react2.default.createElement(
 	        _reactBootstrap.Nav,
 	        { pullRight: true },
+	        demo ? null : _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          { eventKey: 1, onClick: handleDemoClick },
+	          'Demo'
+	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
-	          { eventKey: 1, onClick: handleLoginClick },
-	          loggedIn ? 'Log out' : 'Log in'
+	          { eventKey: 2, onClick: handleLoginClick },
+	          loggedIn ? demo ? 'End Demo' : 'Log out' : 'Log in'
 	        )
 	      )
 	    )
@@ -53609,23 +53664,6 @@
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { md: 6 },
-	          _react2.default.createElement(_TotalTime2.default, {
-	            timeWaiting: timeWaiting,
-	            timeRiding: timeRiding
-	          })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Row,
-	        { className: 'show-grid' },
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 6 },
-	          _react2.default.createElement(_first2.default, null)
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 6 },
 	          _react2.default.createElement(_cities2.default, {
 	            cityData: cityData,
 	            numberOfTrips: numberOfTrips
@@ -53635,6 +53673,18 @@
 	      _react2.default.createElement(
 	        _reactBootstrap.Row,
 	        { className: 'show-grid' },
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 12 },
+	          _react2.default.createElement(_TotalTime2.default, {
+	            timeWaiting: timeWaiting,
+	            timeRiding: timeRiding
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Row,
+	        { style: { marginBottom: '30px' }, className: 'show-grid' },
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { md: 6 },
@@ -53678,8 +53728,8 @@
 
 	var generateIconDivs = function generateIconDivs(numberOfTrips) {
 	  var iconTotal = Math.ceil(numberOfTrips / 10);
-	  var remainder = Math.ceil(numberOfTrips / 10) - numberOfTrips / 10;
-	  var cutWidth = (remainder ? 100 * remainder : 100) + 'px';
+	  var remainder = 1 - (Math.ceil(numberOfTrips / 10) - numberOfTrips / 10);
+	  var cutWidth = 100 * remainder + 'px';
 	  var icons = [];
 	  for (var i = 0; i < iconTotal; i++) {
 	    icons.push(i);
@@ -53703,7 +53753,8 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Total Rides'
+	    _react2.default.createElement('i', { className: 'fa fa-car', 'aria-hidden': 'true' }),
+	    ' Total Rides'
 	  );
 	  return _react2.default.createElement(
 	    'div',
@@ -53789,7 +53840,8 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Distance Traveled'
+	    _react2.default.createElement('i', { className: 'fa fa-road', 'aria-hidden': 'true' }),
+	    ' Distance Traveled'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
@@ -53825,6 +53877,7 @@
 	      { className: 'text-center' },
 	      _react2.default.createElement(_reactChartjs.Bar, {
 	        data: distanceGraphData,
+	        options: { responsive: true },
 	        height: 400,
 	        width: 400
 	      })
@@ -53861,21 +53914,22 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Total Ride and Wait Times'
+	    _react2.default.createElement('i', { className: 'fa fa-clock-o', 'aria-hidden': 'true' }),
+	    ' Total Wait and Ride Times'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
 	    { className: 'panel-primary', header: title },
 	    _react2.default.createElement(
 	      _reactBootstrap.Row,
-	      { style: { marginTop: '20px', marginLeft: '5px' } },
+	      { style: { marginBottom: '20px' } },
 	      _react2.default.createElement(
 	        _reactBootstrap.Col,
 	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'text-right', style: { paddingTop: '20px' } },
-	          _react2.default.createElement('div', { style: { minHeight: '128px', minWidth: '128px', display: 'inline-block', background: 'url(assets/traffic.png) no-repeat' } })
+	          { className: 'pull-right' },
+	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/traffic.png' })
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -53883,15 +53937,11 @@
 	        { xs: 8, md: 8 },
 	        _react2.default.createElement(
 	          'h2',
-	          { className: 'text-left' },
-	          _react2.default.createElement(
-	            'small',
-	            null,
-	            'You\'ve waited for Ubers a total of'
-	          )
+	          { className: 'text-left text-muted' },
+	          'You\'ve waited for Ubers a total of'
 	        ),
 	        _react2.default.createElement(
-	          'h3',
+	          'h2',
 	          { className: 'text-left text-primary' },
 	          timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null,
 	          ' ',
@@ -53906,14 +53956,14 @@
 	    ),
 	    _react2.default.createElement(
 	      _reactBootstrap.Row,
-	      { style: { marginTop: '40px', marginLeft: '5px', marginBottom: '30px' } },
+	      null,
 	      _react2.default.createElement(
 	        _reactBootstrap.Col,
 	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'text-right', style: { paddingTop: '20px' } },
-	          _react2.default.createElement('div', { style: { minHeight: '128px', minWidth: '128px', display: 'inline-block', background: 'url(assets/carwheel.png) no-repeat' } })
+	          { className: 'pull-right' },
+	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/carwheel.png' })
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -53921,15 +53971,11 @@
 	        { xs: 8, md: 8 },
 	        _react2.default.createElement(
 	          'h2',
-	          { className: 'text-left' },
-	          _react2.default.createElement(
-	            'small',
-	            null,
-	            'You\'ve ridden in Ubers a total of'
-	          )
+	          { className: 'text-left text-muted' },
+	          'You\'ve ridden in Ubers a total of'
 	        ),
 	        _react2.default.createElement(
-	          'h3',
+	          'h2',
 	          { className: 'text-left text-primary' },
 	          timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null,
 	          ' ',
@@ -53995,7 +54041,8 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Average Ride and Wait Times'
+	    _react2.default.createElement('i', { className: 'fa fa-clock-o', 'aria-hidden': 'true' }),
+	    ' Average Wait and Ride Times'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
@@ -54008,20 +54055,20 @@
 	        { xs: 6, md: 6 },
 	        _react2.default.createElement(
 	          'h3',
-	          { className: 'text-center' },
-	          _react2.default.createElement(
-	            'small',
-	            null,
-	            'Your average wait time is'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'h4',
 	          { className: 'text-center text-primary' },
 	          averageRideWaiting.minutes,
 	          ' minutes ',
 	          averageRideWaiting.seconds,
 	          ' seconds'
+	        ),
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-center' },
+	          _react2.default.createElement(
+	            'small',
+	            null,
+	            'Average Wait Length'
+	          )
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -54029,20 +54076,20 @@
 	        { xs: 6, md: 6 },
 	        _react2.default.createElement(
 	          'h3',
-	          { className: 'text-center' },
-	          _react2.default.createElement(
-	            'small',
-	            null,
-	            'Your average ride time is'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'h4',
 	          { className: 'text-center text-primary' },
 	          averageRideRiding.minutes,
 	          ' minutes ',
 	          averageRideRiding.seconds,
 	          ' seconds'
+	        ),
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-center' },
+	          _react2.default.createElement(
+	            'small',
+	            null,
+	            'Average Ride Length'
+	          )
 	        )
 	      )
 	    ),
@@ -54057,8 +54104,9 @@
 	          { className: 'text-center' },
 	          _react2.default.createElement(_reactChartjs.Bar, {
 	            data: averageTimeGraphData,
-	            height: 300,
-	            width: 300
+	            options: { responsive: true },
+	            height: 400,
+	            width: 400
 	          })
 	        )
 	      )
@@ -54124,12 +54172,13 @@
 
 	  var modeCityData = getModeCityData(cityData);
 	  var modeCityName = modeCityData.name;
-	  var modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(2) * 100;
+	  var modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(4) * 100;
 	  var cityBarData = generateCityBarData(cityData);
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Rides by City'
+	    _react2.default.createElement('i', { className: 'fa fa-map', 'aria-hidden': 'true' }),
+	    ' Rides by City'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
@@ -54150,7 +54199,6 @@
 	      _react2.default.createElement(
 	        'small',
 	        null,
-	        'Over ',
 	        _react2.default.createElement(
 	          'strong',
 	          null,
@@ -54165,7 +54213,8 @@
 	      { className: 'text-center' },
 	      _react2.default.createElement(_reactChartjs.Bar, {
 	        data: cityBarData,
-	        height: 350,
+	        options: { responsive: true },
+	        height: 400,
 	        width: 400
 	      })
 	    )
@@ -54234,7 +54283,8 @@
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Rides by Day'
+	    _react2.default.createElement('i', { className: 'fa fa-calendar', 'aria-hidden': 'true' }),
+	    ' Rides by Day'
 	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
@@ -54242,7 +54292,7 @@
 	    _react2.default.createElement(
 	      'h3',
 	      { className: 'text-center' },
-	      'You take rides most often on ',
+	      'You ride most often on ',
 	      _react2.default.createElement(
 	        'strong',
 	        null,
@@ -54255,7 +54305,7 @@
 	      _react2.default.createElement(
 	        'small',
 	        null,
-	        'You take rides least often on ',
+	        'You ride least often on ',
 	        _react2.default.createElement(
 	          'strong',
 	          null,
@@ -54268,6 +54318,7 @@
 	      { className: 'text-center' },
 	      _react2.default.createElement(_reactChartjs.Bar, {
 	        data: dayBarData,
+	        options: { responsive: true },
 	        height: 400,
 	        width: 400
 	      })
@@ -54336,7 +54387,7 @@
 	    _react2.default.createElement(
 	      'h3',
 	      { className: 'text-center' },
-	      'RideStats9000 calculates pertinent statistics about your Uber usage'
+	      'RideStats9000 calculates statistics about your Uber usage'
 	    ),
 	    _react2.default.createElement(
 	      'div',
@@ -54351,6 +54402,12 @@
 	        'strong',
 	        null,
 	        'Log in'
+	      ),
+	      ' or ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        'Demo'
 	      ),
 	      ' to get started'
 	    )
@@ -54389,7 +54446,7 @@
 	        radius: 42,
 	        scale: 1,
 	        corners: 1,
-	        color: '#000',
+	        color: '#2c3e50',
 	        opacity: 0.25,
 	        rotate: 0,
 	        direction: 1,
@@ -54398,7 +54455,7 @@
 	        fps: 20,
 	        zIndex: 2e9,
 	        className: 'spinner',
-	        top: '30%',
+	        top: '40%',
 	        left: '50%',
 	        shadow: false,
 	        hwaccel: false,
@@ -54852,6 +54909,47 @@
 
 	}));
 
+
+/***/ },
+/* 457 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Footer = function Footer() {
+	  return _react2.default.createElement(
+	    "footer",
+	    { className: "footer navbar-fixed-bottom" },
+	    _react2.default.createElement(
+	      "div",
+	      { className: "text-center container footer-content" },
+	      _react2.default.createElement(
+	        "p",
+	        { className: "footer-text" },
+	        "Made with React, Node, and ",
+	        _react2.default.createElement("i", { className: "fa fa-heart faa-pulse animated footer-pulse-heart" }),
+	        " by ",
+	        _react2.default.createElement(
+	          "a",
+	          { href: "https://github.com/ZLester" },
+	          "ZLester"
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = Footer;
 
 /***/ }
 /******/ ]);
