@@ -54877,10 +54877,10 @@
 	var Footer = function Footer() {
 	  return _react2.default.createElement(
 	    "footer",
-	    { className: "footer" },
+	    { className: "footer navbar-fixed-bottom" },
 	    _react2.default.createElement(
 	      "div",
-	      { className: "container footer-content" },
+	      { className: "text-center container footer-content" },
 	      _react2.default.createElement(
 	        "p",
 	        { className: "footer-text" },
