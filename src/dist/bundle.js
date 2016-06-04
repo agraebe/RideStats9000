@@ -34302,7 +34302,7 @@
 	      _react2.default.createElement(
 	        _reactBootstrap.Nav,
 	        { pullRight: true },
-	        demo ? null : _react2.default.createElement(
+	        demo || loggedIn ? null : _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          { eventKey: 1, onClick: handleDemoClick },
 	          'Demo'

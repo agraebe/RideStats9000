@@ -12,7 +12,7 @@ const NavTop = ({ handleDemoClick, handleLoginClick, loggedIn, demo }) => {
       </Navbar.Header>
       <Navbar.Collapse>
         <Nav pullRight>
-          {demo ? null : <NavItem eventKey={1} onClick={handleDemoClick}>Demo</NavItem>}
+          {demo || loggedIn ? null : <NavItem eventKey={1} onClick={handleDemoClick}>Demo</NavItem>}
           <NavItem eventKey={2} onClick={handleLoginClick}>{loggedIn ? demo ? 'End Demo' : 'Log out' : 'Log in' }</NavItem>
         </Nav>
       </Navbar.Collapse>
