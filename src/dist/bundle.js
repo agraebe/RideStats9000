@@ -150,6 +150,9 @@
 
 	      this.setState({ loggedIn: true, loading: true });
 	      _jquery2.default.ajax({ type: 'GET', url: '/api/uber/statistics' }).done(function (response) {
+	        if (window.location.hash === '#/logout') {
+	          return;
+	        }
 	        window.history.pushState(null, '#/stats', '#/stats');
 	        _this2.setState({ data: response.data, loading: false });
 	      }).fail(function (err) {

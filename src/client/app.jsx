@@ -53,6 +53,9 @@ class App extends React.Component {
     this.setState({loggedIn: true, loading: true});
     $.ajax({ type: 'GET', url: '/api/uber/statistics' })
       .done(response => {
+        if (window.location.hash === '#/logout') {
+          return;
+        }
         window.history.pushState(null, '#/stats', '#/stats');
         this.setState({ data: response.data, loading: false })
       })
