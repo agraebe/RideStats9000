@@ -107,7 +107,7 @@
 	    _this.handleLoginClick = _this.handleLoginClick.bind(_this);
 	    _this.handleDemoClick = _this.handleDemoClick.bind(_this);
 	    _this.requestUserStatistics = _this.requestUserStatistics.bind(_this);
-	    _this.requestDummyStatistics = _this.requestDummyStatistics.bind(_this);
+	    _this.requestDemoStatistics = _this.requestDemoStatistics.bind(_this);
 	    _this.handleLogout = _this.handleLogout.bind(_this);
 	    return _this;
 	  }
@@ -135,12 +135,12 @@
 	  }, {
 	    key: 'handleDemoClick',
 	    value: function handleDemoClick() {
-	      this.requestDummyStatistics();
+	      this.requestDemoStatistics();
 	    }
 	  }, {
 	    key: 'handleLogout',
 	    value: function handleLogout() {
-	      window.location.hash = "#/logout";
+	      window.history.pushState(null, '#/logout', '#/logout');
 	      this.setState({ loggedIn: false, loading: false, data: null, demo: false });
 	    }
 	  }, {
@@ -151,7 +151,6 @@
 	      this.setState({ loggedIn: true, loading: true });
 	      _jquery2.default.ajax({ type: 'GET', url: '/api/uber/statistics' }).done(function (response) {
 	        window.location.hash = "#/stats";
-	        console.log(response.data);
 	        _this2.setState({ data: response.data, loading: false });
 	      }).fail(function (err) {
 	        _this2.handleLogout();
@@ -159,12 +158,12 @@
 	      });
 	    }
 	  }, {
-	    key: 'requestDummyStatistics',
-	    value: function requestDummyStatistics() {
+	    key: 'requestDemoStatistics',
+	    value: function requestDemoStatistics() {
 	      var _this3 = this;
 
 	      this.setState({ loggedIn: true, loading: true, demo: true });
-	      window.location.hash === '#/demo';
+	      window.history.pushState(null, '#/demo', '#/demo');
 	      setTimeout(function () {
 	        _this3.setState({
 	          loading: false,
@@ -197,6 +196,7 @@
 	        _react2.default.createElement(_nav2.default, {
 	          handleLoginClick: this.handleLoginClick,
 	          handleDemoClick: this.handleDemoClick,
+	          loading: this.state.loading,
 	          loggedIn: this.state.loggedIn,
 	          demo: this.state.demo
 	        }),
@@ -34273,12 +34273,27 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var generateLoginText = function generateLoginText(loggedIn, demo, loading) {
+	  if (loggedIn) {
+	    if (loading) {
+	      return null;
+	    }
+	    if (demo) {
+	      return 'End Demo';
+	    }
+	    return 'Log out';
+	  }
+	  return 'Log in';
+	};
+
 	var NavTop = function NavTop(_ref) {
 	  var handleDemoClick = _ref.handleDemoClick;
 	  var handleLoginClick = _ref.handleLoginClick;
 	  var loggedIn = _ref.loggedIn;
 	  var demo = _ref.demo;
+	  var loading = _ref.loading;
 
+	  var loginText = generateLoginText(loggedIn, demo, loading);
 	  return _react2.default.createElement(
 	    _reactBootstrap.Navbar,
 	    null,
@@ -34310,7 +34325,7 @@
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          { eventKey: 2, onClick: handleLoginClick },
-	          loggedIn ? demo ? 'End Demo' : 'Log out' : 'Log in'
+	          loginText
 	        )
 	      )
 	    )
@@ -54136,17 +54151,26 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var generateCityBarDataColors = function generateCityBarDataColors(data) {
+	  var colors = ['#970015', '#149C81', '#006551', '#F4A51F', '#C88107', '#E81E3A', '#BF0720'];
+	  return data.map(function () {
+	    var color = colors.shift();
+	    colors.push(color);
+	    return color;
+	  });
+	};
 	var generateCityBarData = function generateCityBarData(cityData) {
 	  var labels = Object.keys(cityData);
 	  var data = labels.map(function (city) {
 	    return cityData[city];
 	  });
+	  var colors = generateCityBarDataColors(data);
 	  var cityBarData = {
 	    labels: labels,
 	    datasets: [{
 	      label: 'Trips Per City',
-	      backgroundColor: '#149c82',
-	      fillColor: '#149c82',
+	      backgroundColor: colors,
+	      fillColor: colors,
 	      borderWidth: 10,
 	      hoverBackgroundColor: '#149c82',
 	      hoverBorderColor: '#149c82',
@@ -54450,16 +54474,13 @@
 	        opacity: 0.25,
 	        rotate: 0,
 	        direction: 1,
-	        speed: 1,
+	        speed: 1.0,
 	        trail: 60,
 	        fps: 20,
 	        zIndex: 2e9,
 	        className: 'spinner',
-	        top: '40%',
-	        left: '50%',
 	        shadow: false,
-	        hwaccel: false,
-	        position: 'absolute'
+	        hwaccel: false
 	    };
 	    return _react2.default.createElement(
 	        'div',

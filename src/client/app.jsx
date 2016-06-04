@@ -20,7 +20,7 @@ class App extends React.Component {
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleDemoClick = this.handleDemoClick.bind(this);
     this.requestUserStatistics = this.requestUserStatistics.bind(this);
-    this.requestDummyStatistics = this.requestDummyStatistics.bind(this);
+    this.requestDemoStatistics = this.requestDemoStatistics.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
@@ -41,11 +41,11 @@ class App extends React.Component {
   }
 
   handleDemoClick () {
-    this.requestDummyStatistics();
+    this.requestDemoStatistics();
   }
 
   handleLogout () {
-    window.location.hash = "#/logout";
+    window.history.pushState(null, '#/logout', '#/logout');
     this.setState({ loggedIn: false, loading: false, data: null, demo: false});
   }
 
@@ -54,7 +54,6 @@ class App extends React.Component {
     $.ajax({ type: 'GET', url: '/api/uber/statistics' })
       .done(response => {
         window.location.hash = "#/stats";
-        console.log(response.data);
         this.setState({ data: response.data, loading: false })
       })
       .fail(err => {
@@ -63,9 +62,9 @@ class App extends React.Component {
       });
   }
 
-  requestDummyStatistics() {
+  requestDemoStatistics() {
     this.setState({loggedIn: true, loading: true, demo: true});
-    window.location.hash === '#/demo'
+    window.history.pushState(null, '#/demo', '#/demo');
     setTimeout(() => {
       this.setState({
         loading: false,
@@ -96,6 +95,7 @@ class App extends React.Component {
         <Nav 
           handleLoginClick={this.handleLoginClick}
           handleDemoClick={this.handleDemoClick}
+          loading={this.state.loading}
           loggedIn={this.state.loggedIn}
           demo={this.state.demo}
         />

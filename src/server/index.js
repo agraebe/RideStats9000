@@ -8,3 +8,5 @@ require('./routes')(app);
 app.listen(port, () => {
   console.log('UberStats listening on ' + port);
 });
+
+module.exports = app;
