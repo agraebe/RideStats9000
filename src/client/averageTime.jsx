@@ -11,9 +11,9 @@ const generateAverageTimeGraphData = (averageRideWaiting, averageRideRiding) => 
     labels,
     datasets: [{
       label: 'Distance',
-      fillColor: ['#149c82','#970015'],
-      backgroundColor: ['#149c82','#970015'],
-      borderColor: ['#149c82','#970015'],
+      fillColor: ['#970015', '#149c82'],
+      backgroundColor: ['#970015', '#149c82'],
+      borderColor: ['#970015', '#149c82'],
       borderWidth: 10,
       hoverBackgroundColor: '#149c82',
       hoverBorderColor: '#149c82',
