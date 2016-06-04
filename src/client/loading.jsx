@@ -14,16 +14,13 @@ const Loading = () => {
       opacity: 0.25,
       rotate: 0,
       direction: 1,
-      speed: 1,
+      speed: 1.0,
       trail: 60,
       fps: 20,
       zIndex: 2e9,
       className: 'spinner',
-      top: '40%',
-      left: '50%',
       shadow: false,
-      hwaccel: false,
-      position: 'absolute',
+      hwaccel: false
   }
   return (
     <div>

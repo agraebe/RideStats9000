@@ -2,15 +2,24 @@ import React from 'react';
 import { Panel, Col, Row } from 'react-bootstrap';
 import { Bar } from 'react-chartjs';
 
+const generateCityBarDataColors = (data) => {
+  const colors = ['#970015', '#149C81', '#006551', '#F4A51F', '#C88107', '#E81E3A', '#BF0720'];
+  return data.map(() => {
+    const color = colors.shift();
+    colors.push(color);
+    return color;
+  });
+}
 const generateCityBarData = cityData => {
   const labels = Object.keys(cityData);
-  const data = labels.map(city => cityData[city])
+  const data = labels.map(city => cityData[city]);
+  const colors = generateCityBarDataColors(data);
   const cityBarData = {
     labels,
     datasets: [{
       label: 'Trips Per City',
-      backgroundColor: '#149c82',
-      fillColor: '#149c82',
+      backgroundColor: colors,
+      fillColor: colors,
       borderWidth: 10,
       hoverBackgroundColor: '#149c82',
       hoverBorderColor: '#149c82',

@@ -20,7 +20,7 @@ class App extends React.Component {
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleDemoClick = this.handleDemoClick.bind(this);
     this.requestUserStatistics = this.requestUserStatistics.bind(this);
-    this.requestDummyStatistics = this.requestDummyStatistics.bind(this);
+    this.requestDemoStatistics = this.requestDemoStatistics.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
@@ -41,11 +41,11 @@ class App extends React.Component {
   }
 
   handleDemoClick () {
-    this.requestDummyStatistics();
+    this.requestDemoStatistics();
   }
 
   handleLogout () {
-    window.location.hash = "#/logout";
+    window.history.pushState(null, '#/logout', '#/logout');
     this.setState({ loggedIn: false, loading: false, data: null, demo: false});
   }
 
@@ -53,8 +53,7 @@ class App extends React.Component {
     this.setState({loggedIn: true, loading: true});
     $.ajax({ type: 'GET', url: '/api/uber/statistics' })
       .done(response => {
-        window.location.hash = "#/stats";
-        console.log(response.data);
+        window.history.pushState(null, '#/stats', '#/stats');
         this.setState({ data: response.data, loading: false })
       })
       .fail(err => {
@@ -63,10 +62,13 @@ class App extends React.Component {
       });
   }
 
-  requestDummyStatistics() {
+  requestDemoStatistics() {
+    window.history.pushState(null, '#/demo', '#/demo');
     this.setState({loggedIn: true, loading: true, demo: true});
-    window.location.hash === '#/demo'
     setTimeout(() => {
+      if (window.location.hash === '#/logout') {
+        return;
+      }
       this.setState({
         loading: false,
         data: {
@@ -96,10 +98,11 @@ class App extends React.Component {
         <Nav 
           handleLoginClick={this.handleLoginClick}
           handleDemoClick={this.handleDemoClick}
+          loading={this.state.loading}
           loggedIn={this.state.loggedIn}
           demo={this.state.demo}
         />
-        {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <LoginReminder /> }
+        {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <LoginReminder handleLoginClick={this.handleLoginClick} handleDemoClick={this.handleDemoClick} /> }
         <Footer />
       </div>
     );
