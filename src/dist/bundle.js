@@ -111,6 +111,7 @@
 	    _this.requestUserStatistics = _this.requestUserStatistics.bind(_this);
 	    _this.requestDemoStatistics = _this.requestDemoStatistics.bind(_this);
 	    _this.handleLogout = _this.handleLogout.bind(_this);
+	    _this.generatePageContent = _this.generatePageContent.bind(_this);
 	    return _this;
 	  }
 
@@ -151,7 +152,8 @@
 
 	      this.setState({ loggedIn: true, loading: true });
 	      _jquery2.default.ajax({ type: 'GET', url: '/api/uber/statistics' }).done(function (response) {
-	        if (window.location.hash === '#/logout') {
+	        // User clicked logout during load
+	        if (_this2.state.loggedIn === false) {
 	          return;
 	        }
 	        window.history.pushState(null, '#/stats', '#/stats');
@@ -168,7 +170,8 @@
 	      window.history.pushState(null, '#/demo', '#/demo');
 	      this.setState({ loggedIn: true, loading: true, demo: true });
 	      setTimeout(function () {
-	        if (window.location.hash === '#/logout') {
+	        // User clicked end demo during load
+	        if (_this3.state.demo === false) {
 	          return;
 	        }
 	        _this3.setState({
@@ -178,8 +181,20 @@
 	      }, 2000);
 	    }
 	  }, {
+	    key: 'generatePageContent',
+	    value: function generatePageContent() {
+	      if (this.state.data) {
+	        return _react2.default.createElement(_stats2.default, { data: this.state.data });
+	      }
+	      if (this.state.loading) {
+	        return _react2.default.createElement(_loading2.default, null);
+	      }
+	      return _react2.default.createElement(_login2.default, { handleLoginClick: this.handleLoginClick, handleDemoClick: this.handleDemoClick });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var pageContent = this.generatePageContent();
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -190,7 +205,7 @@
 	          loggedIn: this.state.loggedIn,
 	          demo: this.state.demo
 	        }),
-	        this.state.data ? _react2.default.createElement(_stats2.default, { data: this.state.data }) : this.state.loading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(_login2.default, { handleLoginClick: this.handleLoginClick, handleDemoClick: this.handleDemoClick }),
+	        pageContent,
 	        _react2.default.createElement(_footer2.default, null)
 	      );
 	    }
@@ -54857,7 +54872,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -54872,36 +54887,40 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var generateSpinConfig = function generateSpinConfig() {
+	  return {
+	    lines: 13,
+	    length: 28,
+	    width: 14,
+	    radius: 42,
+	    scale: 1,
+	    corners: 1,
+	    color: '#2c3e50',
+	    opacity: 0.25,
+	    rotate: 0,
+	    direction: 1,
+	    speed: 1.0,
+	    trail: 60,
+	    fps: 20,
+	    zIndex: 2e9,
+	    className: 'spinner',
+	    shadow: false,
+	    hwaccel: false
+	  };
+	};
+
 	var Loading = function Loading() {
-	    var spinConfig = {
-	        lines: 13,
-	        length: 28,
-	        width: 14,
-	        radius: 42,
-	        scale: 1,
-	        corners: 1,
-	        color: '#2c3e50',
-	        opacity: 0.25,
-	        rotate: 0,
-	        direction: 1,
-	        speed: 1.0,
-	        trail: 60,
-	        fps: 20,
-	        zIndex: 2e9,
-	        className: 'spinner',
-	        shadow: false,
-	        hwaccel: false
-	    };
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	            'h3',
-	            { className: 'text-center' },
-	            'Retrieving Uber statistics...'
-	        ),
-	        _react2.default.createElement(_reactSpin2.default, { config: spinConfig })
-	    );
+	  var spinConfig = generateSpinConfig();
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'Retrieving Uber statistics...'
+	    ),
+	    _react2.default.createElement(_reactSpin2.default, { config: spinConfig })
+	  );
 	};
 
 	exports.default = Loading;
@@ -54969,6 +54988,24 @@
 	  var handleLoginClick = _ref.handleLoginClick;
 	  var handleDemoClick = _ref.handleDemoClick;
 
+	  var demoLink = _react2.default.createElement(
+	    'a',
+	    { className: 'link-demo', onClick: handleDemoClick },
+	    _react2.default.createElement(
+	      'strong',
+	      null,
+	      'Demo'
+	    )
+	  );
+	  var loginLink = _react2.default.createElement(
+	    'a',
+	    { className: 'link-login', onClick: handleLoginClick },
+	    _react2.default.createElement(
+	      'strong',
+	      null,
+	      'Log in'
+	    )
+	  );
 	  return _react2.default.createElement(
 	    'div',
 	    null,
@@ -54986,25 +55023,9 @@
 	      'h4',
 	      { className: 'text-center' },
 	      'Click ',
-	      _react2.default.createElement(
-	        'a',
-	        { className: 'link-demo', onClick: handleDemoClick },
-	        _react2.default.createElement(
-	          'strong',
-	          null,
-	          'Demo'
-	        )
-	      ),
+	      demoLink,
 	      ' or ',
-	      _react2.default.createElement(
-	        'a',
-	        { className: 'link-login', onClick: handleLoginClick },
-	        _react2.default.createElement(
-	          'strong',
-	          null,
-	          'Log in'
-	        )
-	      ),
+	      loginLink,
 	      ' to get started'
 	    )
 	  );

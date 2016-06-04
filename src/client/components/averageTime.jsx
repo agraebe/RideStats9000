@@ -53,4 +53,4 @@ const AverageTime = ({ averageRideWaiting, averageRideRiding }) => {
   )
 }
 
-export default AverageTime
+export default AverageTime;

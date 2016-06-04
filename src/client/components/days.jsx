@@ -52,4 +52,4 @@ const Days = ({ dayData }) => {
   )
 }
 
-export default Days
+export default Days;

@@ -39,4 +39,4 @@ const Distance = ({ distanceTraveled, longestRideDistance, averageRideDistance }
   );
 }
 
-export default Distance
+export default Distance;

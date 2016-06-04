@@ -61,4 +61,5 @@ const Cities = ({ cityData, numberOfTrips }) => {
   )
 }
 
-export default Cities
+export default Cities;
+

@@ -23,6 +23,7 @@ class App extends React.Component {
     this.requestUserStatistics = this.requestUserStatistics.bind(this);
     this.requestDemoStatistics = this.requestDemoStatistics.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.generatePageContent = this.generatePageContent.bind(this);
   }
 
   componentDidMount() {
@@ -53,7 +54,8 @@ class App extends React.Component {
     this.setState({loggedIn: true, loading: true});
     $.ajax({ type: 'GET', url: '/api/uber/statistics' })
       .done(response => {
-        if (window.location.hash === '#/logout') {
+        // User clicked logout during load
+        if (this.state.loggedIn === false) {
           return;
         }
         window.history.pushState(null, '#/stats', '#/stats');
@@ -68,7 +70,8 @@ class App extends React.Component {
     window.history.pushState(null, '#/demo', '#/demo');
     this.setState({loggedIn: true, loading: true, demo: true});
     setTimeout(() => {
-      if (window.location.hash === '#/logout') {
+      // User clicked end demo during load
+      if (this.state.demo === false) {
         return;
       }
       this.setState({
@@ -78,7 +81,18 @@ class App extends React.Component {
     }, 2000);
   }
 
+  generatePageContent() {
+    if (this.state.data) {
+      return (<Stats data={this.state.data}/>);
+    }
+    if (this.state.loading) {
+      return (<Loading />);
+    }
+    return (<Login handleLoginClick={this.handleLoginClick} handleDemoClick={this.handleDemoClick} />);
+  }
+
   render() {
+    const pageContent = this.generatePageContent();
     return (
       <div>
         <Nav 
@@ -88,7 +102,7 @@ class App extends React.Component {
           loggedIn={this.state.loggedIn}
           demo={this.state.demo}
         />
-        {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <Login handleLoginClick={this.handleLoginClick} handleDemoClick={this.handleDemoClick} /> }
+        {pageContent}
         <Footer />
       </div>
     );
