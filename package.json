@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server/"
+    "start": "node src/server/",
+    "build": "webpack",
+    "dev": "webpack && node src/server/",
+    "test": "mocha src/test"
   },
   "engines": {
     "node": "6.2.0"

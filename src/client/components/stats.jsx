@@ -7,7 +7,6 @@ import TotalTime from './TotalTime.jsx';
 import AverageTime from './AverageTime.jsx';
 import Cities from './cities.jsx';
 import Days from './days.jsx';
-import First from './first.jsx';
 
 const Stats = ({ data }) => {
   const convertTime = (seconds) => {

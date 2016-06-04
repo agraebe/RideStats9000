@@ -62,27 +62,27 @@
 
 	var _reactChartjs = __webpack_require__(169);
 
-	var _nav = __webpack_require__(459);
+	var _nav = __webpack_require__(179);
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var _stats = __webpack_require__(460);
+	var _stats = __webpack_require__(445);
 
 	var _stats2 = _interopRequireDefault(_stats);
 
-	var _login = __webpack_require__(470);
+	var _login = __webpack_require__(452);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _loading = __webpack_require__(468);
+	var _loading = __webpack_require__(453);
 
 	var _loading2 = _interopRequireDefault(_loading);
 
-	var _footer = __webpack_require__(469);
+	var _footer = __webpack_require__(456);
 
 	var _footer2 = _interopRequireDefault(_footer);
 
-	var _utils = __webpack_require__(458);
+	var _utils = __webpack_require__(457);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34261,7 +34261,82 @@
 
 
 /***/ },
-/* 179 */,
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateLoginText = function generateLoginText(loggedIn, demo) {
+	  if (loggedIn) {
+	    if (demo) {
+	      return 'End Demo';
+	    }
+	    return 'Log out';
+	  }
+	  return 'Log in';
+	};
+
+	var NavTop = function NavTop(_ref) {
+	  var handleDemoClick = _ref.handleDemoClick;
+	  var handleLoginClick = _ref.handleLoginClick;
+	  var loggedIn = _ref.loggedIn;
+	  var demo = _ref.demo;
+	  var loading = _ref.loading;
+
+	  var loginText = generateLoginText(loggedIn, demo);
+	  return _react2.default.createElement(
+	    _reactBootstrap.Navbar,
+	    null,
+	    _react2.default.createElement(
+	      _reactBootstrap.Navbar.Header,
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Navbar.Brand,
+	        null,
+	        _react2.default.createElement(
+	          'a',
+	          null,
+	          'RideStats9000'
+	        )
+	      ),
+	      _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
+	    ),
+	    _react2.default.createElement(
+	      _reactBootstrap.Navbar.Collapse,
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Nav,
+	        { pullRight: true },
+	        demo || loggedIn ? null : _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          { eventKey: 1, onClick: handleDemoClick },
+	          'Demo'
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          { eventKey: 2, onClick: handleLoginClick },
+	          loginText
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = NavTop;
+
+/***/ },
 /* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -53503,17 +53578,907 @@
 	exports.ValidComponentChildren = _ValidComponentChildren3['default'];
 
 /***/ },
-/* 445 */,
-/* 446 */,
-/* 447 */,
-/* 448 */,
-/* 449 */,
-/* 450 */,
-/* 451 */,
-/* 452 */,
-/* 453 */,
-/* 454 */,
-/* 455 */
+/* 445 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _trips = __webpack_require__(446);
+
+	var _trips2 = _interopRequireDefault(_trips);
+
+	var _distance = __webpack_require__(447);
+
+	var _distance2 = _interopRequireDefault(_distance);
+
+	var _TotalTime = __webpack_require__(448);
+
+	var _TotalTime2 = _interopRequireDefault(_TotalTime);
+
+	var _AverageTime = __webpack_require__(449);
+
+	var _AverageTime2 = _interopRequireDefault(_AverageTime);
+
+	var _cities = __webpack_require__(450);
+
+	var _cities2 = _interopRequireDefault(_cities);
+
+	var _days = __webpack_require__(451);
+
+	var _days2 = _interopRequireDefault(_days);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Stats = function Stats(_ref) {
+	  var data = _ref.data;
+
+	  var convertTime = function convertTime(seconds) {
+	    return {
+	      days: Math.floor(seconds / 86400),
+	      hours: Math.floor(seconds % 86400 / 3600),
+	      minutes: Math.floor(seconds % 3600 / 60),
+	      seconds: Math.floor(seconds % 3600 % 60)
+	    };
+	  };
+
+	  var numberOfTrips = data.numberOfTrips;
+	  var dayData = data.tripsPerDay;
+	  var cityData = data.tripsPerCity;
+
+	  var distanceTraveled = data.totalDistanceTraveled.toFixed(2);
+	  var longestRideDistance = data.longestRide.distance.toFixed(2);
+	  var longestRideCity = data.longestRide.city;
+
+	  var timeWaiting = convertTime(data.timeSpentWaiting);
+	  var timeRiding = convertTime(data.timeSpentRiding);
+
+	  var averageRideDistance = (distanceTraveled / numberOfTrips).toFixed(2);
+	  var averageRideWaiting = convertTime(data.timeSpentWaiting / numberOfTrips);
+	  var averageRideRiding = convertTime(data.timeSpentRiding / numberOfTrips);
+
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      _reactBootstrap.Grid,
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Row,
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 12 },
+	          _react2.default.createElement(_trips2.default, { numberOfTrips: numberOfTrips })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Row,
+	        { className: 'show-grid' },
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 6 },
+	          _react2.default.createElement(_AverageTime2.default, {
+	            averageRideWaiting: averageRideWaiting,
+	            averageRideRiding: averageRideRiding
+	          })
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 6 },
+	          _react2.default.createElement(_cities2.default, {
+	            cityData: cityData,
+	            numberOfTrips: numberOfTrips
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Row,
+	        { className: 'show-grid' },
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 12 },
+	          _react2.default.createElement(_TotalTime2.default, {
+	            timeWaiting: timeWaiting,
+	            timeRiding: timeRiding
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Row,
+	        { style: { marginBottom: '30px' }, className: 'show-grid' },
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 6 },
+	          _react2.default.createElement(_distance2.default, {
+	            distanceTraveled: distanceTraveled,
+	            averageRideDistance: averageRideDistance,
+	            longestRideDistance: longestRideDistance
+	          })
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 6 },
+	          _react2.default.createElement(_days2.default, {
+	            dayData: dayData
+	          })
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = Stats;
+
+/***/ },
+/* 446 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateIconDivs = function generateIconDivs(numberOfTrips) {
+	  var iconTotal = Math.ceil(numberOfTrips / 10);
+	  var remainder = 1 - (Math.ceil(numberOfTrips / 10) - numberOfTrips / 10);
+	  var cutWidth = 100 * remainder + 'px';
+	  var icons = [];
+	  for (var i = 0; i < iconTotal; i++) {
+	    icons.push(i);
+	  }
+	  return icons.map(function (icon, iconIndex) {
+	    if (iconIndex === icons.length - 1) {
+	      return _react2.default.createElement(
+	        'div',
+	        { key: iconIndex, className: 'text-left', style: { minHeight: '100px', minWidth: '100px', maxHeight: '100px', maxWidth: '100px', display: 'inline-block' } },
+	        _react2.default.createElement('div', { style: { minHeight: '100px', minWidth: cutWidth, overflow: 'hidden', display: 'inline-block', background: 'url(assets/carIconRed.png) no-repeat' } })
+	      );
+	    }
+	    return _react2.default.createElement('div', { key: iconIndex, style: { minHeight: '100px', minWidth: '100px', display: 'inline-block', background: 'url(assets/carIconRed.png) no-repeat' } });
+	  });
+	};
+
+	var Trips = function Trips(_ref) {
+	  var numberOfTrips = _ref.numberOfTrips;
+
+	  var iconDivs = generateIconDivs(numberOfTrips);
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    _react2.default.createElement('i', { className: 'fa fa-car', 'aria-hidden': 'true' }),
+	    ' Total Rides'
+	  );
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      _reactBootstrap.Panel,
+	      { className: 'panel-primary', header: title },
+	      _react2.default.createElement(
+	        'h3',
+	        { className: 'text-center' },
+	        'You\'ve taken ',
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          numberOfTrips
+	        ),
+	        ' rides with Uber'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'text-center' },
+	        iconDivs
+	      ),
+	      _react2.default.createElement(
+	        'h3',
+	        { className: 'text-center' },
+	        _react2.default.createElement(
+	          'small',
+	          null,
+	          'One car represents 10 rides'
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = Trips;
+
+/***/ },
+/* 447 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateDistanceGraphData = function generateDistanceGraphData(distanceTraveled, longestRideDistance, averageRideDistance) {
+	  var labels = ['Longest Ride Distance', 'Average Ride Distance'];
+	  var data = [longestRideDistance, averageRideDistance];
+	  return {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Distance',
+	      fillColor: ['#970015', '#149c82'],
+	      backgroundColor: ['#970015', '#149c82'],
+	      borderColor: ['#970015', '#149c82'],
+	      borderWidth: 10,
+	      hoverBackgroundColor: '#149c82',
+	      hoverBorderColor: '#149c82',
+	      data: data
+	    }]
+	  };
+	};
+
+	var Distance = function Distance(_ref) {
+	  var distanceTraveled = _ref.distanceTraveled;
+	  var longestRideDistance = _ref.longestRideDistance;
+	  var averageRideDistance = _ref.averageRideDistance;
+
+	  var distanceGraphData = generateDistanceGraphData(distanceTraveled, longestRideDistance, averageRideDistance);
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    _react2.default.createElement('i', { className: 'fa fa-road', 'aria-hidden': 'true' }),
+	    ' Distance Traveled'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'You\'ve traveled a total of ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        distanceTraveled,
+	        ' miles'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      _react2.default.createElement(
+	        'small',
+	        null,
+	        'Your longest ride ever was ',
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          longestRideDistance,
+	          ' miles'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement(_reactChartjs.Bar, {
+	        data: distanceGraphData,
+	        options: { responsive: true },
+	        height: 400,
+	        width: 400
+	      })
+	    )
+	  );
+	};
+
+	exports.default = Distance;
+
+/***/ },
+/* 448 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var TotalTime = function TotalTime(_ref) {
+	  var timeWaiting = _ref.timeWaiting;
+	  var timeRiding = _ref.timeRiding;
+
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    _react2.default.createElement('i', { className: 'fa fa-clock-o', 'aria-hidden': 'true' }),
+	    ' Total Wait and Ride Times'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      _reactBootstrap.Row,
+	      { style: { marginBottom: '20px' } },
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 4, md: 4 },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'pull-right' },
+	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/traffic.png' })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 8, md: 8 },
+	        _react2.default.createElement(
+	          'h2',
+	          { className: 'text-left text-muted' },
+	          'You\'ve waited for Ubers a total of'
+	        ),
+	        _react2.default.createElement(
+	          'h2',
+	          { className: 'text-left text-primary' },
+	          timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null,
+	          ' ',
+	          timeWaiting.hours,
+	          ' hours, ',
+	          timeWaiting.minutes,
+	          ' minutes, and ',
+	          timeWaiting.seconds,
+	          ' seconds'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _reactBootstrap.Row,
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 4, md: 4 },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'pull-right' },
+	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/carwheel.png' })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 8, md: 8 },
+	        _react2.default.createElement(
+	          'h2',
+	          { className: 'text-left text-muted' },
+	          'You\'ve ridden in Ubers a total of'
+	        ),
+	        _react2.default.createElement(
+	          'h2',
+	          { className: 'text-left text-primary' },
+	          timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null,
+	          ' ',
+	          timeRiding.hours,
+	          ' hours, ',
+	          timeRiding.minutes,
+	          ' minutes, and ',
+	          timeRiding.seconds,
+	          ' seconds'
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = TotalTime;
+
+/***/ },
+/* 449 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateAverageTimeGraphData = function generateAverageTimeGraphData(averageRideWaiting, averageRideRiding) {
+	  var averageRideWaitingDec = (averageRideWaiting.minutes + averageRideWaiting.seconds / 60).toFixed(2);
+	  var averageRideRidingDec = (averageRideRiding.minutes + averageRideRiding.seconds / 60).toFixed(2);
+	  var labels = ['Average Wait', 'Average Ride'];
+	  var data = [averageRideWaitingDec, averageRideRidingDec];
+	  return {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Distance',
+	      fillColor: ['#970015', '#149c82'],
+	      backgroundColor: ['#970015', '#149c82'],
+	      borderColor: ['#970015', '#149c82'],
+	      borderWidth: 10,
+	      hoverBackgroundColor: '#149c82',
+	      hoverBorderColor: '#149c82',
+	      data: data
+	    }]
+	  };
+	};
+
+	var AverageTime = function AverageTime(_ref) {
+	  var averageRideWaiting = _ref.averageRideWaiting;
+	  var averageRideRiding = _ref.averageRideRiding;
+
+	  var averageTimeGraphData = generateAverageTimeGraphData(averageRideWaiting, averageRideRiding);
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    _react2.default.createElement('i', { className: 'fa fa-clock-o', 'aria-hidden': 'true' }),
+	    ' Average Wait and Ride Times'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      _reactBootstrap.Row,
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 6, md: 6 },
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-center text-primary' },
+	          averageRideWaiting.minutes,
+	          ' minutes ',
+	          averageRideWaiting.seconds,
+	          ' seconds'
+	        ),
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-center' },
+	          _react2.default.createElement(
+	            'small',
+	            null,
+	            'Average Wait Length'
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 6, md: 6 },
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-center text-primary' },
+	          averageRideRiding.minutes,
+	          ' minutes ',
+	          averageRideRiding.seconds,
+	          ' seconds'
+	        ),
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'text-center' },
+	          _react2.default.createElement(
+	            'small',
+	            null,
+	            'Average Ride Length'
+	          )
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _reactBootstrap.Row,
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { xs: 12, md: 12 },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'text-center' },
+	          _react2.default.createElement(_reactChartjs.Bar, {
+	            data: averageTimeGraphData,
+	            options: { responsive: true },
+	            height: 400,
+	            width: 400
+	          })
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = AverageTime;
+
+/***/ },
+/* 450 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateCityBarDataColors = function generateCityBarDataColors(data) {
+	  var colors = ['#970015', '#149C81', '#006551', '#F4A51F', '#C88107', '#E81E3A', '#BF0720'];
+	  return data.map(function () {
+	    var color = colors.shift();
+	    colors.push(color);
+	    return color;
+	  });
+	};
+	var generateCityBarData = function generateCityBarData(cityData) {
+	  var labels = Object.keys(cityData);
+	  var data = labels.map(function (city) {
+	    return cityData[city];
+	  });
+	  var colors = generateCityBarDataColors(data);
+	  var cityBarData = {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Trips Per City',
+	      backgroundColor: colors,
+	      fillColor: colors,
+	      borderWidth: 10,
+	      hoverBackgroundColor: '#149c82',
+	      hoverBorderColor: '#149c82',
+	      data: data
+	    }]
+	  };
+	  return cityBarData;
+	};
+
+	var getModeCityData = function getModeCityData(cityData) {
+	  return Object.keys(cityData).reduce(function (results, city) {
+	    if (cityData[city] > results.count) {
+	      results.name = city;
+	      results.count = cityData[city];
+	    }
+	    return results;
+	  }, { name: '', count: 0 });
+	};
+
+	var Cities = function Cities(_ref) {
+	  var cityData = _ref.cityData;
+	  var numberOfTrips = _ref.numberOfTrips;
+
+	  var modeCityData = getModeCityData(cityData);
+	  var modeCityName = modeCityData.name;
+	  var modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(4) * 100;
+	  var cityBarData = generateCityBarData(cityData);
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    _react2.default.createElement('i', { className: 'fa fa-map', 'aria-hidden': 'true' }),
+	    ' Rides by City'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'You take Uber most often in ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        modeCityName
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      _react2.default.createElement(
+	        'small',
+	        null,
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          modeCityPercentage,
+	          '%'
+	        ),
+	        ' of your rides take place there'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement(_reactChartjs.Bar, {
+	        data: cityBarData,
+	        options: { responsive: true },
+	        height: 400,
+	        width: 400
+	      })
+	    )
+	  );
+	};
+
+	exports.default = Cities;
+
+/***/ },
+/* 451 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactChartjs = __webpack_require__(169);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	var generateDayBarData = function generateDayBarData(dayData) {
+	  var labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	  var data = dayData;
+	  var dayBarData = {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Trips Per Day',
+	      fillColor: ['#970015', '#149C81', '#006551', '#F4A51F', '#C88107', '#E81E3A', '#BF0720'],
+	      borderWidth: 10,
+	      hoverBackgroundColor: '#2980b9',
+	      hoverBorderColor: '#2980b9',
+	      data: data
+	    }]
+	  };
+	  return dayBarData;
+	};
+
+	var days = ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays'];
+
+	var getModeDay = function getModeDay(dayData) {
+	  var modeDayInt = Math.max.apply(Math, _toConsumableArray(dayData));
+	  return days[dayData.indexOf(modeDayInt)];
+	};
+
+	var getMinDay = function getMinDay(dayData) {
+	  var minDayInt = Math.min.apply(Math, _toConsumableArray(dayData));
+	  return days[dayData.indexOf(minDayInt)];
+	};
+
+	var Days = function Days(_ref) {
+	  var dayData = _ref.dayData;
+
+	  var modeDay = getModeDay(dayData);
+	  var minDay = getMinDay(dayData);
+	  var dayBarData = generateDayBarData(dayData);
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    _react2.default.createElement('i', { className: 'fa fa-calendar', 'aria-hidden': 'true' }),
+	    ' Rides by Day'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'You ride most often on ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        modeDay
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      _react2.default.createElement(
+	        'small',
+	        null,
+	        'You ride least often on ',
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          minDay
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement(_reactChartjs.Bar, {
+	        data: dayBarData,
+	        options: { responsive: true },
+	        height: 400,
+	        width: 400
+	      })
+	    )
+	  );
+	};
+
+	exports.default = Days;
+
+/***/ },
+/* 452 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Login = function Login(_ref) {
+	  var handleLoginClick = _ref.handleLoginClick;
+	  var handleDemoClick = _ref.handleDemoClick;
+
+	  var demoLink = _react2.default.createElement(
+	    'a',
+	    { className: 'link-demo', onClick: handleDemoClick },
+	    _react2.default.createElement(
+	      'strong',
+	      null,
+	      'Demo'
+	    )
+	  );
+	  var loginLink = _react2.default.createElement(
+	    'a',
+	    { className: 'link-login', onClick: handleLoginClick },
+	    _react2.default.createElement(
+	      'strong',
+	      null,
+	      'Log in'
+	    )
+	  );
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'RideStats9000 calculates statistics about your Uber usage'
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement('img', { className: 'center-block img-rounded img-responsive', src: 'assets/login.jpg' })
+	    ),
+	    _react2.default.createElement(
+	      'h4',
+	      { className: 'text-center' },
+	      'Click ',
+	      demoLink,
+	      ' or ',
+	      loginLink,
+	      ' to get started'
+	    )
+	  );
+	};
+
+	exports.default = Login;
+
+/***/ },
+/* 453 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _reactSpin = __webpack_require__(454);
+
+	var _reactSpin2 = _interopRequireDefault(_reactSpin);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateSpinConfig = function generateSpinConfig() {
+	  return {
+	    lines: 13,
+	    length: 28,
+	    width: 14,
+	    radius: 42,
+	    scale: 1,
+	    corners: 1,
+	    color: '#2c3e50',
+	    opacity: 0.25,
+	    rotate: 0,
+	    direction: 1,
+	    speed: 1.0,
+	    trail: 60,
+	    fps: 20,
+	    zIndex: 2e9,
+	    className: 'spinner',
+	    shadow: false,
+	    hwaccel: false
+	  };
+	};
+
+	var Loading = function Loading() {
+	  var spinConfig = generateSpinConfig();
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'Retrieving Uber statistics...'
+	    ),
+	    _react2.default.createElement(_reactSpin2.default, { config: spinConfig })
+	  );
+	};
+
+	exports.default = Loading;
+
+/***/ },
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53524,7 +54489,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _spin = __webpack_require__(456);
+	var _spin = __webpack_require__(455);
 
 	var _spin2 = _interopRequireDefault(_spin);
 
@@ -53565,7 +54530,7 @@
 	exports.default = ReactSpinner;
 
 /***/ },
-/* 456 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -53948,985 +54913,7 @@
 
 
 /***/ },
-/* 457 */,
-/* 458 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	var generateDemoData = function generateDemoData() {
-	  return {
-	    numberOfTrips: 185,
-	    tripsPerCity: {
-	      "San Francisco": 140,
-	      "Los Angeles": 39,
-	      "Portland": 4,
-	      "New Orleans": 2
-	    },
-	    timeSpentRiding: 102370,
-	    timeSpentWaiting: 47377,
-	    longestRide: {
-	      city: "Los Angeles",
-	      distance: 24.662265066
-	    },
-	    totalDistanceTraveled: 399.1359926652999,
-	    tripsPerDay: [38, 21, 13, 23, 20, 15, 55]
-	  };
-	};
-
-	module.exports = {
-	  generateDemoData: generateDemoData
-	};
-
-/***/ },
-/* 459 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var generateLoginText = function generateLoginText(loggedIn, demo) {
-	  if (loggedIn) {
-	    if (demo) {
-	      return 'End Demo';
-	    }
-	    return 'Log out';
-	  }
-	  return 'Log in';
-	};
-
-	var NavTop = function NavTop(_ref) {
-	  var handleDemoClick = _ref.handleDemoClick;
-	  var handleLoginClick = _ref.handleLoginClick;
-	  var loggedIn = _ref.loggedIn;
-	  var demo = _ref.demo;
-	  var loading = _ref.loading;
-
-	  var loginText = generateLoginText(loggedIn, demo);
-	  return _react2.default.createElement(
-	    _reactBootstrap.Navbar,
-	    null,
-	    _react2.default.createElement(
-	      _reactBootstrap.Navbar.Header,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Navbar.Brand,
-	        null,
-	        _react2.default.createElement(
-	          'a',
-	          null,
-	          'RideStats9000'
-	        )
-	      ),
-	      _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Navbar.Collapse,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Nav,
-	        { pullRight: true },
-	        demo || loggedIn ? null : _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          { eventKey: 1, onClick: handleDemoClick },
-	          'Demo'
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          { eventKey: 2, onClick: handleLoginClick },
-	          loginText
-	        )
-	      )
-	    )
-	  );
-	};
-
-	exports.default = NavTop;
-
-/***/ },
-/* 460 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactChartjs = __webpack_require__(169);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _trips = __webpack_require__(461);
-
-	var _trips2 = _interopRequireDefault(_trips);
-
-	var _distance = __webpack_require__(462);
-
-	var _distance2 = _interopRequireDefault(_distance);
-
-	var _TotalTime = __webpack_require__(463);
-
-	var _TotalTime2 = _interopRequireDefault(_TotalTime);
-
-	var _AverageTime = __webpack_require__(464);
-
-	var _AverageTime2 = _interopRequireDefault(_AverageTime);
-
-	var _cities = __webpack_require__(465);
-
-	var _cities2 = _interopRequireDefault(_cities);
-
-	var _days = __webpack_require__(466);
-
-	var _days2 = _interopRequireDefault(_days);
-
-	var _first = __webpack_require__(467);
-
-	var _first2 = _interopRequireDefault(_first);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Stats = function Stats(_ref) {
-	  var data = _ref.data;
-
-	  var convertTime = function convertTime(seconds) {
-	    return {
-	      days: Math.floor(seconds / 86400),
-	      hours: Math.floor(seconds % 86400 / 3600),
-	      minutes: Math.floor(seconds % 3600 / 60),
-	      seconds: Math.floor(seconds % 3600 % 60)
-	    };
-	  };
-
-	  var numberOfTrips = data.numberOfTrips;
-	  var dayData = data.tripsPerDay;
-	  var cityData = data.tripsPerCity;
-
-	  var distanceTraveled = data.totalDistanceTraveled.toFixed(2);
-	  var longestRideDistance = data.longestRide.distance.toFixed(2);
-	  var longestRideCity = data.longestRide.city;
-
-	  var timeWaiting = convertTime(data.timeSpentWaiting);
-	  var timeRiding = convertTime(data.timeSpentRiding);
-
-	  var averageRideDistance = (distanceTraveled / numberOfTrips).toFixed(2);
-	  var averageRideWaiting = convertTime(data.timeSpentWaiting / numberOfTrips);
-	  var averageRideRiding = convertTime(data.timeSpentRiding / numberOfTrips);
-
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      _reactBootstrap.Grid,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Row,
-	        null,
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 12 },
-	          _react2.default.createElement(_trips2.default, { numberOfTrips: numberOfTrips })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Row,
-	        { className: 'show-grid' },
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 6 },
-	          _react2.default.createElement(_AverageTime2.default, {
-	            averageRideWaiting: averageRideWaiting,
-	            averageRideRiding: averageRideRiding
-	          })
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 6 },
-	          _react2.default.createElement(_cities2.default, {
-	            cityData: cityData,
-	            numberOfTrips: numberOfTrips
-	          })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Row,
-	        { className: 'show-grid' },
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 12 },
-	          _react2.default.createElement(_TotalTime2.default, {
-	            timeWaiting: timeWaiting,
-	            timeRiding: timeRiding
-	          })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Row,
-	        { style: { marginBottom: '30px' }, className: 'show-grid' },
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 6 },
-	          _react2.default.createElement(_distance2.default, {
-	            distanceTraveled: distanceTraveled,
-	            averageRideDistance: averageRideDistance,
-	            longestRideDistance: longestRideDistance
-	          })
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { md: 6 },
-	          _react2.default.createElement(_days2.default, {
-	            dayData: dayData
-	          })
-	        )
-	      )
-	    )
-	  );
-	};
-
-	exports.default = Stats;
-
-/***/ },
-/* 461 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var generateIconDivs = function generateIconDivs(numberOfTrips) {
-	  var iconTotal = Math.ceil(numberOfTrips / 10);
-	  var remainder = 1 - (Math.ceil(numberOfTrips / 10) - numberOfTrips / 10);
-	  var cutWidth = 100 * remainder + 'px';
-	  var icons = [];
-	  for (var i = 0; i < iconTotal; i++) {
-	    icons.push(i);
-	  }
-	  return icons.map(function (icon, iconIndex) {
-	    if (iconIndex === icons.length - 1) {
-	      return _react2.default.createElement(
-	        'div',
-	        { key: iconIndex, className: 'text-left', style: { minHeight: '100px', minWidth: '100px', maxHeight: '100px', maxWidth: '100px', display: 'inline-block' } },
-	        _react2.default.createElement('div', { style: { minHeight: '100px', minWidth: cutWidth, overflow: 'hidden', display: 'inline-block', background: 'url(assets/carIconRed.png) no-repeat' } })
-	      );
-	    }
-	    return _react2.default.createElement('div', { key: iconIndex, style: { minHeight: '100px', minWidth: '100px', display: 'inline-block', background: 'url(assets/carIconRed.png) no-repeat' } });
-	  });
-	};
-
-	var Trips = function Trips(_ref) {
-	  var numberOfTrips = _ref.numberOfTrips;
-
-	  var iconDivs = generateIconDivs(numberOfTrips);
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    _react2.default.createElement('i', { className: 'fa fa-car', 'aria-hidden': 'true' }),
-	    ' Total Rides'
-	  );
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      _reactBootstrap.Panel,
-	      { className: 'panel-primary', header: title },
-	      _react2.default.createElement(
-	        'h3',
-	        { className: 'text-center' },
-	        'You\'ve taken ',
-	        _react2.default.createElement(
-	          'strong',
-	          null,
-	          numberOfTrips
-	        ),
-	        ' rides with Uber'
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'text-center' },
-	        iconDivs
-	      ),
-	      _react2.default.createElement(
-	        'h3',
-	        { className: 'text-center' },
-	        _react2.default.createElement(
-	          'small',
-	          null,
-	          'One car represents 10 rides'
-	        )
-	      )
-	    )
-	  );
-	};
-
-	exports.default = Trips;
-
-/***/ },
-/* 462 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _reactChartjs = __webpack_require__(169);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var generateDistanceGraphData = function generateDistanceGraphData(distanceTraveled, longestRideDistance, averageRideDistance) {
-	  var labels = ['Longest Ride Distance', 'Average Ride Distance'];
-	  var data = [longestRideDistance, averageRideDistance];
-	  return {
-	    labels: labels,
-	    datasets: [{
-	      label: 'Distance',
-	      fillColor: ['#970015', '#149c82'],
-	      backgroundColor: ['#970015', '#149c82'],
-	      borderColor: ['#970015', '#149c82'],
-	      borderWidth: 10,
-	      hoverBackgroundColor: '#149c82',
-	      hoverBorderColor: '#149c82',
-	      data: data
-	    }]
-	  };
-	};
-
-	var Distance = function Distance(_ref) {
-	  var distanceTraveled = _ref.distanceTraveled;
-	  var longestRideDistance = _ref.longestRideDistance;
-	  var averageRideDistance = _ref.averageRideDistance;
-
-	  var distanceGraphData = generateDistanceGraphData(distanceTraveled, longestRideDistance, averageRideDistance);
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    _react2.default.createElement('i', { className: 'fa fa-road', 'aria-hidden': 'true' }),
-	    ' Distance Traveled'
-	  );
-	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    { className: 'panel-primary', header: title },
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      'You\'ve traveled a total of ',
-	      _react2.default.createElement(
-	        'strong',
-	        null,
-	        distanceTraveled,
-	        ' miles'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      _react2.default.createElement(
-	        'small',
-	        null,
-	        'Your longest ride ever was ',
-	        _react2.default.createElement(
-	          'strong',
-	          null,
-	          longestRideDistance,
-	          ' miles'
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'text-center' },
-	      _react2.default.createElement(_reactChartjs.Bar, {
-	        data: distanceGraphData,
-	        options: { responsive: true },
-	        height: 400,
-	        width: 400
-	      })
-	    )
-	  );
-	};
-
-	exports.default = Distance;
-
-/***/ },
-/* 463 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _reactChartjs = __webpack_require__(169);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var TotalTime = function TotalTime(_ref) {
-	  var timeWaiting = _ref.timeWaiting;
-	  var timeRiding = _ref.timeRiding;
-
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    _react2.default.createElement('i', { className: 'fa fa-clock-o', 'aria-hidden': 'true' }),
-	    ' Total Wait and Ride Times'
-	  );
-	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    { className: 'panel-primary', header: title },
-	    _react2.default.createElement(
-	      _reactBootstrap.Row,
-	      { style: { marginBottom: '20px' } },
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 4, md: 4 },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'pull-right' },
-	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/traffic.png' })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 8, md: 8 },
-	        _react2.default.createElement(
-	          'h2',
-	          { className: 'text-left text-muted' },
-	          'You\'ve waited for Ubers a total of'
-	        ),
-	        _react2.default.createElement(
-	          'h2',
-	          { className: 'text-left text-primary' },
-	          timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null,
-	          ' ',
-	          timeWaiting.hours,
-	          ' hours, ',
-	          timeWaiting.minutes,
-	          ' minutes, and ',
-	          timeWaiting.seconds,
-	          ' seconds'
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Row,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 4, md: 4 },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'pull-right' },
-	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/carwheel.png' })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 8, md: 8 },
-	        _react2.default.createElement(
-	          'h2',
-	          { className: 'text-left text-muted' },
-	          'You\'ve ridden in Ubers a total of'
-	        ),
-	        _react2.default.createElement(
-	          'h2',
-	          { className: 'text-left text-primary' },
-	          timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null,
-	          ' ',
-	          timeRiding.hours,
-	          ' hours, ',
-	          timeRiding.minutes,
-	          ' minutes, and ',
-	          timeRiding.seconds,
-	          ' seconds'
-	        )
-	      )
-	    )
-	  );
-	};
-
-	exports.default = TotalTime;
-
-/***/ },
-/* 464 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _reactChartjs = __webpack_require__(169);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var generateAverageTimeGraphData = function generateAverageTimeGraphData(averageRideWaiting, averageRideRiding) {
-	  var averageRideWaitingDec = (averageRideWaiting.minutes + averageRideWaiting.seconds / 60).toFixed(2);
-	  var averageRideRidingDec = (averageRideRiding.minutes + averageRideRiding.seconds / 60).toFixed(2);
-	  var labels = ['Average Wait', 'Average Ride'];
-	  var data = [averageRideWaitingDec, averageRideRidingDec];
-	  return {
-	    labels: labels,
-	    datasets: [{
-	      label: 'Distance',
-	      fillColor: ['#970015', '#149c82'],
-	      backgroundColor: ['#970015', '#149c82'],
-	      borderColor: ['#970015', '#149c82'],
-	      borderWidth: 10,
-	      hoverBackgroundColor: '#149c82',
-	      hoverBorderColor: '#149c82',
-	      data: data
-	    }]
-	  };
-	};
-
-	var AverageTime = function AverageTime(_ref) {
-	  var averageRideWaiting = _ref.averageRideWaiting;
-	  var averageRideRiding = _ref.averageRideRiding;
-
-	  var averageTimeGraphData = generateAverageTimeGraphData(averageRideWaiting, averageRideRiding);
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    _react2.default.createElement('i', { className: 'fa fa-clock-o', 'aria-hidden': 'true' }),
-	    ' Average Wait and Ride Times'
-	  );
-	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    { className: 'panel-primary', header: title },
-	    _react2.default.createElement(
-	      _reactBootstrap.Row,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 6, md: 6 },
-	        _react2.default.createElement(
-	          'h3',
-	          { className: 'text-center text-primary' },
-	          averageRideWaiting.minutes,
-	          ' minutes ',
-	          averageRideWaiting.seconds,
-	          ' seconds'
-	        ),
-	        _react2.default.createElement(
-	          'h3',
-	          { className: 'text-center' },
-	          _react2.default.createElement(
-	            'small',
-	            null,
-	            'Average Wait Length'
-	          )
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 6, md: 6 },
-	        _react2.default.createElement(
-	          'h3',
-	          { className: 'text-center text-primary' },
-	          averageRideRiding.minutes,
-	          ' minutes ',
-	          averageRideRiding.seconds,
-	          ' seconds'
-	        ),
-	        _react2.default.createElement(
-	          'h3',
-	          { className: 'text-center' },
-	          _react2.default.createElement(
-	            'small',
-	            null,
-	            'Average Ride Length'
-	          )
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Row,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Col,
-	        { xs: 12, md: 12 },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'text-center' },
-	          _react2.default.createElement(_reactChartjs.Bar, {
-	            data: averageTimeGraphData,
-	            options: { responsive: true },
-	            height: 400,
-	            width: 400
-	          })
-	        )
-	      )
-	    )
-	  );
-	};
-
-	exports.default = AverageTime;
-
-/***/ },
-/* 465 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _reactChartjs = __webpack_require__(169);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var generateCityBarDataColors = function generateCityBarDataColors(data) {
-	  var colors = ['#970015', '#149C81', '#006551', '#F4A51F', '#C88107', '#E81E3A', '#BF0720'];
-	  return data.map(function () {
-	    var color = colors.shift();
-	    colors.push(color);
-	    return color;
-	  });
-	};
-	var generateCityBarData = function generateCityBarData(cityData) {
-	  var labels = Object.keys(cityData);
-	  var data = labels.map(function (city) {
-	    return cityData[city];
-	  });
-	  var colors = generateCityBarDataColors(data);
-	  var cityBarData = {
-	    labels: labels,
-	    datasets: [{
-	      label: 'Trips Per City',
-	      backgroundColor: colors,
-	      fillColor: colors,
-	      borderWidth: 10,
-	      hoverBackgroundColor: '#149c82',
-	      hoverBorderColor: '#149c82',
-	      data: data
-	    }]
-	  };
-	  return cityBarData;
-	};
-
-	var getModeCityData = function getModeCityData(cityData) {
-	  return Object.keys(cityData).reduce(function (results, city) {
-	    if (cityData[city] > results.count) {
-	      results.name = city;
-	      results.count = cityData[city];
-	    }
-	    return results;
-	  }, { name: '', count: 0 });
-	};
-
-	var Cities = function Cities(_ref) {
-	  var cityData = _ref.cityData;
-	  var numberOfTrips = _ref.numberOfTrips;
-
-	  var modeCityData = getModeCityData(cityData);
-	  var modeCityName = modeCityData.name;
-	  var modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(4) * 100;
-	  var cityBarData = generateCityBarData(cityData);
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    _react2.default.createElement('i', { className: 'fa fa-map', 'aria-hidden': 'true' }),
-	    ' Rides by City'
-	  );
-	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    { className: 'panel-primary', header: title },
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      'You take Uber most often in ',
-	      _react2.default.createElement(
-	        'strong',
-	        null,
-	        modeCityName
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      _react2.default.createElement(
-	        'small',
-	        null,
-	        _react2.default.createElement(
-	          'strong',
-	          null,
-	          modeCityPercentage,
-	          '%'
-	        ),
-	        ' of your rides take place there'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'text-center' },
-	      _react2.default.createElement(_reactChartjs.Bar, {
-	        data: cityBarData,
-	        options: { responsive: true },
-	        height: 400,
-	        width: 400
-	      })
-	    )
-	  );
-	};
-
-	exports.default = Cities;
-
-/***/ },
-/* 466 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _reactChartjs = __webpack_require__(169);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-	var generateDayBarData = function generateDayBarData(dayData) {
-	  var labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-	  var data = dayData;
-	  var dayBarData = {
-	    labels: labels,
-	    datasets: [{
-	      label: 'Trips Per Day',
-	      fillColor: ['#970015', '#149C81', '#006551', '#F4A51F', '#C88107', '#E81E3A', '#BF0720'],
-	      borderWidth: 10,
-	      hoverBackgroundColor: '#2980b9',
-	      hoverBorderColor: '#2980b9',
-	      data: data
-	    }]
-	  };
-	  return dayBarData;
-	};
-
-	var days = ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays'];
-
-	var getModeDay = function getModeDay(dayData) {
-	  var modeDayInt = Math.max.apply(Math, _toConsumableArray(dayData));
-	  return days[dayData.indexOf(modeDayInt)];
-	};
-
-	var getMinDay = function getMinDay(dayData) {
-	  var minDayInt = Math.min.apply(Math, _toConsumableArray(dayData));
-	  return days[dayData.indexOf(minDayInt)];
-	};
-
-	var Days = function Days(_ref) {
-	  var dayData = _ref.dayData;
-
-	  var modeDay = getModeDay(dayData);
-	  var minDay = getMinDay(dayData);
-	  var dayBarData = generateDayBarData(dayData);
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    _react2.default.createElement('i', { className: 'fa fa-calendar', 'aria-hidden': 'true' }),
-	    ' Rides by Day'
-	  );
-	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    { className: 'panel-primary', header: title },
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      'You ride most often on ',
-	      _react2.default.createElement(
-	        'strong',
-	        null,
-	        modeDay
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      _react2.default.createElement(
-	        'small',
-	        null,
-	        'You ride least often on ',
-	        _react2.default.createElement(
-	          'strong',
-	          null,
-	          minDay
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'text-center' },
-	      _react2.default.createElement(_reactChartjs.Bar, {
-	        data: dayBarData,
-	        options: { responsive: true },
-	        height: 400,
-	        width: 400
-	      })
-	    )
-	  );
-	};
-
-	exports.default = Days;
-
-/***/ },
-/* 467 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _reactChartjs = __webpack_require__(169);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var First = function First() {
-	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    null,
-	    _react2.default.createElement(
-	      'div',
-	      { style: { marginTop: '12px', marginBottom: '12px' }, className: 'text-center' },
-	      _react2.default.createElement('img', { className: 'center-block img-rounded img-responsive', src: 'assets/carSpacer.jpg' })
-	    )
-	  );
-	};
-
-	exports.default = First;
-
-/***/ },
-/* 468 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	var _reactSpin = __webpack_require__(455);
-
-	var _reactSpin2 = _interopRequireDefault(_reactSpin);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var generateSpinConfig = function generateSpinConfig() {
-	  return {
-	    lines: 13,
-	    length: 28,
-	    width: 14,
-	    radius: 42,
-	    scale: 1,
-	    corners: 1,
-	    color: '#2c3e50',
-	    opacity: 0.25,
-	    rotate: 0,
-	    direction: 1,
-	    speed: 1.0,
-	    trail: 60,
-	    fps: 20,
-	    zIndex: 2e9,
-	    className: 'spinner',
-	    shadow: false,
-	    hwaccel: false
-	  };
-	};
-
-	var Loading = function Loading() {
-	  var spinConfig = generateSpinConfig();
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      'Retrieving Uber statistics...'
-	    ),
-	    _react2.default.createElement(_reactSpin2.default, { config: spinConfig })
-	  );
-	};
-
-	exports.default = Loading;
-
-/***/ },
-/* 469 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -54967,71 +54954,34 @@
 	exports.default = Footer;
 
 /***/ },
-/* 470 */
-/***/ function(module, exports, __webpack_require__) {
+/* 457 */
+/***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(180);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Login = function Login(_ref) {
-	  var handleLoginClick = _ref.handleLoginClick;
-	  var handleDemoClick = _ref.handleDemoClick;
-
-	  var demoLink = _react2.default.createElement(
-	    'a',
-	    { className: 'link-demo', onClick: handleDemoClick },
-	    _react2.default.createElement(
-	      'strong',
-	      null,
-	      'Demo'
-	    )
-	  );
-	  var loginLink = _react2.default.createElement(
-	    'a',
-	    { className: 'link-login', onClick: handleLoginClick },
-	    _react2.default.createElement(
-	      'strong',
-	      null,
-	      'Log in'
-	    )
-	  );
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      'RideStats9000 calculates statistics about your Uber usage'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'text-center' },
-	      _react2.default.createElement('img', { className: 'center-block img-rounded img-responsive', src: 'assets/login.jpg' })
-	    ),
-	    _react2.default.createElement(
-	      'h4',
-	      { className: 'text-center' },
-	      'Click ',
-	      demoLink,
-	      ' or ',
-	      loginLink,
-	      ' to get started'
-	    )
-	  );
+	var generateDemoData = function generateDemoData() {
+	  return {
+	    numberOfTrips: 185,
+	    tripsPerCity: {
+	      "San Francisco": 140,
+	      "Los Angeles": 39,
+	      "Portland": 4,
+	      "New Orleans": 2
+	    },
+	    timeSpentRiding: 102370,
+	    timeSpentWaiting: 47377,
+	    longestRide: {
+	      city: "Los Angeles",
+	      distance: 24.662265066
+	    },
+	    totalDistanceTraveled: 399.1359926652999,
+	    tripsPerDay: [38, 21, 13, 23, 20, 15, 55]
+	  };
 	};
 
-	exports.default = Login;
+	module.exports = {
+	  generateDemoData: generateDemoData
+	};
 
 /***/ }
 /******/ ]);
