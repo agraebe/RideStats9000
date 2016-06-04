@@ -1,11 +1,8 @@
 import React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
-const generateLoginText = (loggedIn, demo, loading) => {
+const generateLoginText = (loggedIn, demo) => {
   if (loggedIn) {
-    if (loading) {
-      return null;
-    }
     if (demo) {
       return 'End Demo';
     }
@@ -15,7 +12,7 @@ const generateLoginText = (loggedIn, demo, loading) => {
 }
 
 const NavTop = ({ handleDemoClick, handleLoginClick, loggedIn, demo, loading }) => {
-  const loginText = generateLoginText(loggedIn, demo, loading)
+  const loginText = generateLoginText(loggedIn, demo);
   return (
     <Navbar>
       <Navbar.Header>

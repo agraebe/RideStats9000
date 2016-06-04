@@ -12,3 +12,7 @@ body {
   color: #FF0000;
   padding-left: 2px;
 }
+
+.link-demo, .link-login {
+  cursor: pointer;
+}

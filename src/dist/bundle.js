@@ -150,7 +150,7 @@
 
 	      this.setState({ loggedIn: true, loading: true });
 	      _jquery2.default.ajax({ type: 'GET', url: '/api/uber/statistics' }).done(function (response) {
-	        window.location.hash = "#/stats";
+	        window.history.pushState(null, '#/stats', '#/stats');
 	        _this2.setState({ data: response.data, loading: false });
 	      }).fail(function (err) {
 	        _this2.handleLogout();
@@ -162,9 +162,12 @@
 	    value: function requestDemoStatistics() {
 	      var _this3 = this;
 
-	      this.setState({ loggedIn: true, loading: true, demo: true });
 	      window.history.pushState(null, '#/demo', '#/demo');
+	      this.setState({ loggedIn: true, loading: true, demo: true });
 	      setTimeout(function () {
+	        if (window.location.hash === '#/logout') {
+	          return;
+	        }
 	        _this3.setState({
 	          loading: false,
 	          data: {
@@ -200,7 +203,7 @@
 	          loggedIn: this.state.loggedIn,
 	          demo: this.state.demo
 	        }),
-	        this.state.data ? _react2.default.createElement(_stats2.default, { data: this.state.data }) : this.state.loading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(_loginReminder2.default, null),
+	        this.state.data ? _react2.default.createElement(_stats2.default, { data: this.state.data }) : this.state.loading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(_loginReminder2.default, { handleLoginClick: this.handleLoginClick, handleDemoClick: this.handleDemoClick }),
 	        _react2.default.createElement(_footer2.default, null)
 	      );
 	    }
@@ -34273,11 +34276,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var generateLoginText = function generateLoginText(loggedIn, demo, loading) {
+	var generateLoginText = function generateLoginText(loggedIn, demo) {
 	  if (loggedIn) {
-	    if (loading) {
-	      return null;
-	    }
 	    if (demo) {
 	      return 'End Demo';
 	    }
@@ -34293,7 +34293,7 @@
 	  var demo = _ref.demo;
 	  var loading = _ref.loading;
 
-	  var loginText = generateLoginText(loggedIn, demo, loading);
+	  var loginText = generateLoginText(loggedIn, demo);
 	  return _react2.default.createElement(
 	    _reactBootstrap.Navbar,
 	    null,
@@ -54404,7 +54404,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var LoginReminder = function LoginReminder() {
+	var LoginReminder = function LoginReminder(_ref) {
+	  var handleLoginClick = _ref.handleLoginClick;
+	  var handleDemoClick = _ref.handleDemoClick;
+
 	  return _react2.default.createElement(
 	    'div',
 	    null,
@@ -54423,15 +54426,23 @@
 	      { className: 'text-center' },
 	      'Click ',
 	      _react2.default.createElement(
-	        'strong',
-	        null,
-	        'Log in'
+	        'a',
+	        { className: 'link-demo', onClick: handleDemoClick },
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          'Demo'
+	        )
 	      ),
 	      ' or ',
 	      _react2.default.createElement(
-	        'strong',
-	        null,
-	        'Demo'
+	        'a',
+	        { className: 'link-login', onClick: handleLoginClick },
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          'Log in'
+	        )
 	      ),
 	      ' to get started'
 	    )

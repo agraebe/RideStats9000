@@ -53,7 +53,7 @@ class App extends React.Component {
     this.setState({loggedIn: true, loading: true});
     $.ajax({ type: 'GET', url: '/api/uber/statistics' })
       .done(response => {
-        window.location.hash = "#/stats";
+        window.history.pushState(null, '#/stats', '#/stats');
         this.setState({ data: response.data, loading: false })
       })
       .fail(err => {
@@ -63,9 +63,12 @@ class App extends React.Component {
   }
 
   requestDemoStatistics() {
-    this.setState({loggedIn: true, loading: true, demo: true});
     window.history.pushState(null, '#/demo', '#/demo');
+    this.setState({loggedIn: true, loading: true, demo: true});
     setTimeout(() => {
+      if (window.location.hash === '#/logout') {
+        return;
+      }
       this.setState({
         loading: false,
         data: {
@@ -99,7 +102,7 @@ class App extends React.Component {
           loggedIn={this.state.loggedIn}
           demo={this.state.demo}
         />
-        {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <LoginReminder /> }
+        {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <LoginReminder handleLoginClick={this.handleLoginClick} handleDemoClick={this.handleDemoClick} /> }
         <Footer />
       </div>
     );
