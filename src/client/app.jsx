@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import { Bar } from 'react-chartjs';
-import Nav from './nav.jsx';
-import Stats from './stats.jsx';
-import LoginReminder from './loginReminder.jsx';
-import Loading from './loading.jsx';
-import Footer from './footer.jsx';
+import Nav from './components/nav.jsx';
+import Stats from './components/stats.jsx';
+import Login from './components/login.jsx';
+import Loading from './components/loading.jsx';
+import Footer from './components/footer.jsx';
+import { generateDemoData } from './utils';
 
 class App extends React.Component {
   constructor() {
@@ -25,7 +26,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // Temp for testing
     if (window.location.hash === '#/loading') {
       this.requestUserStatistics();
     }
@@ -61,7 +61,6 @@ class App extends React.Component {
       })
       .fail(err => {
         this.handleLogout();
-        console.log(err);
       });
   }
 
@@ -74,23 +73,7 @@ class App extends React.Component {
       }
       this.setState({
         loading: false,
-        data: {
-          numberOfTrips: 185,
-          tripsPerCity: {
-            "San Francisco": 140,
-            "Los Angeles": 39,
-            "Portland": 4,
-            "New Orleans": 2
-          },
-          timeSpentRiding: 102370,
-          timeSpentWaiting: 47377,
-          longestRide: {
-            city: "Los Angeles",
-            distance: 24.662265066
-          },
-          totalDistanceTraveled: 399.1359926652999,
-          tripsPerDay: [38, 21, 13, 23, 20, 15, 55]
-        }
+        data: generateDemoData()
       });
     }, 2000);
   }
@@ -105,7 +88,7 @@ class App extends React.Component {
           loggedIn={this.state.loggedIn}
           demo={this.state.demo}
         />
-        {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <LoginReminder handleLoginClick={this.handleLoginClick} handleDemoClick={this.handleDemoClick} /> }
+        {this.state.data ? <Stats data={this.state.data}/> : this.state.loading ? <Loading /> : <Login handleLoginClick={this.handleLoginClick} handleDemoClick={this.handleDemoClick} /> }
         <Footer />
       </div>
     );

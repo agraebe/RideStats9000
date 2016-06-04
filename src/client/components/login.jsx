@@ -1,7 +1,7 @@
 import React from 'react';
 import { Panel } from 'react-bootstrap';
 
-const LoginReminder = ({ handleLoginClick, handleDemoClick }) => {
+const Login = ({ handleLoginClick, handleDemoClick }) => {
   return (
     <div>
         <h3 className="text-center">RideStats9000 calculates statistics about your Uber usage</h3>
@@ -11,4 +11,4 @@ const LoginReminder = ({ handleLoginClick, handleDemoClick }) => {
   );
 }
 
-export default LoginReminder;
+export default Login;
