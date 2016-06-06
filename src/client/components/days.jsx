@@ -2,8 +2,10 @@ import React from 'react';
 import { Panel } from 'react-bootstrap';
 import { Bar} from 'react-chartjs';
 
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 const generateDayBarData = dayData => {
-  const labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const labels = days;
   const data = dayData;
   const dayBarData = {
     labels,
@@ -18,8 +20,6 @@ const generateDayBarData = dayData => {
   }
   return dayBarData;
 }
-
-const days = ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays'];
 
 const getModeDay = dayData => {
   const modeDayInt = Math.max(...dayData);

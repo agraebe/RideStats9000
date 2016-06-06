@@ -54275,8 +54275,10 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+	var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 	var generateDayBarData = function generateDayBarData(dayData) {
-	  var labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	  var labels = days;
 	  var data = dayData;
 	  var dayBarData = {
 	    labels: labels,
@@ -54291,8 +54293,6 @@
 	  };
 	  return dayBarData;
 	};
-
-	var days = ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays'];
 
 	var getModeDay = function getModeDay(dayData) {
 	  var modeDayInt = Math.max.apply(Math, _toConsumableArray(dayData));
