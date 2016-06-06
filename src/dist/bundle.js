@@ -54478,7 +54478,7 @@
 	    _react2.default.createElement(
 	      'h3',
 	      { className: 'text-center' },
-	      'Retrieving Uber statistics...'
+	      'Retrieving your Uber statistics...'
 	    ),
 	    _react2.default.createElement(
 	      'div',
