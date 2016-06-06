@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import { Bar } from 'react-chartjs';
 import Nav from './components/nav.jsx';
 import Stats from './components/stats.jsx';
 import Login from './components/login.jsx';
@@ -16,7 +15,7 @@ class App extends React.Component {
       data: null,
       loading: false,
       loggedIn: false,
-      demo: false
+      demo: false,
     };
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleDemoClick = this.handleDemoClick.bind(this);
@@ -32,7 +31,7 @@ class App extends React.Component {
     }
   }
 
-  handleLoginClick () {
+  handleLoginClick() {
     if (this.state.loggedIn) {
       return this.handleLogout();
     }
@@ -41,17 +40,17 @@ class App extends React.Component {
       .fail(err => console.log(err));
   }
 
-  handleDemoClick () {
+  handleDemoClick() {
     this.requestDemoStatistics();
   }
 
-  handleLogout () {
+  handleLogout() {
     window.history.pushState(null, '#/logout', '#/logout');
-    this.setState({ loggedIn: false, loading: false, data: null, demo: false});
+    this.setState({ loggedIn: false, loading: false, data: null, demo: false });
   }
 
-  requestUserStatistics () {
-    this.setState({loggedIn: true, loading: true});
+  requestUserStatistics() {
+    this.setState({ loggedIn: true, loading: true });
     $.ajax({ type: 'GET', url: '/api/uber/statistics' })
       .done(response => {
         // User clicked logout during load
@@ -59,16 +58,17 @@ class App extends React.Component {
           return;
         }
         window.history.pushState(null, '#/stats', '#/stats');
-        this.setState({ data: response.data, loading: false })
+        this.setState({ data: response.data, loading: false });
       })
       .fail(err => {
+        console.log(err);
         this.handleLogout();
       });
   }
 
   requestDemoStatistics() {
     window.history.pushState(null, '#/demo', '#/demo');
-    this.setState({loggedIn: true, loading: true, demo: true});
+    this.setState({ loggedIn: true, loading: true, demo: true });
     setTimeout(() => {
       // User clicked end demo during load
       if (this.state.demo === false) {
@@ -76,7 +76,7 @@ class App extends React.Component {
       }
       this.setState({
         loading: false,
-        data: generateDemoData()
+        data: generateDemoData(),
       });
     }, 2000);
   }
@@ -95,7 +95,7 @@ class App extends React.Component {
     const pageContent = this.generatePageContent();
     return (
       <div>
-        <Nav 
+        <Nav
           handleLoginClick={this.handleLoginClick}
           handleDemoClick={this.handleDemoClick}
           loading={this.state.loading}
@@ -107,6 +107,6 @@ class App extends React.Component {
       </div>
     );
   }
-};
+}
 
 ReactDOM.render(<App />, document.querySelector('#root'));
