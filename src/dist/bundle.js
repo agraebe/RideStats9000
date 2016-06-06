@@ -54088,7 +54088,7 @@
 	          _react2.default.createElement(
 	            'small',
 	            null,
-	            'Average Wait Length'
+	            'Average Wait Time'
 	          )
 	        )
 	      ),
@@ -54109,7 +54109,7 @@
 	          _react2.default.createElement(
 	            'small',
 	            null,
-	            'Average Ride Length'
+	            'Average Ride Time'
 	          )
 	        )
 	      )

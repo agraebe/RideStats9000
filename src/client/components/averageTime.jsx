@@ -30,11 +30,11 @@ const AverageTime = ({ averageRideWaiting, averageRideRiding }) => {
       <Row>
         <Col xs={6} md={6}>
           <h3 className="text-center text-primary">{averageRideWaiting.minutes} minutes {averageRideWaiting.seconds} seconds</h3>
-          <h3 className="text-center"><small>Average Wait Length</small></h3>
+          <h3 className="text-center"><small>Average Wait Time</small></h3>
         </Col>
         <Col xs={6} md={6}>
           <h3 className="text-center text-primary">{averageRideRiding.minutes} minutes {averageRideRiding.seconds} seconds</h3>
-          <h3 className="text-center"><small>Average Ride Length</small></h3>
+          <h3 className="text-center"><small>Average Ride Time</small></h3>
         </Col>
       </Row>
       <Row>
