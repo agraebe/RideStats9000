@@ -17,7 +17,7 @@ const NavTop = ({ handleDemoClick, handleLoginClick, loggedIn, demo, loading }) 
     <Navbar>
       <Navbar.Header>
         <Navbar.Brand>
-          <a>RideStats9000</a>
+          <a>RideStats</a>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>

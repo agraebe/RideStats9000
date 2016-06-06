@@ -34308,7 +34308,7 @@
 	        _react2.default.createElement(
 	          'a',
 	          null,
-	          'RideStats9000'
+	          'RideStats'
 	        )
 	      ),
 	      _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
@@ -54404,7 +54404,7 @@
 	    _react2.default.createElement(
 	      'h3',
 	      { className: 'text-center' },
-	      'RideStats9000 calculates statistics about your Uber usage'
+	      'RideStats calculates statistics about your Uber usage'
 	    ),
 	    _react2.default.createElement(
 	      'div',

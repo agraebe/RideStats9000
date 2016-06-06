@@ -1,4 +1,4 @@
-# RideStats9000
+# RideStats
 ### Uber Data Visualizer
 
 ## Usage

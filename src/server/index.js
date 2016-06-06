@@ -6,7 +6,7 @@ require('./middleware')(app, express);
 require('./routes')(app);
 
 app.listen(port, () => {
-  console.log('UberStats listening on ' + port);
+  console.log('RideStats listening on ' + port);
 });
 
 module.exports = app;
