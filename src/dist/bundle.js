@@ -187,7 +187,7 @@
 	        return _react2.default.createElement(_stats2.default, { data: this.state.data });
 	      }
 	      if (this.state.loading) {
-	        return _react2.default.createElement(_loading2.default, null);
+	        return _react2.default.createElement(_loading2.default, { demo: this.state.demo });
 	      }
 	      return _react2.default.createElement(_login2.default, { handleLoginClick: this.handleLoginClick, handleDemoClick: this.handleDemoClick });
 	    }
@@ -54470,7 +54470,9 @@
 	  };
 	};
 
-	var Loading = function Loading() {
+	var Loading = function Loading(_ref) {
+	  var demo = _ref.demo;
+
 	  var spinConfig = generateSpinConfig();
 	  return _react2.default.createElement(
 	    'div',
@@ -54478,7 +54480,9 @@
 	    _react2.default.createElement(
 	      'h3',
 	      { className: 'text-center' },
-	      'Retrieving your Uber statistics...'
+	      'Retrieving ',
+	      demo ? 'demo' : 'your',
+	      ' Uber statistics...'
 	    ),
 	    _react2.default.createElement(
 	      'div',

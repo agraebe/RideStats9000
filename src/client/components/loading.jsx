@@ -25,11 +25,11 @@ const generateSpinConfig = () => {
   };
 }
 
-const Loading = () => {
+const Loading = ({ demo }) => {
   const spinConfig = generateSpinConfig();
   return (
     <div>
-        <h3 className="text-center">Retrieving your Uber statistics...</h3>
+        <h3 className="text-center">Retrieving {demo ? 'demo' : 'your' } Uber statistics...</h3>
         <div className="spinner-container">
             <Spinner config={spinConfig} />
         </div>

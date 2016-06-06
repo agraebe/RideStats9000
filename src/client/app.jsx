@@ -86,7 +86,7 @@ class App extends React.Component {
       return (<Stats data={this.state.data}/>);
     }
     if (this.state.loading) {
-      return (<Loading />);
+      return (<Loading demo={this.state.demo} />);
     }
     return (<Login handleLoginClick={this.handleLoginClick} handleDemoClick={this.handleDemoClick} />);
   }
