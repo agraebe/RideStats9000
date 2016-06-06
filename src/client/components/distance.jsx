@@ -25,7 +25,7 @@ const Distance = ({ distanceTraveled, longestRideDistance, averageRideDistance }
   const title = (<h3><i className="fa fa-road" aria-hidden="true"></i> Distance Traveled</h3>)
   return(
     <Panel className="panel-primary" header={title}>
-      <h3 className="text-center">You've traveled a total of <strong>{distanceTraveled} miles</strong></h3>
+      <h3 className="text-center">You've traveled <strong>{distanceTraveled}</strong> miles total</h3>
       <h3 className="text-center"><small>Your longest ride ever was <strong>{longestRideDistance} miles</strong></small></h3>
       <div className="text-center">
         <Bar

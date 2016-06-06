@@ -53656,7 +53656,7 @@
 	      null,
 	      _react2.default.createElement(
 	        _reactBootstrap.Row,
-	        null,
+	        { className: 'show-grid' },
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { md: 12 },
@@ -53862,13 +53862,13 @@
 	    _react2.default.createElement(
 	      'h3',
 	      { className: 'text-center' },
-	      'You\'ve traveled a total of ',
+	      'You\'ve traveled ',
 	      _react2.default.createElement(
 	        'strong',
 	        null,
-	        distanceTraveled,
-	        ' miles'
-	      )
+	        distanceTraveled
+	      ),
+	      ' miles total'
 	    ),
 	    _react2.default.createElement(
 	      'h3',
@@ -53941,7 +53941,7 @@
 	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'pull-right' },
+	          { style: { top: '33%' }, className: 'pull-right' },
 	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/traffic.png' })
 	        )
 	      ),
@@ -53949,21 +53949,25 @@
 	        _reactBootstrap.Col,
 	        { xs: 8, md: 8 },
 	        _react2.default.createElement(
-	          'h2',
+	          'h3',
 	          { className: 'text-left text-muted' },
 	          'You\'ve waited for Ubers a total of'
 	        ),
 	        _react2.default.createElement(
 	          'h2',
 	          { className: 'text-left text-primary' },
-	          timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null,
-	          ' ',
-	          timeWaiting.hours,
-	          ' hours, ',
-	          timeWaiting.minutes,
-	          ' minutes, and ',
-	          timeWaiting.seconds,
-	          ' seconds'
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null,
+	            ' ',
+	            timeWaiting.hours,
+	            ' hours, ',
+	            timeWaiting.minutes,
+	            ' minutes, and ',
+	            timeWaiting.seconds,
+	            ' seconds'
+	          )
 	        )
 	      )
 	    ),
@@ -53983,21 +53987,25 @@
 	        _reactBootstrap.Col,
 	        { xs: 8, md: 8 },
 	        _react2.default.createElement(
-	          'h2',
+	          'h3',
 	          { className: 'text-left text-muted' },
 	          'You\'ve ridden in Ubers a total of'
 	        ),
 	        _react2.default.createElement(
 	          'h2',
 	          { className: 'text-left text-primary' },
-	          timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null,
-	          ' ',
-	          timeRiding.hours,
-	          ' hours, ',
-	          timeRiding.minutes,
-	          ' minutes, and ',
-	          timeRiding.seconds,
-	          ' seconds'
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null,
+	            ' ',
+	            timeRiding.hours,
+	            ' hours, ',
+	            timeRiding.minutes,
+	            ' minutes, and ',
+	            timeRiding.seconds,
+	            ' seconds'
+	          )
 	        )
 	      )
 	    )

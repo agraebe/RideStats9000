@@ -36,7 +36,7 @@ const Stats = ({ data }) => {
   return (
     <div>
         <Grid>
-          <Row>
+          <Row className="show-grid">
             <Col md={12}>
               <Trips numberOfTrips={numberOfTrips} />
             </Col>
