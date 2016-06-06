@@ -1,11 +1,11 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = require('chai').expect;
-const server = require('../../server');
-const uberClient = require('../../server/resources/uber/uberClient');
-const uberRouter = require('../../server/resources/uber/uberRouter');
-const uberController = require('../../server/resources/uber/uberController');
-const uberUtils = require('../../server/resources/uber/uberUtils');
+const server = require('../server');
+const uberClient = require('../server/resources/uber/uberClient');
+const uberRouter = require('../server/resources/uber/uberRouter');
+const uberController = require('../server/resources/uber/uberController');
+const uberUtils = require('../server/resources/uber/uberUtils');
 
 chai.use(chaiHttp);
 

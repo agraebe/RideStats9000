@@ -7,9 +7,10 @@ const handleLogin = (req, res) => {
 
 const handleCredentials = (req, res) => {
   const authorization_code = req.query.code;
+  console.log(authorization_code);
   storeCredentials(authorization_code)
     .then(tokens => res.redirect('/#/loading'))
-    .catch(err => res.status(500).json(err))
+    .catch(message => res.status(500).json({ success: false, data: null, message }))
 }
 
 module.exports = {

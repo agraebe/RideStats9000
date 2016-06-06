@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = require('chai').expect;
-const server = require('../../server');
+const server = require('../server');
 
 chai.use(chaiHttp);
 
@@ -22,7 +22,7 @@ describe('Server Functionality', () => {
       .get('/')
       .end((err, res) => {
         expect(err).to.equal(null);
-        expect(res.statusCode).to.equal(200);
+        expect(res.status).to.equal(200);
         expect(res.ok).to.equal(true);
         expect(res.headers['content-type']).to.equal('text/html; charset=UTF-8');
         done();
