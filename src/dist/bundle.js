@@ -53697,7 +53697,7 @@
 	      ),
 	      _react2.default.createElement(
 	        _reactBootstrap.Row,
-	        { style: { marginBottom: '30px' }, className: 'show-grid' },
+	        { className: 'show-grid' },
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { md: 6 },
@@ -54457,7 +54457,8 @@
 	    zIndex: 2e9,
 	    className: 'spinner',
 	    shadow: false,
-	    hwaccel: false
+	    hwaccel: false,
+	    position: 'relative'
 	  };
 	};
 
@@ -54471,7 +54472,11 @@
 	      { className: 'text-center' },
 	      'Retrieving Uber statistics...'
 	    ),
-	    _react2.default.createElement(_reactSpin2.default, { config: spinConfig })
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'spinner-container' },
+	      _react2.default.createElement(_reactSpin2.default, { config: spinConfig })
+	    )
 	  );
 	};
 

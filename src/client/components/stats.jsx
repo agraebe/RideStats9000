@@ -63,7 +63,7 @@ const Stats = ({ data }) => {
               />
             </Col>
           </Row>
-          <Row style={{marginBottom: '30px'}} className="show-grid">
+          <Row className="show-grid">
             <Col md={6}>
               <Distance
                 distanceTraveled={distanceTraveled}

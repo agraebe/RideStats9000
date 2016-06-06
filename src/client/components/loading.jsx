@@ -20,7 +20,8 @@ const generateSpinConfig = () => {
     zIndex: 2e9,
     className: 'spinner',
     shadow: false,
-    hwaccel: false
+    hwaccel: false,
+    position: 'relative'
   };
 }
 
@@ -29,7 +30,9 @@ const Loading = () => {
   return (
     <div>
         <h3 className="text-center">Retrieving Uber statistics...</h3>
-        <Spinner config={spinConfig} />
+        <div className="spinner-container">
+            <Spinner config={spinConfig} />
+        </div>
     </div>
   );
 }
