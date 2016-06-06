@@ -1,4 +1,3 @@
-const { uber } = require('../uber/uberClient.js');
 const { getAuthorizeUrl, storeCredentials } = require('../uber/uberClient.js');
 
 const handleLogin = (req, res) => {

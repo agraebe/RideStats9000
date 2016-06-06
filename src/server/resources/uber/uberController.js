@@ -1,5 +1,5 @@
-const { getUserProfile, getUserHistory, getRequestByID, getRequestReceiptByID, getCurrentRequest } = require('./uberClient.js');
-const { processHistories, generateRemainingQueryOffsets, generateStatistics } = require('./uberUtils.js');
+const { getUserProfile, getUserHistory, getRequestByID, getRequestReceiptByID, getCurrentRequest } = require('./uberClient');
+const { processHistories, generateRemainingQueryOffsets, generateStatistics } = require('./uberUtils');
 
 const retrieveProfile = (req, res) => {
   getUserProfile()
