@@ -53823,7 +53823,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var generateDistanceGraphData = function generateDistanceGraphData(distanceTraveled, longestRideDistance, averageRideDistance) {
+	var generateDistanceGraphData = function generateDistanceGraphData(longestRideDistance, averageRideDistance) {
 	  var labels = ['Longest Ride Distance', 'Average Ride Distance'];
 	  var data = [longestRideDistance, averageRideDistance];
 	  return {
@@ -53846,7 +53846,8 @@
 	  var longestRideDistance = _ref.longestRideDistance;
 	  var averageRideDistance = _ref.averageRideDistance;
 
-	  var distanceGraphData = generateDistanceGraphData(distanceTraveled, longestRideDistance, averageRideDistance);
+	  var graphData = generateDistanceGraphData(longestRideDistance, averageRideDistance);
+	  var graphOptions = { responsive: true };
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
@@ -53886,8 +53887,8 @@
 	      'div',
 	      { className: 'text-center' },
 	      _react2.default.createElement(_reactChartjs.Bar, {
-	        data: distanceGraphData,
-	        options: { responsive: true },
+	        data: graphData,
+	        options: graphOptions,
 	        height: 400,
 	        width: 400
 	      })
@@ -54031,9 +54032,13 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var convertAverageTime = function convertAverageTime(minutes, seconds) {
+	  return (minutes + seconds / 60).toFixed(2);
+	};
+
 	var generateAverageTimeGraphData = function generateAverageTimeGraphData(averageRideWaiting, averageRideRiding) {
-	  var averageRideWaitingDec = (averageRideWaiting.minutes + averageRideWaiting.seconds / 60).toFixed(2);
-	  var averageRideRidingDec = (averageRideRiding.minutes + averageRideRiding.seconds / 60).toFixed(2);
+	  var averageRideWaitingDec = convertAverageTime(averageRideWaiting.minutes, averageRideWaiting.seconds);
+	  var averageRideRidingDec = convertAverageTime(averageRideRiding.minutes, averageRideRiding.seconds);
 	  var labels = ['Average Wait', 'Average Ride'];
 	  var data = [averageRideWaitingDec, averageRideRidingDec];
 	  return {
@@ -54055,7 +54060,8 @@
 	  var averageRideWaiting = _ref.averageRideWaiting;
 	  var averageRideRiding = _ref.averageRideRiding;
 
-	  var averageTimeGraphData = generateAverageTimeGraphData(averageRideWaiting, averageRideRiding);
+	  var graphData = generateAverageTimeGraphData(averageRideWaiting, averageRideRiding);
+	  var graphOptions = { responsive: true };
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
@@ -54121,8 +54127,8 @@
 	          'div',
 	          { className: 'text-center' },
 	          _react2.default.createElement(_reactChartjs.Bar, {
-	            data: averageTimeGraphData,
-	            options: { responsive: true },
+	            data: graphData,
+	            options: graphOptions,
 	            height: 400,
 	            width: 400
 	          })
@@ -54162,6 +54168,7 @@
 	    return color;
 	  });
 	};
+
 	var generateCityBarData = function generateCityBarData(cityData) {
 	  var labels = Object.keys(cityData);
 	  var data = labels.map(function (city) {
@@ -54184,13 +54191,14 @@
 	};
 
 	var getModeCityData = function getModeCityData(cityData) {
+	  var tally = { name: '', count: 0 };
 	  return Object.keys(cityData).reduce(function (results, city) {
 	    if (cityData[city] > results.count) {
 	      results.name = city;
 	      results.count = cityData[city];
 	    }
 	    return results;
-	  }, { name: '', count: 0 });
+	  }, tally);
 	};
 
 	var Cities = function Cities(_ref) {
@@ -54200,7 +54208,8 @@
 	  var modeCityData = getModeCityData(cityData);
 	  var modeCityName = modeCityData.name;
 	  var modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(4) * 100;
-	  var cityBarData = generateCityBarData(cityData);
+	  var graphData = generateCityBarData(cityData);
+	  var graphOptions = { responsive: true };
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
@@ -54239,8 +54248,8 @@
 	      'div',
 	      { className: 'text-center' },
 	      _react2.default.createElement(_reactChartjs.Bar, {
-	        data: cityBarData,
-	        options: { responsive: true },
+	        data: graphData,
+	        options: graphOptions,
 	        height: 400,
 	        width: 400
 	      })
@@ -54306,7 +54315,8 @@
 
 	  var modeDay = getModeDay(dayData);
 	  var minDay = getMinDay(dayData);
-	  var dayBarData = generateDayBarData(dayData);
+	  var graphData = generateDayBarData(dayData);
+	  var graphOptions = { responsive: true };
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
@@ -54344,8 +54354,8 @@
 	      'div',
 	      { className: 'text-center' },
 	      _react2.default.createElement(_reactChartjs.Bar, {
-	        data: dayBarData,
-	        options: { responsive: true },
+	        data: graphData,
+	        options: graphOptions,
 	        height: 400,
 	        width: 400
 	      })
@@ -54971,21 +54981,21 @@
 /* 457 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	var generateDemoData = function generateDemoData() {
 	  return {
 	    numberOfTrips: 185,
 	    tripsPerCity: {
-	      "San Francisco": 140,
-	      "Los Angeles": 39,
-	      "Portland": 4,
-	      "New Orleans": 2
+	      'San Francisco': 140,
+	      'Los Angeles': 39,
+	      Portland: 4,
+	      'New Orleans': 2
 	    },
 	    timeSpentRiding: 102370,
 	    timeSpentWaiting: 47377,
 	    longestRide: {
-	      city: "Los Angeles",
+	      city: 'Los Angeles',
 	      distance: 24.662265066
 	    },
 	    totalDistanceTraveled: 399.1359926652999,

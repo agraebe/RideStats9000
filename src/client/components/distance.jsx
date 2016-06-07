@@ -2,7 +2,7 @@ import React from 'react';
 import { Panel } from 'react-bootstrap';
 import { Bar } from 'react-chartjs';
 
-const generateDistanceGraphData = (distanceTraveled, longestRideDistance, averageRideDistance) => {
+const generateDistanceGraphData = (longestRideDistance, averageRideDistance) => {
   const labels = ['Longest Ride Distance', 'Average Ride Distance'];
   const data = [longestRideDistance, averageRideDistance];
   return {
@@ -15,28 +15,33 @@ const generateDistanceGraphData = (distanceTraveled, longestRideDistance, averag
       borderWidth: 10,
       hoverBackgroundColor: '#149c82',
       hoverBorderColor: '#149c82',
-      data
-    }]
+      data,
+    }],
   };
-}
+};
 
 const Distance = ({ distanceTraveled, longestRideDistance, averageRideDistance }) => {
-  const distanceGraphData = generateDistanceGraphData(distanceTraveled, longestRideDistance, averageRideDistance);
-  const title = (<h3><i className="fa fa-road" aria-hidden="true"></i> Distance Traveled</h3>)
-  return(
+  const graphData = generateDistanceGraphData(longestRideDistance, averageRideDistance);
+  const graphOptions = { responsive: true };
+  const title = (<h3><i className="fa fa-road" aria-hidden="true"></i> Distance Traveled</h3>);
+  return (
     <Panel className="panel-primary" header={title}>
-      <h3 className="text-center">You've traveled <strong>{distanceTraveled}</strong> miles total</h3>
-      <h3 className="text-center"><small>Your longest ride ever was <strong>{longestRideDistance} miles</strong></small></h3>
+      <h3 className="text-center">
+        You've traveled <strong>{distanceTraveled}</strong> miles total
+      </h3>
+      <h3 className="text-center">
+        <small>Your longest ride ever was <strong>{longestRideDistance} miles</strong></small>
+      </h3>
       <div className="text-center">
         <Bar
-          data={distanceGraphData}
-          options={{responsive: true}}
+          data={graphData}
+          options={graphOptions}
           height={400}
           width={400}
         />
       </div>
     </Panel>
   );
-}
+};
 
 export default Distance;

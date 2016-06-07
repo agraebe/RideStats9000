@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel, Col, Row } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import { Bar } from 'react-chartjs';
 
 const generateCityBarDataColors = (data) => {
@@ -9,7 +9,8 @@ const generateCityBarDataColors = (data) => {
     colors.push(color);
     return color;
   });
-}
+};
+
 const generateCityBarData = cityData => {
   const labels = Object.keys(cityData);
   const data = labels.map(city => cityData[city]);
@@ -23,43 +24,44 @@ const generateCityBarData = cityData => {
       borderWidth: 10,
       hoverBackgroundColor: '#149c82',
       hoverBorderColor: '#149c82',
-      data
-    }]
-  }
+      data,
+    }],
+  };
   return cityBarData;
-}
+};
 
 const getModeCityData = cityData => {
+  const tally = { name: '', count: 0 };
   return Object.keys(cityData).reduce((results, city) => {
     if (cityData[city] > results.count) {
       results.name = city;
       results.count = cityData[city];
     }
     return results;
-  }, {name: '', count: 0});
-}
+  }, tally);
+};
 
 const Cities = ({ cityData, numberOfTrips }) => {
   const modeCityData = getModeCityData(cityData);
   const modeCityName = modeCityData.name;
   const modeCityPercentage = (modeCityData.count / numberOfTrips).toFixed(4) * 100;
-  const cityBarData = generateCityBarData(cityData);
+  const graphData = generateCityBarData(cityData);
+  const graphOptions = { responsive: true };
   const title = (<h3><i className="fa fa-map" aria-hidden="true"></i> Rides by City</h3>);
-  return(
+  return (
     <Panel className="panel-primary" header={title}>
-      <h3 className="text-center">You take Uber most often in <strong>{modeCityName}</strong></h3> 
+      <h3 className="text-center">You take Uber most often in <strong>{modeCityName}</strong></h3>
       <h3 className="text-center"><small><strong>{modeCityPercentage}%</strong> of your rides take place there</small></h3>
       <div className="text-center">
-        <Bar 
-          data={cityBarData}
-          options={{responsive: true}}
+        <Bar
+          data={graphData}
+          options={graphOptions}
           height={400}
           width={400}
         />
       </div>
     </Panel>
-  )
-}
+  );
+};
 
 export default Cities;
-
