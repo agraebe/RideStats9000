@@ -1,6 +1,12 @@
-var uberRouter = require('express').Router();
-var { retrieveProfile, retrieveHistory, retrieveStatistics, retrieveRequestByID, retrieveRequestReceipt, retrieveCurrentRequest } = require('./uberController.js');
-var uber = require('./uberClient.js');
+const uberRouter = require('express').Router();
+const {
+  retrieveProfile,
+  retrieveHistory,
+  retrieveStatistics,
+  retrieveRequestByID,
+  retrieveRequestReceipt,
+  retrieveCurrentRequest,
+} = require('./uberController.js');
 
 uberRouter.route('/profile')
   .get(retrieveProfile);
@@ -9,7 +15,7 @@ uberRouter.route('/history')
   .get(retrieveHistory);
 
 uberRouter.route('/statistics')
-  .get(retrieveStatistics);  
+  .get(retrieveStatistics);
 
 uberRouter.route('/requests/:request_id')
   .get(retrieveRequestByID);

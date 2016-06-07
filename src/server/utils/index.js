@@ -1,4 +1,4 @@
-const promisify = (func, context=this) => {
+const promisify = (func, context = this) => {
   return (...args) => {
     return new Promise((resolve, reject) => {
       const callback = (error, ...results) => {
@@ -11,11 +11,11 @@ const promisify = (func, context=this) => {
         resolve(results[0]);
       };
       args.push(callback);
-      func.apply(context, args)
+      func.apply(context, args);
     });
-  }
+  };
 };
 
 module.exports = {
-  promisify
+  promisify,
 };

@@ -9,7 +9,7 @@ const uber = new Uber({
   redirect_uri: process.env.UBER_REDIRECT_URI || config.uber.redirect_uri,
   name: process.env.UBER_NAME || config.uber.name,
   language: process.env.UBER_LANGUAGE || config.uber.language,
-  sandbox: process.env.UBER_SANDBOX || config.uber.sandbox
+  sandbox: process.env.UBER_SANDBOX || config.uber.sandbox,
 });
 
 const getUserProfile = promisify(callback => {
@@ -46,5 +46,5 @@ module.exports = {
   getRequestReceiptByID,
   getCurrentRequest,
   storeCredentials,
-  getAuthorizeUrl
+  getAuthorizeUrl,
 };

@@ -1,5 +1,5 @@
-var authRouter = require('express').Router();
-var { handleLogin, handleCredentials } = require('./authController.js');
+const authRouter = require('express').Router();
+const { handleLogin, handleCredentials } = require('./authController.js');
 
 authRouter.route('/login')
   .get(handleLogin);
