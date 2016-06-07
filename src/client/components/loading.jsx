@@ -21,9 +21,9 @@ const generateSpinConfig = () => {
     className: 'spinner',
     shadow: false,
     hwaccel: false,
-    position: 'relative'
+    position: 'relative',
   };
-}
+};
 
 const Loading = ({ demo }) => {
   const spinConfig = generateSpinConfig();
@@ -35,6 +35,6 @@ const Loading = ({ demo }) => {
         </div>
     </div>
   );
-}
+};
 
 export default Loading;
