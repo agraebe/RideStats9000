@@ -1,6 +1,15 @@
 import React from 'react';
 import { Row, Col, Panel } from 'react-bootstrap';
 
+const generateWaitingDays = days => {
+  if (days > 1) {
+    return days + ' days,';
+  } else if (days === 1) {
+    return days + ' day,';
+  }
+  return null;
+};
+
 const TotalTime = ({ timeWaiting, timeRiding }) => {
   const title = (<h3><i className="fa fa-clock-o" aria-hidden="true"></i> Total Wait and Ride Times</h3>);
   return (
@@ -11,7 +20,7 @@ const TotalTime = ({ timeWaiting, timeRiding }) => {
         </Col>
         <Col xs={8} md={8}>
           <h3 className="text-left text-muted">You've waited for Ubers a total of</h3>
-          <h2 className="text-left text-primary"><strong>{timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null} {timeWaiting.hours} hours, {timeWaiting.minutes} minutes, and {timeWaiting.seconds} seconds</strong></h2>
+          <h2 className="text-left text-primary"><strong>{generateWaitingDays(timeWaiting.days)} {timeWaiting.hours} hours, {timeWaiting.minutes} minutes, and {timeWaiting.seconds} seconds</strong></h2>
         </Col>
       </Row>
       <Row>
@@ -20,7 +29,7 @@ const TotalTime = ({ timeWaiting, timeRiding }) => {
         </Col>
         <Col xs={8} md={8}>
           <h3 className="text-left text-muted">You've ridden in Ubers a total of</h3>
-          <h2 className="text-left text-primary"><strong>{timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null} {timeRiding.hours} hours, {timeRiding.minutes} minutes, and {timeRiding.seconds} seconds</strong></h2>
+          <h2 className="text-left text-primary"><strong>{generateWaitingDays(timeRiding.days)} {timeRiding.hours} hours, {timeRiding.minutes} minutes, and {timeRiding.seconds} seconds</strong></h2>
         </Col>
       </Row>
     </Panel>

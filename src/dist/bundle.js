@@ -53911,6 +53911,15 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var generateWaitingDays = function generateWaitingDays(days) {
+	  if (days > 1) {
+	    return days + ' days,';
+	  } else if (days === 1) {
+	    return days + ' day,';
+	  }
+	  return null;
+	};
+
 	var TotalTime = function TotalTime(_ref) {
 	  var timeWaiting = _ref.timeWaiting;
 	  var timeRiding = _ref.timeRiding;
@@ -53950,7 +53959,7 @@
 	          _react2.default.createElement(
 	            'strong',
 	            null,
-	            timeWaiting.days > 0 ? timeWaiting.days > 1 ? timeWaiting.days + ' days,' : timeWaiting.days + ' day,' : null,
+	            generateWaitingDays(timeWaiting.days),
 	            ' ',
 	            timeWaiting.hours,
 	            ' hours, ',
@@ -53988,7 +53997,7 @@
 	          _react2.default.createElement(
 	            'strong',
 	            null,
-	            timeRiding.days > 0 ? timeRiding.days > 1 ? timeRiding.days + ' days,' : timeRiding.days + ' day,' : null,
+	            generateWaitingDays(timeRiding.days),
 	            ' ',
 	            timeRiding.hours,
 	            ' hours, ',
@@ -54436,8 +54445,6 @@
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(170);
 
 	var _reactSpin = __webpack_require__(454);
 

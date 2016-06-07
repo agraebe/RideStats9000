@@ -7,14 +7,12 @@ import AverageTime from './AverageTime.jsx';
 import Cities from './cities.jsx';
 import Days from './days.jsx';
 
-const convertTime = seconds => {
-  return {
-    days: Math.floor(seconds / 86400),
-    hours: Math.floor(seconds % 86400 / 3600),
-    minutes: Math.floor(seconds % 3600 / 60),
-    seconds: Math.floor(seconds % 3600 % 60),
-  };
-};
+const convertTime = seconds => ({
+  days: Math.floor(seconds / 86400),
+  hours: Math.floor(seconds % 86400 / 3600),
+  minutes: Math.floor(seconds % 3600 / 60),
+  seconds: Math.floor(seconds % 3600 % 60),
+});
 
 const Stats = ({ data }) => {
   const numberOfTrips = data.numberOfTrips;
