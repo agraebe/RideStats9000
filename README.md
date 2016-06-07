@@ -2,7 +2,7 @@
 ### Uber Data Visualizer
 
 ## Usage
-RideStats9000 calculates statistics about your Uber usage (though has a demo mode for those who want to see it in action without actually logging into their Uber account).
+RideStats calculates statistics about your Uber usage (though has a demo mode for those who want to see it in action without actually logging into their Uber account).
 
 ## Requirements
 
