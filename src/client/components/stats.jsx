@@ -1,5 +1,4 @@
 import React from 'react';
-import { Bar } from 'react-chartjs';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Trips from './trips.jsx';
 import Distance from './distance.jsx';
@@ -8,23 +7,22 @@ import AverageTime from './AverageTime.jsx';
 import Cities from './cities.jsx';
 import Days from './days.jsx';
 
-const Stats = ({ data }) => {
-  const convertTime = (seconds) => {
-    return {
-      days: Math.floor(seconds / 86400),
-      hours: Math.floor(seconds % 86400 / 3600),
-      minutes: Math.floor(seconds % 3600 / 60),
-      seconds: Math.floor(seconds % 3600 % 60)
-    }
-  }
+const convertTime = seconds => {
+  return {
+    days: Math.floor(seconds / 86400),
+    hours: Math.floor(seconds % 86400 / 3600),
+    minutes: Math.floor(seconds % 3600 / 60),
+    seconds: Math.floor(seconds % 3600 % 60),
+  };
+};
 
+const Stats = ({ data }) => {
   const numberOfTrips = data.numberOfTrips;
   const dayData = data.tripsPerDay;
   const cityData = data.tripsPerCity;
 
   const distanceTraveled = data.totalDistanceTraveled.toFixed(2);
   const longestRideDistance = data.longestRide.distance.toFixed(2);
-  const longestRideCity = data.longestRide.city;
 
   const timeWaiting = convertTime(data.timeSpentWaiting);
   const timeRiding = convertTime(data.timeSpentRiding);
@@ -44,12 +42,12 @@ const Stats = ({ data }) => {
           <Row className="show-grid">
             <Col md={6}>
               <AverageTime
-                averageRideWaiting={averageRideWaiting} 
+                averageRideWaiting={averageRideWaiting}
                 averageRideRiding={averageRideRiding}
               />
             </Col>
             <Col md={6}>
-              <Cities 
+              <Cities
                 cityData={cityData}
                 numberOfTrips={numberOfTrips}
               />
@@ -57,7 +55,7 @@ const Stats = ({ data }) => {
           </Row>
           <Row className="show-grid">
             <Col md={12}>
-              <TotalTime 
+              <TotalTime
                 timeWaiting={timeWaiting}
                 timeRiding={timeRiding}
               />
@@ -72,14 +70,14 @@ const Stats = ({ data }) => {
               />
             </Col>
             <Col md={6}>
-              <Days 
+              <Days
                 dayData={dayData}
               />
             </Col>
           </Row>
-        </Grid>      
+        </Grid>
     </div>
-  )
-}
+  );
+};
 
 export default Stats;

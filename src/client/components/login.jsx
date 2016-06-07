@@ -1,5 +1,4 @@
 import React from 'react';
-import { Panel } from 'react-bootstrap';
 
 const Login = ({ handleLoginClick, handleDemoClick }) => {
   const demoLink = (<a className="link-demo" onClick={handleDemoClick}><strong>Demo</strong></a>);
@@ -13,6 +12,6 @@ const Login = ({ handleLoginClick, handleDemoClick }) => {
         <h4 className="text-center">Click {demoLink} or {loginLink} to get started</h4>
     </div>
   );
-}
+};
 
 export default Login;

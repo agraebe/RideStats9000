@@ -98,7 +98,6 @@ class App extends React.Component {
         <Nav
           handleLoginClick={this.handleLoginClick}
           handleDemoClick={this.handleDemoClick}
-          loading={this.state.loading}
           loggedIn={this.state.loggedIn}
           demo={this.state.demo}
         />

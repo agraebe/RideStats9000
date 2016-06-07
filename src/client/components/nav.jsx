@@ -9,9 +9,9 @@ const generateLoginText = (loggedIn, demo) => {
     return 'Log out';
   }
   return 'Log in';
-}
+};
 
-const NavTop = ({ handleDemoClick, handleLoginClick, loggedIn, demo, loading }) => {
+const NavTop = ({ handleDemoClick, handleLoginClick, loggedIn, demo }) => {
   const loginText = generateLoginText(loggedIn, demo);
   return (
     <Navbar>
@@ -29,6 +29,6 @@ const NavTop = ({ handleDemoClick, handleLoginClick, loggedIn, demo, loading }) 
       </Navbar.Collapse>
     </Navbar>
   );
-}
+};
 
 export default NavTop;

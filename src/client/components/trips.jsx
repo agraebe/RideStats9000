@@ -2,11 +2,11 @@ import React from 'react';
 import { Panel } from 'react-bootstrap';
 
 const generateIconDivs = numberOfTrips => {
-  const iconTotal = Math.ceil(numberOfTrips/10);
-  const remainder = 1 - (Math.ceil(numberOfTrips/10) - (numberOfTrips/10));
+  const iconTotal = Math.ceil(numberOfTrips / 10);
+  const remainder = 1 - (iconTotal - (numberOfTrips / 10));
   const cutWidth = 100 * remainder + 'px';
   const icons = [];
-  for (let i = 0; i < iconTotal; i++) {  
+  for (let i = 0; i < iconTotal; i++) {
     icons.push(i);
   }
   return icons.map((icon, iconIndex) => {
@@ -15,11 +15,11 @@ const generateIconDivs = numberOfTrips => {
     }
     return <div key={iconIndex} style={{ minHeight: '100px', minWidth: '100px', display: 'inline-block', background: 'url(assets/carIconRed.png) no-repeat' }}></div>;
   });
-}
+};
 
 const Trips = ({ numberOfTrips }) => {
   const iconDivs = generateIconDivs(numberOfTrips);
-  const title = (<h3><i className="fa fa-car" aria-hidden="true"></i> Total Rides</h3>)
+  const title = (<h3><i className="fa fa-car" aria-hidden="true"></i> Total Rides</h3>);
   return (
     <div>
       <Panel className="panel-primary" header={title}>
@@ -28,7 +28,7 @@ const Trips = ({ numberOfTrips }) => {
         <h3 className="text-center"><small>One car represents 10 rides</small></h3>
       </Panel>
     </div>
-  )
-}
+  );
+};
 
 export default Trips;

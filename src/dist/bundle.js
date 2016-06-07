@@ -200,7 +200,6 @@
 	        _react2.default.createElement(_nav2.default, {
 	          handleLoginClick: this.handleLoginClick,
 	          handleDemoClick: this.handleDemoClick,
-	          loading: this.state.loading,
 	          loggedIn: this.state.loggedIn,
 	          demo: this.state.demo
 	        }),
@@ -30336,7 +30335,6 @@
 	  var handleLoginClick = _ref.handleLoginClick;
 	  var loggedIn = _ref.loggedIn;
 	  var demo = _ref.demo;
-	  var loading = _ref.loading;
 
 	  var loginText = generateLoginText(loggedIn, demo);
 	  return _react2.default.createElement(
@@ -49634,15 +49632,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactChartjs = __webpack_require__(436);
-
 	var _reactBootstrap = __webpack_require__(170);
 
-	var _trips = __webpack_require__(446);
+	var _trips = __webpack_require__(436);
 
 	var _trips2 = _interopRequireDefault(_trips);
 
-	var _distance = __webpack_require__(447);
+	var _distance = __webpack_require__(437);
 
 	var _distance2 = _interopRequireDefault(_distance);
 
@@ -49664,17 +49660,17 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var convertTime = function convertTime(seconds) {
+	  return {
+	    days: Math.floor(seconds / 86400),
+	    hours: Math.floor(seconds % 86400 / 3600),
+	    minutes: Math.floor(seconds % 3600 / 60),
+	    seconds: Math.floor(seconds % 3600 % 60)
+	  };
+	};
+
 	var Stats = function Stats(_ref) {
 	  var data = _ref.data;
-
-	  var convertTime = function convertTime(seconds) {
-	    return {
-	      days: Math.floor(seconds / 86400),
-	      hours: Math.floor(seconds % 86400 / 3600),
-	      minutes: Math.floor(seconds % 3600 / 60),
-	      seconds: Math.floor(seconds % 3600 % 60)
-	    };
-	  };
 
 	  var numberOfTrips = data.numberOfTrips;
 	  var dayData = data.tripsPerDay;
@@ -49682,7 +49678,6 @@
 
 	  var distanceTraveled = data.totalDistanceTraveled.toFixed(2);
 	  var longestRideDistance = data.longestRide.distance.toFixed(2);
-	  var longestRideCity = data.longestRide.city;
 
 	  var timeWaiting = convertTime(data.timeSpentWaiting);
 	  var timeRiding = convertTime(data.timeSpentRiding);
@@ -49768,28 +49763,208 @@
 /* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = {
-	  Bar: __webpack_require__(437),
-	  Doughnut: __webpack_require__(441),
-	  Line: __webpack_require__(442),
-	  Pie: __webpack_require__(443),
-	  PolarArea: __webpack_require__(444),
-	  Radar: __webpack_require__(445),
-	  createClass: __webpack_require__(438).createClass
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(170);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateIconDivs = function generateIconDivs(numberOfTrips) {
+	  var iconTotal = Math.ceil(numberOfTrips / 10);
+	  var remainder = 1 - (iconTotal - numberOfTrips / 10);
+	  var cutWidth = 100 * remainder + 'px';
+	  var icons = [];
+	  for (var i = 0; i < iconTotal; i++) {
+	    icons.push(i);
+	  }
+	  return icons.map(function (icon, iconIndex) {
+	    if (iconIndex === icons.length - 1) {
+	      return _react2.default.createElement(
+	        'div',
+	        { key: iconIndex, className: 'text-left', style: { minHeight: '100px', minWidth: '100px', maxHeight: '100px', maxWidth: '100px', display: 'inline-block' } },
+	        _react2.default.createElement('div', { style: { minHeight: '100px', minWidth: cutWidth, overflow: 'hidden', display: 'inline-block', background: 'url(assets/carIconRed.png) no-repeat' } })
+	      );
+	    }
+	    return _react2.default.createElement('div', { key: iconIndex, style: { minHeight: '100px', minWidth: '100px', display: 'inline-block', background: 'url(assets/carIconRed.png) no-repeat' } });
+	  });
 	};
 
+	var Trips = function Trips(_ref) {
+	  var numberOfTrips = _ref.numberOfTrips;
+
+	  var iconDivs = generateIconDivs(numberOfTrips);
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    _react2.default.createElement('i', { className: 'fa fa-car', 'aria-hidden': 'true' }),
+	    ' Total Rides'
+	  );
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      _reactBootstrap.Panel,
+	      { className: 'panel-primary', header: title },
+	      _react2.default.createElement(
+	        'h3',
+	        { className: 'text-center' },
+	        'You\'ve taken ',
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          numberOfTrips
+	        ),
+	        ' rides with Uber'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'text-center' },
+	        iconDivs
+	      ),
+	      _react2.default.createElement(
+	        'h3',
+	        { className: 'text-center' },
+	        _react2.default.createElement(
+	          'small',
+	          null,
+	          'One car represents 10 rides'
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = Trips;
 
 /***/ },
 /* 437 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var vars = __webpack_require__(438);
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(170);
+
+	var _reactChartjs = __webpack_require__(438);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var generateDistanceGraphData = function generateDistanceGraphData(longestRideDistance, averageRideDistance) {
+	  var labels = ['Longest Ride Distance', 'Average Ride Distance'];
+	  var data = [longestRideDistance, averageRideDistance];
+	  return {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Distance',
+	      fillColor: ['#970015', '#149c82'],
+	      backgroundColor: ['#970015', '#149c82'],
+	      borderColor: ['#970015', '#149c82'],
+	      borderWidth: 10,
+	      hoverBackgroundColor: '#149c82',
+	      hoverBorderColor: '#149c82',
+	      data: data
+	    }]
+	  };
+	};
+
+	var Distance = function Distance(_ref) {
+	  var distanceTraveled = _ref.distanceTraveled;
+	  var longestRideDistance = _ref.longestRideDistance;
+	  var averageRideDistance = _ref.averageRideDistance;
+
+	  var graphData = generateDistanceGraphData(longestRideDistance, averageRideDistance);
+	  var graphOptions = { responsive: true };
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    _react2.default.createElement('i', { className: 'fa fa-road', 'aria-hidden': 'true' }),
+	    ' Distance Traveled'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title },
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'You\'ve traveled ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        distanceTraveled
+	      ),
+	      ' miles total'
+	    ),
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      _react2.default.createElement(
+	        'small',
+	        null,
+	        'Your longest ride ever was ',
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          longestRideDistance,
+	          ' miles'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement(_reactChartjs.Bar, {
+	        data: graphData,
+	        options: graphOptions,
+	        height: 400,
+	        width: 400
+	      })
+	    )
+	  );
+	};
+
+	exports.default = Distance;
+
+/***/ },
+/* 438 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = {
+	  Bar: __webpack_require__(439),
+	  Doughnut: __webpack_require__(443),
+	  Line: __webpack_require__(444),
+	  Pie: __webpack_require__(445),
+	  PolarArea: __webpack_require__(446),
+	  Radar: __webpack_require__(447),
+	  createClass: __webpack_require__(440).createClass
+	};
+
+
+/***/ },
+/* 439 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var vars = __webpack_require__(440);
 
 	module.exports = vars.createClass('Bar', ['getBarsAtEvent']);
 
 
 /***/ },
-/* 438 */
+/* 440 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -49848,7 +50023,7 @@
 	    };
 
 	    classData.initializeChart = function(nextProps) {
-	      var Chart = __webpack_require__(439);
+	      var Chart = __webpack_require__(441);
 	      var el = ReactDOM.findDOMNode(this);
 	      var ctx = el.getContext("2d");
 	      var chart = new Chart(ctx)[chartType](nextProps.data, nextProps.options || {});
@@ -49924,7 +50099,7 @@
 
 
 /***/ },
-/* 439 */
+/* 441 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -50238,7 +50413,7 @@
 				//Method for warning of errors
 				if (window.console && typeof window.console.warn === "function") console.warn(str);
 			},
-			amd = helpers.amd = ("function" === 'function' && __webpack_require__(440)),
+			amd = helpers.amd = ("function" === 'function' && __webpack_require__(442)),
 			//-- Math methods
 			isNumber = helpers.isNumber = function(n){
 				return !isNaN(parseFloat(n)) && isFinite(n);
@@ -53666,7 +53841,7 @@
 
 
 /***/ },
-/* 440 */
+/* 442 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -53674,229 +53849,49 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 441 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var vars = __webpack_require__(438);
-
-	module.exports = vars.createClass('Doughnut', ['getSegmentsAtEvent']);
-
-
-/***/ },
-/* 442 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var vars = __webpack_require__(438);
-
-	module.exports = vars.createClass('Line', ['getPointsAtEvent']);
-
-
-/***/ },
 /* 443 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var vars = __webpack_require__(438);
+	var vars = __webpack_require__(440);
 
-	module.exports = vars.createClass('Pie', ['getSegmentsAtEvent']);
+	module.exports = vars.createClass('Doughnut', ['getSegmentsAtEvent']);
 
 
 /***/ },
 /* 444 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var vars = __webpack_require__(438);
+	var vars = __webpack_require__(440);
 
-	module.exports = vars.createClass('PolarArea', ['getSegmentsAtEvent']);
+	module.exports = vars.createClass('Line', ['getPointsAtEvent']);
 
 
 /***/ },
 /* 445 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var vars = __webpack_require__(438);
+	var vars = __webpack_require__(440);
 
-	module.exports = vars.createClass('Radar', ['getPointsAtEvent']);
+	module.exports = vars.createClass('Pie', ['getSegmentsAtEvent']);
 
 
 /***/ },
 /* 446 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	var vars = __webpack_require__(440);
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	module.exports = vars.createClass('PolarArea', ['getSegmentsAtEvent']);
 
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(170);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var generateIconDivs = function generateIconDivs(numberOfTrips) {
-	  var iconTotal = Math.ceil(numberOfTrips / 10);
-	  var remainder = 1 - (Math.ceil(numberOfTrips / 10) - numberOfTrips / 10);
-	  var cutWidth = 100 * remainder + 'px';
-	  var icons = [];
-	  for (var i = 0; i < iconTotal; i++) {
-	    icons.push(i);
-	  }
-	  return icons.map(function (icon, iconIndex) {
-	    if (iconIndex === icons.length - 1) {
-	      return _react2.default.createElement(
-	        'div',
-	        { key: iconIndex, className: 'text-left', style: { minHeight: '100px', minWidth: '100px', maxHeight: '100px', maxWidth: '100px', display: 'inline-block' } },
-	        _react2.default.createElement('div', { style: { minHeight: '100px', minWidth: cutWidth, overflow: 'hidden', display: 'inline-block', background: 'url(assets/carIconRed.png) no-repeat' } })
-	      );
-	    }
-	    return _react2.default.createElement('div', { key: iconIndex, style: { minHeight: '100px', minWidth: '100px', display: 'inline-block', background: 'url(assets/carIconRed.png) no-repeat' } });
-	  });
-	};
-
-	var Trips = function Trips(_ref) {
-	  var numberOfTrips = _ref.numberOfTrips;
-
-	  var iconDivs = generateIconDivs(numberOfTrips);
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    _react2.default.createElement('i', { className: 'fa fa-car', 'aria-hidden': 'true' }),
-	    ' Total Rides'
-	  );
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      _reactBootstrap.Panel,
-	      { className: 'panel-primary', header: title },
-	      _react2.default.createElement(
-	        'h3',
-	        { className: 'text-center' },
-	        'You\'ve taken ',
-	        _react2.default.createElement(
-	          'strong',
-	          null,
-	          numberOfTrips
-	        ),
-	        ' rides with Uber'
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'text-center' },
-	        iconDivs
-	      ),
-	      _react2.default.createElement(
-	        'h3',
-	        { className: 'text-center' },
-	        _react2.default.createElement(
-	          'small',
-	          null,
-	          'One car represents 10 rides'
-	        )
-	      )
-	    )
-	  );
-	};
-
-	exports.default = Trips;
 
 /***/ },
 /* 447 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	var vars = __webpack_require__(440);
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	module.exports = vars.createClass('Radar', ['getPointsAtEvent']);
 
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactBootstrap = __webpack_require__(170);
-
-	var _reactChartjs = __webpack_require__(436);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var generateDistanceGraphData = function generateDistanceGraphData(longestRideDistance, averageRideDistance) {
-	  var labels = ['Longest Ride Distance', 'Average Ride Distance'];
-	  var data = [longestRideDistance, averageRideDistance];
-	  return {
-	    labels: labels,
-	    datasets: [{
-	      label: 'Distance',
-	      fillColor: ['#970015', '#149c82'],
-	      backgroundColor: ['#970015', '#149c82'],
-	      borderColor: ['#970015', '#149c82'],
-	      borderWidth: 10,
-	      hoverBackgroundColor: '#149c82',
-	      hoverBorderColor: '#149c82',
-	      data: data
-	    }]
-	  };
-	};
-
-	var Distance = function Distance(_ref) {
-	  var distanceTraveled = _ref.distanceTraveled;
-	  var longestRideDistance = _ref.longestRideDistance;
-	  var averageRideDistance = _ref.averageRideDistance;
-
-	  var graphData = generateDistanceGraphData(longestRideDistance, averageRideDistance);
-	  var graphOptions = { responsive: true };
-	  var title = _react2.default.createElement(
-	    'h3',
-	    null,
-	    _react2.default.createElement('i', { className: 'fa fa-road', 'aria-hidden': 'true' }),
-	    ' Distance Traveled'
-	  );
-	  return _react2.default.createElement(
-	    _reactBootstrap.Panel,
-	    { className: 'panel-primary', header: title },
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      'You\'ve traveled ',
-	      _react2.default.createElement(
-	        'strong',
-	        null,
-	        distanceTraveled
-	      ),
-	      ' miles total'
-	    ),
-	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      _react2.default.createElement(
-	        'small',
-	        null,
-	        'Your longest ride ever was ',
-	        _react2.default.createElement(
-	          'strong',
-	          null,
-	          longestRideDistance,
-	          ' miles'
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'text-center' },
-	      _react2.default.createElement(_reactChartjs.Bar, {
-	        data: graphData,
-	        options: graphOptions,
-	        height: 400,
-	        width: 400
-	      })
-	    )
-	  );
-	};
-
-	exports.default = Distance;
 
 /***/ },
 /* 448 */
@@ -53913,8 +53908,6 @@
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactBootstrap = __webpack_require__(170);
-
-	var _reactChartjs = __webpack_require__(436);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54028,7 +54021,7 @@
 
 	var _reactBootstrap = __webpack_require__(170);
 
-	var _reactChartjs = __webpack_require__(436);
+	var _reactChartjs = __webpack_require__(438);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54156,7 +54149,7 @@
 
 	var _reactBootstrap = __webpack_require__(170);
 
-	var _reactChartjs = __webpack_require__(436);
+	var _reactChartjs = __webpack_require__(438);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54275,7 +54268,7 @@
 
 	var _reactBootstrap = __webpack_require__(170);
 
-	var _reactChartjs = __webpack_require__(436);
+	var _reactChartjs = __webpack_require__(438);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54369,7 +54362,7 @@
 /* 452 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -54379,8 +54372,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactBootstrap = __webpack_require__(170);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Login = function Login(_ref) {
@@ -54388,44 +54379,44 @@
 	  var handleDemoClick = _ref.handleDemoClick;
 
 	  var demoLink = _react2.default.createElement(
-	    'a',
-	    { className: 'link-demo', onClick: handleDemoClick },
+	    "a",
+	    { className: "link-demo", onClick: handleDemoClick },
 	    _react2.default.createElement(
-	      'strong',
+	      "strong",
 	      null,
-	      'Demo'
+	      "Demo"
 	    )
 	  );
 	  var loginLink = _react2.default.createElement(
-	    'a',
-	    { className: 'link-login', onClick: handleLoginClick },
+	    "a",
+	    { className: "link-login", onClick: handleLoginClick },
 	    _react2.default.createElement(
-	      'strong',
+	      "strong",
 	      null,
-	      'Log in'
+	      "Log in"
 	    )
 	  );
 	  return _react2.default.createElement(
-	    'div',
+	    "div",
 	    null,
 	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      'RideStats calculates statistics about your Uber usage'
+	      "h3",
+	      { className: "text-center" },
+	      "RideStats calculates statistics about your Uber usage"
 	    ),
 	    _react2.default.createElement(
-	      'div',
-	      { className: 'text-center' },
-	      _react2.default.createElement('img', { className: 'center-block img-rounded img-responsive', src: 'assets/login.jpg' })
+	      "div",
+	      { className: "text-center" },
+	      _react2.default.createElement("img", { className: "center-block img-rounded img-responsive", src: "assets/login.jpg" })
 	    ),
 	    _react2.default.createElement(
-	      'h4',
-	      { className: 'text-center' },
-	      'Click ',
+	      "h4",
+	      { className: "text-center" },
+	      "Click ",
 	      demoLink,
-	      ' or ',
+	      " or ",
 	      loginLink,
-	      ' to get started'
+	      " to get started"
 	    )
 	  );
 	};

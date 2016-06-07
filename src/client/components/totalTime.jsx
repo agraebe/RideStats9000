@@ -1,14 +1,13 @@
 import React from 'react';
 import { Row, Col, Panel } from 'react-bootstrap';
-import { Bar } from 'react-chartjs';
 
 const TotalTime = ({ timeWaiting, timeRiding }) => {
   const title = (<h3><i className="fa fa-clock-o" aria-hidden="true"></i> Total Wait and Ride Times</h3>);
-  return(
+  return (
     <Panel className="panel-primary" header={title}>
-      <Row style={{ marginBottom: '20px'}}>
+      <Row style={{ marginBottom: '20px' }}>
         <Col xs={4} md={4}>
-          <div style={{top: '33%'}} className="pull-right"><img className="img-responsive" src="/assets/traffic.png" /></div>
+          <div style={{ top: '33%' }} className="pull-right"><img className="img-responsive" src="/assets/traffic.png" /></div>
         </Col>
         <Col xs={8} md={8}>
           <h3 className="text-left text-muted">You've waited for Ubers a total of</h3>
@@ -26,6 +25,6 @@ const TotalTime = ({ timeWaiting, timeRiding }) => {
       </Row>
     </Panel>
   );
-}
+};
 
-export default TotalTime
+export default TotalTime;
