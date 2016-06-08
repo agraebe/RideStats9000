@@ -4,9 +4,8 @@ const { processHistories, generateRemainingQueryOffsets, generateStatistics } = 
 const retrieveProfile = (req, res) => {
   getUserProfile()
     .then(profile => res.json({ success: true, data: profile }))
-    .then(() => deleteCredentials())
-    .catch(message => res.status(500).json({ success: false, data: null, message }))
-    .then(() => removeCredentials());
+    .then(() => removeCredentials())
+    .catch(message => res.status(500).json({ success: false, data: null, message }));
 };
 
 const retrieveRemainingHistories = data => {
@@ -20,40 +19,39 @@ const retrieveHistory = (req, res) => {
   getUserHistory(0)
     .then(history => retrieveRemainingHistories(history))
     .then(histories => res.json({ success: true, data: processHistories(histories) }))
-    .catch(message => res.status(500).json({ success: false, data: null, message }))
-    .then(() => removeCredentials());
+    .then(() => removeCredentials())
+    .catch(message => res.status(500).json({ success: false, data: null, message }));
 };
 
-// TODO: Abstract retrieveStatistics and retrieveHistory
 const retrieveStatistics = (req, res) => {
   getUserHistory(0)
     .then(history => retrieveRemainingHistories(history))
     .then(histories => res.json({ success: true, data: generateStatistics(processHistories(histories)) }))
-    .catch(message => res.status(500).json({ success: false, data: null, message }))
-    .then(() => removeCredentials());
+    .then(() => removeCredentials())
+    .catch(message => res.status(500).json({ success: false, data: null, message }));
 };
 
 const retrieveRequestByID = (req, res) => {
   const id = req.params.request_id;
   getRequestByID(id)
     .then(request => res.json({ success: true, data: request }))
-    .catch(message => res.status(500).json({ success: false, data: null, message }))
-    .then(() => removeCredentials());
+    .then(() => removeCredentials())
+    .catch(message => res.status(500).json({ success: false, data: null, message }));
 };
 
 const retrieveRequestReceipt = (req, res) => {
   const id = req.params.request_id;
   getRequestReceiptByID(id)
     .then(receipt => res.json({ success: true, data: receipt }))
-    .catch(message => res.status(500).json({ success: false, data: null, message }))
-    .then(() => removeCredentials());
+    .then(() => removeCredentials())
+    .catch(message => res.status(500).json({ success: false, data: null, message }));
 };
 
 const retrieveCurrentRequest = (req, res) => {
   getCurrentRequest()
     .then(request => res.json({ success: true, data: request }))
-    .catch(message => res.status(500).json({ success: false, data: null, message }))
-    .then(() => removeCredentials());
+    .then(() => removeCredentials())
+    .catch(message => res.status(500).json({ success: false, data: null, message }));
 };
 
 module.exports = {
