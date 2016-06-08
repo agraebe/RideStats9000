@@ -8,8 +8,8 @@ const {
   retrieveCurrentRequest,
 } = require('./uberController.js');
 
-uberRouter.route('/profile')
-  .get(retrieveProfile);
+// uberRouter.route('/profile')
+//   .get(retrieveProfile);
 
 uberRouter.route('/history')
   .get(retrieveHistory);
@@ -17,13 +17,13 @@ uberRouter.route('/history')
 uberRouter.route('/statistics')
   .get(retrieveStatistics);
 
-uberRouter.route('/requests/:request_id')
-  .get(retrieveRequestByID);
+// uberRouter.route('/requests/:request_id')
+//   .get(retrieveRequestByID);
 
-uberRouter.route('/requests/:request_id/receipt')
-  .get(retrieveRequestReceipt);
+// uberRouter.route('/requests/:request_id/receipt')
+//   .get(retrieveRequestReceipt);
 
-uberRouter.route('/requests/current')
-  .get(retrieveCurrentRequest);
+// uberRouter.route('/requests/current')
+//   .get(retrieveCurrentRequest);
 
 module.exports = uberRouter;

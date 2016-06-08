@@ -36,15 +36,19 @@ const storeCredentials = promisify((authorization_code, callback) => {
   uber.authorization({ authorization_code }, callback);
 });
 
+const removeCredentials = () => {
+  uber.authorization_code = null;
+  uber.refresh_token = null;
+};
 const getAuthorizeUrl = () => uber.getAuthorizeUrl(config.uber.scope);
 
 module.exports = {
-  uber,
   getUserProfile,
   getUserHistory,
   getRequestByID,
   getRequestReceiptByID,
   getCurrentRequest,
   storeCredentials,
+  removeCredentials,
   getAuthorizeUrl,
 };
