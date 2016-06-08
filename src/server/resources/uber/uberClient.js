@@ -37,8 +37,7 @@ const storeCredentials = promisify((authorization_code, callback) => {
 });
 
 const removeCredentials = () => {
-  uber.authorization_code = null;
-  uber.refresh_token = null;
+  uber.clearTokens();
 };
 const getAuthorizeUrl = () => uber.getAuthorizeUrl(config.uber.scope);
 
