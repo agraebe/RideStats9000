@@ -3,7 +3,7 @@ import { Panel } from 'react-bootstrap';
 import { Bar } from 'react-chartjs';
 
 const generateDistanceGraphData = (longestRideDistance, averageRideDistance) => {
-  const labels = ['Longest Ride Distance', 'Average Ride Distance'];
+  const labels = ['Longest Ride', 'Average Ride'];
   const data = [longestRideDistance, averageRideDistance];
   return {
     labels,

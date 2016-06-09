@@ -6,6 +6,7 @@ import TotalTime from './TotalTime.jsx';
 import AverageTime from './AverageTime.jsx';
 import Cities from './cities.jsx';
 import Days from './days.jsx';
+import Hours from './hours.jsx';
 
 const convertTime = seconds => ({
   days: Math.floor(seconds / 86400),
@@ -17,6 +18,7 @@ const convertTime = seconds => ({
 const Stats = ({ data }) => {
   const numberOfTrips = data.numberOfTrips;
   const dayData = data.tripsPerDay;
+  const hourData = data.tripsPerHour;
   const cityData = data.tripsPerCity;
 
   const distanceTraveled = data.totalDistanceTraveled.toFixed(2);
@@ -70,6 +72,13 @@ const Stats = ({ data }) => {
             <Col md={6}>
               <Days
                 dayData={dayData}
+              />
+            </Col>
+          </Row>
+          <Row className="show-grid">
+            <Col md={12}>
+              <Hours
+                hourData={hourData}
               />
             </Col>
           </Row>

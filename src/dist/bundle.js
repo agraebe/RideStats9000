@@ -68,19 +68,19 @@
 
 	var _stats2 = _interopRequireDefault(_stats);
 
-	var _login = __webpack_require__(452);
+	var _login = __webpack_require__(453);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _loading = __webpack_require__(453);
+	var _loading = __webpack_require__(454);
 
 	var _loading2 = _interopRequireDefault(_loading);
 
-	var _footer = __webpack_require__(456);
+	var _footer = __webpack_require__(457);
 
 	var _footer2 = _interopRequireDefault(_footer);
 
-	var _utils = __webpack_require__(457);
+	var _utils = __webpack_require__(458);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49658,6 +49658,10 @@
 
 	var _days2 = _interopRequireDefault(_days);
 
+	var _hours = __webpack_require__(452);
+
+	var _hours2 = _interopRequireDefault(_hours);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var convertTime = function convertTime(seconds) {
@@ -49674,6 +49678,7 @@
 
 	  var numberOfTrips = data.numberOfTrips;
 	  var dayData = data.tripsPerDay;
+	  var hourData = data.tripsPerHour;
 	  var cityData = data.tripsPerCity;
 
 	  var distanceTraveled = data.totalDistanceTraveled.toFixed(2);
@@ -49750,6 +49755,17 @@
 	          { md: 6 },
 	          _react2.default.createElement(_days2.default, {
 	            dayData: dayData
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Row,
+	        { className: 'show-grid' },
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { md: 12 },
+	          _react2.default.createElement(_hours2.default, {
+	            hourData: hourData
 	          })
 	        )
 	      )
@@ -49865,7 +49881,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var generateDistanceGraphData = function generateDistanceGraphData(longestRideDistance, averageRideDistance) {
-	  var labels = ['Longest Ride Distance', 'Average Ride Distance'];
+	  var labels = ['Longest Ride', 'Average Ride'];
 	  var data = [longestRideDistance, averageRideDistance];
 	  return {
 	    labels: labels,
@@ -54371,6 +54387,116 @@
 /* 452 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(170);
+
+	var _reactChartjs = __webpack_require__(438);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	var hours = ["Midnight", "1 a.m.", "2 a.m.", "3 a.m.", "4 a.m.", "5 a.m.", "6 a.m.", "7 a.m.", "8 a.m.", "9 a.m.", "10 a.m.", "11 a.m.", "12 p.m.", "1 p.m.", "2 p.m.", "3 p.m.", "4 p.m.", "5 p.m.", "6 p.m.", "7 p.m.", "8 p.m.", "9 p.m.", "10 p.m.", "11 p.m."];
+
+	var generateHourLineData = function generateHourLineData(hourData) {
+	  var labels = hours;
+	  var data = hourData;
+	  var dayLineData = {
+	    labels: labels,
+	    datasets: [{
+	      label: 'Trips By Hour',
+	      fillColor: '#006551',
+	      strokeColor: '#006551',
+	      pointColor: '#149C81',
+	      pointStrokeColor: '#006551',
+	      pointHighlightFill: '#8EF0DD',
+	      pointHighlightStroke: '#149C81',
+	      data: data
+	    }]
+	  };
+	  return dayLineData;
+	};
+
+	var getModeHourRange = function getModeHourRange(hourData) {
+	  var modeHourInt = Math.max.apply(Math, _toConsumableArray(hourData));
+	  var modeHourIndex = hourData.indexOf(modeHourInt);
+	  return hours[modeHourIndex] + ' and ' + (hours[modeHourIndex + 1] || hours[0]);
+	};
+
+	var getMinHourRange = function getMinHourRange(hourData) {
+	  var minHourInt = Math.min.apply(Math, _toConsumableArray(hourData));
+	  var minHourIndex = hourData.indexOf(minHourInt);
+	  return hours[minHourIndex] + ' and ' + (hours[minHourIndex + 1] || hours[0]);
+	};
+
+	var Hours = function Hours(_ref) {
+	  var hourData = _ref.hourData;
+
+	  var modeHourRange = getModeHourRange(hourData);
+	  var minHourRange = getMinHourRange(hourData);
+	  var graphData = generateHourLineData(hourData);
+	  var graphOptions = { responsive: true, pointHitDetectionRadius: 5, pointDot: true };
+	  var title = _react2.default.createElement(
+	    'h3',
+	    null,
+	    _react2.default.createElement('i', { className: 'fa fa-clock-o', 'aria-hidden': 'true' }),
+	    ' Rides by Hour'
+	  );
+	  return _react2.default.createElement(
+	    _reactBootstrap.Panel,
+	    { className: 'panel-primary', header: title, body: true },
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      'You ride most often between ',
+	      _react2.default.createElement(
+	        'strong',
+	        null,
+	        modeHourRange
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'h3',
+	      { className: 'text-center' },
+	      _react2.default.createElement(
+	        'small',
+	        null,
+	        'You ride least often between ',
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          minHourRange
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'text-center' },
+	      _react2.default.createElement(_reactChartjs.Line, {
+	        data: graphData,
+	        options: graphOptions,
+	        height: 200,
+	        width: 400
+	      })
+	    )
+	  );
+	};
+
+	exports.default = Hours;
+
+/***/ },
+/* 453 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -54433,7 +54559,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 453 */
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54446,7 +54572,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactSpin = __webpack_require__(454);
+	var _reactSpin = __webpack_require__(455);
 
 	var _reactSpin2 = _interopRequireDefault(_reactSpin);
 
@@ -54500,7 +54626,7 @@
 	exports.default = Loading;
 
 /***/ },
-/* 454 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54511,7 +54637,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _spin = __webpack_require__(455);
+	var _spin = __webpack_require__(456);
 
 	var _spin2 = _interopRequireDefault(_spin);
 
@@ -54552,7 +54678,7 @@
 	exports.default = ReactSpinner;
 
 /***/ },
-/* 455 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -54935,7 +55061,7 @@
 
 
 /***/ },
-/* 456 */
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -54976,7 +55102,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 457 */
+/* 458 */
 /***/ function(module, exports) {
 
 	'use strict';

@@ -57,7 +57,7 @@ class App extends React.Component {
         if (this.state.loggedIn === false) {
           return;
         }
-        window.history.pushState(null, '#/stats', '#/stats');
+        window.history.pushState(null, '#/stats', '#/stats'); 
         this.setState({ data: response.data, loading: false });
       })
       .fail(err => {
