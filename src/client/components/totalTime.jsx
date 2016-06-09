@@ -16,7 +16,7 @@ const TotalTime = ({ timeWaiting, timeRiding }) => {
     <Panel className="panel-primary" header={title}>
       <Row style={{ marginBottom: '20px' }}>
         <Col xs={4} md={4}>
-          <div style={{ top: '33%' }} className="pull-right"><img className="img-responsive" src="/assets/traffic.png" /></div>
+          <div className="pull-right"><img className="img-responsive" src="/assets/traffic.png" /></div>
         </Col>
         <Col xs={8} md={8}>
           <h3 className="text-left text-muted">You've waited for Ubers a total of</h3>

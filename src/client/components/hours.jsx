@@ -78,7 +78,7 @@ const Hours = ({ hourData }) => {
         <Line
           data={graphData}
           options={graphOptions}
-          height={200}
+          height={250}
           width={400}
         />
       </div>

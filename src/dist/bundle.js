@@ -53957,7 +53957,7 @@
 	        { xs: 4, md: 4 },
 	        _react2.default.createElement(
 	          'div',
-	          { style: { top: '33%' }, className: 'pull-right' },
+	          { className: 'pull-right' },
 	          _react2.default.createElement('img', { className: 'img-responsive', src: '/assets/traffic.png' })
 	        )
 	      ),
@@ -54484,7 +54484,7 @@
 	      _react2.default.createElement(_reactChartjs.Line, {
 	        data: graphData,
 	        options: graphOptions,
-	        height: 200,
+	        height: 250,
 	        width: 400
 	      })
 	    )
@@ -55124,7 +55124,7 @@
 	    },
 	    totalDistanceTraveled: 399.1359926652999,
 	    tripsPerDay: [38, 21, 13, 23, 20, 15, 55],
-	    tripsPerHour: [25, 18, 9, 2, 4, 2, 2, 2, 4, 4, 2, 8, 6, 3, 4, 3, 4, 2, 7, 8, 15, 12, 23, 16]
+	    tripsPerHour: [25, 21, 9, 2, 2, 2, 2, 4, 4, 4, 2, 8, 6, 3, 4, 3, 4, 2, 7, 8, 12, 15, 16, 20]
 	  };
 	};
 
