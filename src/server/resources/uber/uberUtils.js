@@ -34,7 +34,7 @@ const generateStatistics = data => {
     numberOfTrips: data.count,
     tripsPerCity: {},
     tripsPerDay: [0, 0, 0, 0, 0, 0, 0],
-    tripsPerHour: {},
+    tripsPerHour: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     timeSpentWaiting: 0,
     timeSpentRiding: 0,
     totalDistanceTraveled: 0,
