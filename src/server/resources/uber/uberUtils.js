@@ -24,11 +24,17 @@ const getTripDay = startTime => {
   return date.getDay();
 };
 
+const getTripHour = startTime => {
+  const date = new Date(startTime * 1000);
+  return date.getHours();
+}
+
 const generateStatistics = data => {
   const statistics = {
     numberOfTrips: data.count,
     tripsPerCity: {},
     tripsPerDay: [0, 0, 0, 0, 0, 0, 0],
+    tripsPerHour: {},
     timeSpentWaiting: 0,
     timeSpentRiding: 0,
     totalDistanceTraveled: 0,
@@ -45,9 +51,13 @@ const generateStatistics = data => {
     }
     stats.tripsPerCity[currentTripCity]++;
 
-    // Record currentTrip's day of the week
+    // Record currentTrip's day
     const currentTripDay = getTripDay(currentTrip.start_time);
     stats.tripsPerDay[currentTripDay]++;
+
+    // Record currentTrip's hour
+    const currentTripHour = getTripHour(currentTrip.start_time);
+    stats.tripsPerHour[currentTripHour]++;
 
     // Record currentTrip's wait time, ride time, and distance
     stats.timeSpentWaiting += currentTrip.start_time - currentTrip.request_time;
