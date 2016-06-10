@@ -10,7 +10,7 @@ RideStats calculates statistics about your Uber usage (though has a demo mode fo
 - Express 4.x
 - Mocha 2.x.x
 
-> Note: You have to create an app in the [Uber Developers Dahsboard](https://developer.uber.com/dashboard) first. Grant the new app with all access rights and set the callbakc URL to ``http://localhost:3000/api/auth/callback``
+> Note: You have to create an app in the [Uber Developers Dahsboard](https://developer.uber.com/dashboard) first. Grant the new app with all access rights and set the callback URL to ``http://localhost:3000/api/auth/callback``
 
 ### Installing Dependencies
 
