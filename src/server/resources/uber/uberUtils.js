@@ -41,21 +41,21 @@ const updateTripsPerCity = (tripsPerCity, currentTrip) => {
 
 const updateTripsPerDay = (tripsPerDay, currentTrip) => {
   const currentTripDay = getTripDay(currentTrip.start_time);
-  return tripsPerDay.map((count, day) => {
+  return tripsPerDay.map((tally, day) => {
     if (currentTripDay === day) {
-      return ++count;
+      return ++tally;
     }
-    return count;
+    return tally;
   });
 };
 
 const updateTripsPerHour = (tripsPerHour, currentTrip) => {
   const currentTripHour = getTripHour(currentTrip.start_time);
-  return tripsPerHour.map((count, hour) => {
+  return tripsPerHour.map((tally, hour) => {
     if (currentTripHour === hour) {
-      return ++count;
+      return ++tally;
     }
-    return count;
+    return tally;
   });
 };
 
