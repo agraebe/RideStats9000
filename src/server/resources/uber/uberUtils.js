@@ -111,4 +111,11 @@ module.exports = {
   generateRemainingQueryOffsets,
   generateStatistics,
   processHistories,
+  updateTripsPerCity,
+  updateTripsPerDay,
+  updateTripsPerHour,
+  updateTimeSpentWaiting,
+  updateTimeSpentRiding,
+  updateTotalDistanceTraveled,
+  updateLongestRide,
 };
