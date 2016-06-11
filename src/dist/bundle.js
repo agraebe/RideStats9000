@@ -54414,6 +54414,7 @@
 	var generateHourLineData = function generateHourLineData(hourData) {
 	  var labels = hours;
 	  var data = hourData;
+	  console.log(data);
 	  var dayLineData = {
 	    labels: labels,
 	    datasets: [{

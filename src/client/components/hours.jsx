@@ -32,6 +32,7 @@ const hours = [
 const generateHourLineData = hourData => {
   const labels = hours;
   const data = hourData;
+  console.log(data);
   const dayLineData = {
     labels,
     datasets: [{
