@@ -54054,11 +54054,13 @@
 	  return (minutes + seconds / 60).toFixed(2);
 	};
 
-	var generateAverageTimeGraphData = function generateAverageTimeGraphData(averageRideWaiting, averageRideRiding) {
+	var normalizeGraphData = function normalizeGraphData(averageRideWaiting, averageRideRiding) {
 	  var averageRideWaitingDec = convertAverageTime(averageRideWaiting.minutes, averageRideWaiting.seconds);
 	  var averageRideRidingDec = convertAverageTime(averageRideRiding.minutes, averageRideRiding.seconds);
-	  var labels = ['Average Wait', 'Average Ride'];
-	  var data = [averageRideWaitingDec, averageRideRidingDec];
+	  return [averageRideWaitingDec, averageRideRidingDec];
+	};
+
+	var generateAverageTimeGraphData = function generateAverageTimeGraphData(data, labels) {
 	  return {
 	    labels: labels,
 	    datasets: [{
@@ -54078,7 +54080,9 @@
 	  var averageRideWaiting = _ref.averageRideWaiting;
 	  var averageRideRiding = _ref.averageRideRiding;
 
-	  var graphData = generateAverageTimeGraphData(averageRideWaiting, averageRideRiding);
+	  var graphLabels = ['Average Wait', 'Average Ride'];
+	  var normalizedGraphData = normalizeGraphData(averageRideWaiting, averageRideRiding);
+	  var graphData = generateAverageTimeGraphData(normalizedGraphData, graphLabels);
 	  var graphOptions = { responsive: true };
 	  var title = _react2.default.createElement(
 	    'h3',
@@ -54405,7 +54409,7 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-	var hours = ["Midnight", "1 a.m.", "2 a.m.", "3 a.m.", "4 a.m.", "5 a.m.", "6 a.m.", "7 a.m.", "8 a.m.", "9 a.m.", "10 a.m.", "11 a.m.", "12 p.m.", "1 p.m.", "2 p.m.", "3 p.m.", "4 p.m.", "5 p.m.", "6 p.m.", "7 p.m.", "8 p.m.", "9 p.m.", "10 p.m.", "11 p.m."];
+	var hours = ['Midnight', '1 a.m.', '2 a.m.', '3 a.m.', '4 a.m.', '5 a.m.', '6 a.m.', '7 a.m.', '8 a.m.', '9 a.m.', '10 a.m.', '11 a.m.', 'Noon', '1 p.m.', '2 p.m.', '3 p.m.', '4 p.m.', '5 p.m.', '6 p.m.', '7 p.m.', '8 p.m.', '9 p.m.', '10 p.m.', '11 p.m.'];
 
 	var generateHourLineData = function generateHourLineData(hourData) {
 	  var labels = hours;
