@@ -75,21 +75,18 @@ const Hours = ({ hourData }) => {
   const modeHourRange = getModeHourRange(hourData);
   const minHourRange = getMinHourRange(hourData);
   const graphData = generateHourLineData(hourData);
-  const graphOptions = { responsive: true, pointHitDetectionRadius: 5, pointDot: true};
+  const graphOptions = { responsive: true, pointHitDetectionRadius: 3, pointDot: true};
   const title = (<h3><i className="fa fa-clock-o" aria-hidden="true"></i> Rides by Hour</h3>);
   return (
     <Panel className="panel-primary" header={title} body>
       <h3 className="text-center">
         You ride most often between <strong>{modeHourRange}</strong>
       </h3>
-      <h3 className="text-center">
-        <small>You ride least often between <strong>{minHourRange}</strong></small>
-      </h3>
       <div className="text-center">
         <Line
           data={graphData}
           options={graphOptions}
-          height={250}
+          height={200}
           width={400}
         />
       </div>

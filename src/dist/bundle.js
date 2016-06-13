@@ -54476,7 +54476,7 @@
 	  var modeHourRange = getModeHourRange(hourData);
 	  var minHourRange = getMinHourRange(hourData);
 	  var graphData = generateHourLineData(hourData);
-	  var graphOptions = { responsive: true, pointHitDetectionRadius: 5, pointDot: true };
+	  var graphOptions = { responsive: true, pointHitDetectionRadius: 3, pointDot: true };
 	  var title = _react2.default.createElement(
 	    'h3',
 	    null,
@@ -54497,26 +54497,12 @@
 	      )
 	    ),
 	    _react2.default.createElement(
-	      'h3',
-	      { className: 'text-center' },
-	      _react2.default.createElement(
-	        'small',
-	        null,
-	        'You ride least often between ',
-	        _react2.default.createElement(
-	          'strong',
-	          null,
-	          minHourRange
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
 	      'div',
 	      { className: 'text-center' },
 	      _react2.default.createElement(_reactChartjs.Line, {
 	        data: graphData,
 	        options: graphOptions,
-	        height: 250,
+	        height: 200,
 	        width: 400
 	      })
 	    )
