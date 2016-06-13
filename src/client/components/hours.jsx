@@ -29,10 +29,20 @@ const hours = [
   '11 p.m.',
 ];
 
+const adjustForTimeOffset = hourData => {
+  const modifiedData = hourData.slice();
+  const date = new Date();
+  const offset = Math.floor(date.getTimezoneOffset() / 60);
+  for (let i = 0; i < offset; i++) {
+    let moved = hourData.pop();
+    modifiedData.push(moved);
+  }
+  return modifiedData;
+}
+
 const generateHourLineData = hourData => {
   const labels = hours;
   const data = hourData;
-  console.log(data);
   const dayLineData = {
     labels,
     datasets: [{

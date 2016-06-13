@@ -76,11 +76,15 @@
 
 	var _loading2 = _interopRequireDefault(_loading);
 
-	var _footer = __webpack_require__(457);
+	var _errorModal = __webpack_require__(457);
+
+	var _errorModal2 = _interopRequireDefault(_errorModal);
+
+	var _footer = __webpack_require__(458);
 
 	var _footer2 = _interopRequireDefault(_footer);
 
-	var _utils = __webpack_require__(458);
+	var _utils = __webpack_require__(459);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -102,13 +106,15 @@
 	      data: null,
 	      loading: false,
 	      loggedIn: false,
-	      demo: false
+	      demo: false,
+	      showErrorModal: true
 	    };
 	    _this.handleLoginClick = _this.handleLoginClick.bind(_this);
 	    _this.handleDemoClick = _this.handleDemoClick.bind(_this);
+	    _this.handleLogout = _this.handleLogout.bind(_this);
+	    _this.handleErrorModalClose = _this.handleErrorModalClose.bind(_this);
 	    _this.requestUserStatistics = _this.requestUserStatistics.bind(_this);
 	    _this.requestDemoStatistics = _this.requestDemoStatistics.bind(_this);
-	    _this.handleLogout = _this.handleLogout.bind(_this);
 	    _this.generatePageContent = _this.generatePageContent.bind(_this);
 	    return _this;
 	  }
@@ -123,13 +129,15 @@
 	  }, {
 	    key: 'handleLoginClick',
 	    value: function handleLoginClick() {
+	      var _this2 = this;
+
 	      if (this.state.loggedIn) {
 	        return this.handleLogout();
 	      }
 	      _jquery2.default.ajax({ type: 'GET', url: '/api/auth/login' }).done(function (data) {
 	        return window.location.href = data.url;
 	      }).fail(function (err) {
-	        return console.log(err);
+	        return _this2.setState({ showErrorModal: true });
 	      });
 	    }
 	  }, {
@@ -144,36 +152,41 @@
 	      this.setState({ loggedIn: false, loading: false, data: null, demo: false });
 	    }
 	  }, {
+	    key: 'handleErrorModalClose',
+	    value: function handleErrorModalClose() {
+	      this.setState({ showErrorModal: false });
+	    }
+	  }, {
 	    key: 'requestUserStatistics',
 	    value: function requestUserStatistics() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      this.setState({ loggedIn: true, loading: true });
 	      _jquery2.default.ajax({ type: 'GET', url: '/api/uber/statistics' }).done(function (response) {
 	        // User clicked logout during load
-	        if (_this2.state.loggedIn === false) {
+	        if (_this3.state.loggedIn === false) {
 	          return;
 	        }
 	        window.history.pushState(null, '#/stats', '#/stats');
-	        _this2.setState({ data: response.data, loading: false });
+	        _this3.setState({ data: response.data, loading: false });
 	      }).fail(function (err) {
-	        console.log(err);
-	        _this2.handleLogout();
+	        _this3.setState({ showErrorModal: true });
+	        _this3.handleLogout();
 	      });
 	    }
 	  }, {
 	    key: 'requestDemoStatistics',
 	    value: function requestDemoStatistics() {
-	      var _this3 = this;
+	      var _this4 = this;
 
 	      window.history.pushState(null, '#/demo', '#/demo');
 	      this.setState({ loggedIn: true, loading: true, demo: true });
 	      setTimeout(function () {
 	        // User clicked end demo during load
-	        if (_this3.state.demo === false) {
+	        if (_this4.state.demo === false) {
 	          return;
 	        }
-	        _this3.setState({
+	        _this4.setState({
 	          loading: false,
 	          data: (0, _utils.generateDemoData)()
 	        });
@@ -204,6 +217,10 @@
 	          demo: this.state.demo
 	        }),
 	        pageContent,
+	        _react2.default.createElement(_errorModal2.default, {
+	          showErrorModal: this.state.showErrorModal,
+	          handleErrorModalClose: this.handleErrorModalClose
+	        }),
 	        _react2.default.createElement(_footer2.default, null)
 	      );
 	    }
@@ -54411,10 +54428,20 @@
 
 	var hours = ['Midnight', '1 a.m.', '2 a.m.', '3 a.m.', '4 a.m.', '5 a.m.', '6 a.m.', '7 a.m.', '8 a.m.', '9 a.m.', '10 a.m.', '11 a.m.', 'Noon', '1 p.m.', '2 p.m.', '3 p.m.', '4 p.m.', '5 p.m.', '6 p.m.', '7 p.m.', '8 p.m.', '9 p.m.', '10 p.m.', '11 p.m.'];
 
+	var adjustForTimeOffset = function adjustForTimeOffset(hourData) {
+	  var modifiedData = hourData.slice();
+	  var date = new Date();
+	  var offset = Math.floor(date.getTimezoneOffset() / 60);
+	  for (var i = 0; i < offset; i++) {
+	    var moved = hourData.pop();
+	    modifiedData.push(moved);
+	  }
+	  return modifiedData;
+	};
+
 	var generateHourLineData = function generateHourLineData(hourData) {
 	  var labels = hours;
 	  var data = hourData;
-	  console.log(data);
 	  var dayLineData = {
 	    labels: labels,
 	    datasets: [{
@@ -55069,6 +55096,68 @@
 /* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(170);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ErrorModal = function ErrorModal(_ref) {
+	  var showErrorModal = _ref.showErrorModal;
+	  var handleErrorModalClose = _ref.handleErrorModalClose;
+
+	  return _react2.default.createElement(
+	    _reactBootstrap.Modal,
+	    { show: showErrorModal, onHide: handleErrorModalClose },
+	    _react2.default.createElement(
+	      _reactBootstrap.Modal.Header,
+	      { bsStyle: 'modal-header modal-header-success', closeButton: true },
+	      _react2.default.createElement(
+	        _reactBootstrap.Modal.Title,
+	        null,
+	        'Error'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _reactBootstrap.Modal.Body,
+	      null,
+	      _react2.default.createElement(
+	        'p',
+	        null,
+	        'Sorry, there was an error loading your Uber account information.'
+	      ),
+	      _react2.default.createElement(
+	        'p',
+	        null,
+	        'Please try again later.'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _reactBootstrap.Modal.Footer,
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Button,
+	        { bsStyle: 'primary', onClick: handleErrorModalClose },
+	        'Close'
+	      )
+	    )
+	  );
+	};
+
+	exports.default = ErrorModal;
+
+/***/ },
+/* 458 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -55107,7 +55196,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 458 */
+/* 459 */
 /***/ function(module, exports) {
 
 	'use strict';

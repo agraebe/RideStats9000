@@ -5,6 +5,7 @@ import Nav from './components/nav.jsx';
 import Stats from './components/stats.jsx';
 import Login from './components/login.jsx';
 import Loading from './components/loading.jsx';
+import ErrorModal from './components/errorModal.jsx';
 import Footer from './components/footer.jsx';
 import { generateDemoData } from './utils';
 
@@ -16,12 +17,14 @@ class App extends React.Component {
       loading: false,
       loggedIn: false,
       demo: false,
+      showErrorModal: true,
     };
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleDemoClick = this.handleDemoClick.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleErrorModalClose = this.handleErrorModalClose.bind(this);
     this.requestUserStatistics = this.requestUserStatistics.bind(this);
     this.requestDemoStatistics = this.requestDemoStatistics.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
     this.generatePageContent = this.generatePageContent.bind(this);
   }
 
@@ -37,7 +40,7 @@ class App extends React.Component {
     }
     $.ajax({ type: 'GET', url: '/api/auth/login' })
       .done(data => window.location.href = data.url)
-      .fail(err => console.log(err));
+      .fail(err => this.setState({ showErrorModal: true }));
   }
 
   handleDemoClick() {
@@ -47,6 +50,10 @@ class App extends React.Component {
   handleLogout() {
     window.history.pushState(null, '#/logout', '#/logout');
     this.setState({ loggedIn: false, loading: false, data: null, demo: false });
+  }
+
+  handleErrorModalClose() {
+    this.setState({ showErrorModal: false });
   }
 
   requestUserStatistics() {
@@ -61,7 +68,7 @@ class App extends React.Component {
         this.setState({ data: response.data, loading: false });
       })
       .fail(err => {
-        console.log(err);
+        this.setState({ showErrorModal: true });
         this.handleLogout();
       });
   }
@@ -102,6 +109,10 @@ class App extends React.Component {
           demo={this.state.demo}
         />
         {pageContent}
+        <ErrorModal 
+          showErrorModal={this.state.showErrorModal}
+          handleErrorModalClose={this.handleErrorModalClose}
+        />
         <Footer />
       </div>
     );
