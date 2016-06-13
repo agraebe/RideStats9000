@@ -4,28 +4,30 @@ import { Bar } from 'react-chartjs';
 
 const convertAverageTime = (minutes, seconds) => (minutes + (seconds / 60)).toFixed(2);
 
-const generateAverageTimeGraphData = (averageRideWaiting, averageRideRiding) => {
+const normalizeGraphData = (averageRideWaiting, averageRideRiding) => {
   const averageRideWaitingDec = convertAverageTime(averageRideWaiting.minutes, averageRideWaiting.seconds);
   const averageRideRidingDec = convertAverageTime(averageRideRiding.minutes, averageRideRiding.seconds);
-  const labels = ['Average Wait', 'Average Ride'];
-  const data = [averageRideWaitingDec, averageRideRidingDec];
-  return {
-    labels,
-    datasets: [{
-      label: 'Distance',
-      fillColor: ['#970015', '#149c82'],
-      backgroundColor: ['#970015', '#149c82'],
-      borderColor: ['#970015', '#149c82'],
-      borderWidth: 10,
-      hoverBackgroundColor: '#149c82',
-      hoverBorderColor: '#149c82',
-      data,
-    }],
-  };
+  return [averageRideWaitingDec, averageRideRidingDec];
 };
 
+const generateAverageTimeGraphData = (data, labels) => ({
+  labels,
+  datasets: [{
+    label: 'Distance',
+    fillColor: ['#970015', '#149c82'],
+    backgroundColor: ['#970015', '#149c82'],
+    borderColor: ['#970015', '#149c82'],
+    borderWidth: 10,
+    hoverBackgroundColor: '#149c82',
+    hoverBorderColor: '#149c82',
+    data,
+  }],
+});
+
 const AverageTime = ({ averageRideWaiting, averageRideRiding }) => {
-  const graphData = generateAverageTimeGraphData(averageRideWaiting, averageRideRiding);
+  const graphLabels = ['Average Wait', 'Average Ride'];
+  const normalizedGraphData = normalizeGraphData(averageRideWaiting, averageRideRiding);
+  const graphData = generateAverageTimeGraphData(normalizedGraphData, graphLabels);
   const graphOptions = { responsive: true };
   const title = (<h3><i className="fa fa-clock-o" aria-hidden="true"></i> Average Wait and Ride Times</h3>);
   return (

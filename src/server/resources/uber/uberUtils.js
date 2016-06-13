@@ -27,7 +27,59 @@ const getTripDay = startTime => {
 const getTripHour = startTime => {
   const date = new Date(startTime * 1000);
   return date.getHours();
-}
+};
+
+const updateTripsPerCity = (tripsPerCity, currentTrip) => {
+  const nextTripsPerCity = Object.assign({}, tripsPerCity);
+  const currentTripCity = currentTrip.start_city.display_name;
+  if (!nextTripsPerCity[currentTripCity]) {
+    nextTripsPerCity[currentTripCity] = 0;
+  }
+  nextTripsPerCity[currentTripCity]++;
+  return nextTripsPerCity;
+};
+
+const updateTripsPerDay = (tripsPerDay, currentTrip) => {
+  const currentTripDay = getTripDay(currentTrip.start_time);
+  return tripsPerDay.map((tally, day) => {
+    if (currentTripDay === day) {
+      return ++tally;
+    }
+    return tally;
+  });
+};
+
+const updateTripsPerHour = (tripsPerHour, currentTrip) => {
+  const currentTripHour = getTripHour(currentTrip.start_time);
+  return tripsPerHour.map((tally, hour) => {
+    if (currentTripHour === hour) {
+      return ++tally;
+    }
+    return tally;
+  });
+};
+
+const updateTimeSpentWaiting = (timeSpentWaiting, currentTrip) => {
+  return timeSpentWaiting + currentTrip.start_time - currentTrip.request_time;
+};
+
+const updateTimeSpentRiding = (timeSpentRiding, currentTrip) => {
+  return timeSpentRiding + currentTrip.end_time - currentTrip.start_time;
+};
+
+const updateTotalDistanceTraveled = (totalDistanceTraveled, currentTrip) => {
+  return totalDistanceTraveled + currentTrip.distance;
+};
+
+const updateLongestRide = (longestRide, currentTrip) => {
+  if (longestRide.distance < currentTrip.distance) {
+    return {
+      distance: currentTrip.distance,
+      city: currentTrip.city,
+    }
+  }
+  return longestRide;
+};
 
 const generateStatistics = data => {
   const statistics = {
@@ -44,32 +96,13 @@ const generateStatistics = data => {
     },
   };
   return data.history.reduce((stats, currentTrip) => {
-    // Record currentTrip's start city
-    const currentTripCity = currentTrip.start_city.display_name;
-    if (!stats.tripsPerCity[currentTripCity]) {
-      stats.tripsPerCity[currentTripCity] = 0;
-    }
-    stats.tripsPerCity[currentTripCity]++;
-
-    // Record currentTrip's day
-    const currentTripDay = getTripDay(currentTrip.start_time);
-    stats.tripsPerDay[currentTripDay]++;
-
-    // Record currentTrip's hour
-    const currentTripHour = getTripHour(currentTrip.start_time);
-    stats.tripsPerHour[currentTripHour]++;
-
-    // Record currentTrip's wait time, ride time, and distance
-    stats.timeSpentWaiting += currentTrip.start_time - currentTrip.request_time;
-    stats.timeSpentRiding += currentTrip.end_time - currentTrip.start_time;
-    stats.totalDistanceTraveled += currentTrip.distance;
-
-    // Check if currentTrip is the longest
-    if (stats.longestRide.distance < currentTrip.distance) {
-      stats.longestRide.distance = currentTrip.distance;
-      stats.longestRide.city = currentTripCity;
-    }
-
+    stats.tripsPerCity = updateTripsPerCity(stats.tripsPerCity, currentTrip);
+    stats.tripsPerDay = updateTripsPerDay(stats.tripsPerDay, currentTrip);
+    stats.tripsPerHour = updateTripsPerHour(stats.tripsPerHour, currentTrip);
+    stats.timeSpentWaiting = updateTimeSpentWaiting(stats.timeSpentWaiting, currentTrip);
+    stats.timeSpentRiding = updateTimeSpentRiding(stats.timeSpentRiding, currentTrip);
+    stats.totalDistanceTraveled = updateTotalDistanceTraveled(stats.totalDistanceTraveled, currentTrip);
+    stats.longestRide = updateLongestRide(stats.longestRide, currentTrip);
     return stats;
   }, statistics);
 };
@@ -78,4 +111,11 @@ module.exports = {
   generateRemainingQueryOffsets,
   generateStatistics,
   processHistories,
+  updateTripsPerCity,
+  updateTripsPerDay,
+  updateTripsPerHour,
+  updateTimeSpentWaiting,
+  updateTimeSpentRiding,
+  updateTotalDistanceTraveled,
+  updateLongestRide,
 };

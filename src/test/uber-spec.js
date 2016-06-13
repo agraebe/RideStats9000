@@ -38,10 +38,36 @@ describe('Uber Controller Functionality', () => {
 
 describe('Uber Utils Functionality', () => {
 
+
   it('should exist', done => {
     expect(!!uberUtils).to.equal(true);
     done();
   });
+
+  it('should use updateTripsPerCity to correctly alter tripsPerCity when provided a new city', done => {
+    const initial = {};
+    const next = {
+      start_city: {
+        display_name: 'San Francisco'
+      }
+    }
+    expect(uberUtils.updateTripsPerCity(initial, next)['San Francisco']).to.equal(1);
+    done();
+  });
+
+  it('should use updateTripsPerCity to correctly update tripsPerCity when provided an existant city', done => {
+    const initial = {
+      'San Francisco': 1,
+    };
+    const next = {
+      start_city: {
+        display_name: 'San Francisco'
+      }
+    }
+    expect(uberUtils.updateTripsPerCity(initial, next)['San Francisco']).to.equal(2);
+    done();
+  });
+
 
 });
 
