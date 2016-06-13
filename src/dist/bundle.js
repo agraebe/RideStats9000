@@ -30344,7 +30344,7 @@
 	    }
 	    return 'Log out';
 	  }
-	  return 'Log in';
+	  return 'Log in to Uber';
 	};
 
 	var NavTop = function NavTop(_ref) {
@@ -54560,7 +54560,7 @@
 	    _react2.default.createElement(
 	      "strong",
 	      null,
-	      "Log in"
+	      "Log in to Uber"
 	    )
 	  );
 	  return _react2.default.createElement(

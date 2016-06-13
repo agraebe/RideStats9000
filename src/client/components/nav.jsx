@@ -8,7 +8,7 @@ const generateLoginText = (loggedIn, demo) => {
     }
     return 'Log out';
   }
-  return 'Log in';
+  return 'Log in to Uber';
 };
 
 const NavTop = ({ handleDemoClick, handleLoginClick, loggedIn, demo }) => {
