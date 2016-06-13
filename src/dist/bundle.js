@@ -107,7 +107,7 @@
 	      loading: false,
 	      loggedIn: false,
 	      demo: false,
-	      showErrorModal: true
+	      showErrorModal: false
 	    };
 	    _this.handleLoginClick = _this.handleLoginClick.bind(_this);
 	    _this.handleDemoClick = _this.handleDemoClick.bind(_this);

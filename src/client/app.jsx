@@ -17,7 +17,7 @@ class App extends React.Component {
       loading: false,
       loggedIn: false,
       demo: false,
-      showErrorModal: true,
+      showErrorModal: false,
     };
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleDemoClick = this.handleDemoClick.bind(this);
